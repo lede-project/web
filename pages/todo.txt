@@ -1,0 +1,22 @@
+include::header.txt[]
+
+== TODO List
+
+This page lists the current project wide todos
+
+=== Infrastructure
+
+. Find mirroring capacity - we liberally distribute rsync keys if you have bandwidth and storage available on trusted infrastructure contact us
+. Setup an issue tracker
+. what shall we do about wiki and forum ?
+
+=== Releases
+
+. Define pre release testing rules/guidelines
+. Decide on new naming scheme - YY.MM + animal names have been proposed as an naming option
+
+=== Buildbot Setup
+
+. Rework buildbot setup to allow running more than one build int he same tree
+. Rework buildbot setup to allow building release on the same setup
+

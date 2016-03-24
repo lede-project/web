@@ -1,0 +1,117 @@
+include::header.txt[]
+
+== The Source Code
+
+The LEDE project source code start off with OpenWrt revision r44444. The code
+stored inside a git tree. This tree contains all branches and releases ever
+mad by OpenWrt. While importing the SOurces the tree was normalized and some
+minor tweaks were made to commiter names and mail addresses.
+
+=== Getting The _LEDE_ Code
+
+----
+git clone git@git.lede-project.org:openwrt/source.git
+----
+
+=== Getting the OpenWrt Code
+
+----
+git clone git@git.lede-project.org:source.git
+----
+
+=== The Web Presence
+
+----
+git clone git@git.lede-project.org:web.git
+----
+
+=== Submitting Patches
+
+The biggest difference is that we now accept pull requests. The tree that shall
+be pulled from needs to be hosted publicly. Small fixes and minor patches can
+also be submitted via the mailing list (__LINK__). Submissions should follow
+these rules
+
+. rule N+1
+
+All patches need to be sent in a format that they are listed in patchwork (__LINK__).
+If the patch does not get listed in patchwork then it wont get processed.
+
+
+=== Reporting Bugs
+
+. *All* bug reports need to be submitted via the mailing list (__LINK__)
+. When reporting bugs please make sure to
+  .. Name the tree/revision
+  .. Name the effected device
+  .. What does it do that it should not do / what does it not do that it should do
+  .. Steps to reproduce
+  .. What you have already done to fix the problem
+  .. Any additional info you thinks is important
+. Reporting a bug means that you reported a bug. It does not constitue a claim that
+  anyone has to work on fixing it.
+. Pointless/vague/silly/... bugs reports will be ignored
+. Feature requests are not Bugs. They will also be ignored.
+. The better your bug report, the more likely it is that it will be worked on.
+
+All bug reports need to be sent in a format so that they are listed in the issue
+tracker (__LINK__). If the bug report does not get listed in the issue tracker then
+it wont get processed.
+
+
+=== Patch Merging And Tree Life Cycle
+
+We encourage commiters to host their own staging trees where they aggregate patches
+that they feel responsible for and/or ones that they created themselves. Once the tree
+has been reviewed and tested it can be proposed for inclusion in the master branch.
+
+. Trees will be merged into master during a merge window
+. The date when the next merge window opens will be announced in advance
+. The window should be less than a week
+. Only bug fixes can be merged outside the merge window via the fixes branch (__LINK__)
+. No new features/update/... may be merged ourside the window
+. PRs can be sent to the patches mailing list from any source and will always be considered
+  for inclusion if the quality of the tree is good and format of submission is correct
+
+
+=== Kernel updates
+
+It has proven impratical and a timekiller to always be on the very latest kernel within
+2 days of its release. It has caused these issues.
+
+. diversification of kernel versions
+. pressure on maintainers to constantly upgrade rather than stabilize
+. huge effort invested to upgrade 3-4 times between releases
+. huge workload to maintain kmod-* packaging
+. Upgrade to kernels that might not be fully tested
+
+This is obviously not an invite to sit on ancient and dusty kernels. A sane path in between
+should be taken that give the community recent kernels without causing unnecessary workload
+and stability issues.
+
+There should be a max of three concurrent kernel version. Having only two concurrent versions
+is better than three.
+
+In Short - stability should be valued higher than bleeding edge, although bleeding edge is
+also important, but not as a trade-off to stability.
+
+
+=== Releases
+
+Generating Releases has already been vastly automated. The remaining parts of the process need
+to also be automated before the first _LEDE_ release. We will introduce a TESTERS file that is
+formatted similarly to the MAINTAINERS file of the kernel. Community members can list themselves
+as testers for a target/profile/device. Once a release has been generated testers should receive
+an email informing them of the requirement for images to be tested. It needs to be decided if only
+tested images should be included in the binary release.
+
+Releases should
+
+. Happen at least once a year
+. Have at least one maintainance update
+. Provide CVE/critical/... fixes for at least one year after the release
+. Only include maintained targets
+. Only include targets that have seen on device testing
+. Be ready when they are ready
+
+See the TODO page for more info.

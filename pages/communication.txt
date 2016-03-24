@@ -1,0 +1,47 @@
+include::header.txt[]
+
+== Communication
+
+It is possible to communicate with other community members using mail and IRC.
+All project related communication should be done on public channels that are
+archived and easily browsable. Specific problems and tasks may be resolved
+using direct means of communication.
+
+
+=== Twitter
+
+In case of services going down, being moved or being unreachable for any other
+reason, please go to twitter and see what the status is. The project will do
+its best to post updates link:https://twitter.com/lede_project[here]
+
+
+=== Mailing Lists
+
+The project offers the following mailing lists
+
+. lede-dev - this list is used for submitting patches and general developement
+  related work
+. lede-adm - this list is used for project organisational purposes. anyone can
+  subscribe and read this list. Only committers may write to this list.
+. lede-bugs - this list is used for reporting bugs
+
+
+=== IRC Channels
+
+The project provides 2 IRC channels on freenode
+
+. #lede-dev - a public channel for everyone to join and participate
+. #lede-adm - a moderated channel that anyone can join but only people with +v flag can write on
+
+
+=== Corporate Contact
+
+There is a special email address that companies wanting to colaborate with the
+project can contact commiters confidentially. These type of "first contact" only
+have the purpose of helping companies understand the mode of operations. Once the
+intent is communicated, companies are invited to participate in the project just
+like any other community member. This means that engagement should be done in
+public. Ideally companies simply allow part of their R&D team to participate
+in the normal developement process as normal community members. There will be
+no special treatment beyond the "first contact". Please see the project
+link:rules.html[rules] for further information.
