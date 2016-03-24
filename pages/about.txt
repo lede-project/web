@@ -1,0 +1,38 @@
+== About LEDE
+
+The LEDE project was founded in April 2016 as an OpenWrt based spinoff with a
+strong focus on transparency, user collaboration and decentralized structures.
+
+=== Origin
+
+For a long time the OpenWrt parent project experienced infrastructure issues
+and declining developer participation on the base system while the community
+driven package ecosystem around it continued to thrive.
+
+When the number of frequently active committers reached a new low in the
+beginning of 2016, the three OpenWrt developers John Crispin, Felix Fietkau
+and Jo-Philipp Wich decided to start a new spin-off project in an attempt to
+radically change the development processes and reboot the project in better,
+community-driven manner.
+
+=== Goals
+
+LEDE's stated goals are:
+
+. Transparent decision processes with broad community participation and public
+  meetings
+. Only rely on decentralized infrastructure provided by free services and
+  volunteers while avoiding single points of failure to ensure maximum
+  avilability of the software
+. Avoidance of developer hierarchies, "core members" and the like
+
+=== Name
+
+The name _LEDE_ is an abbreviation for Linux Embedded Development Environment,
+a reference to its flexibility and embedded buildroot origins, making it a
+solid choice for embedded Linux applications far beyound the wireless router
+and network appliance realm.
+
+The word _LEDE_ is also an alternation of the phrase _to lead_, describing
+an introductory section of a news story that is intended to entice the reader
+to read the full story.
