@@ -2,7 +2,7 @@ include::header.txt[]
 
 == The Source Code
 
-The LEDE project source code start off with OpenWrt revision r44444. The code
+The LEDE project source code start off with OpenWrt revision r49083. The code
 stored inside a git tree. This tree contains all branches and releases ever
 mad by OpenWrt. While importing the SOurces the tree was normalized and some
 minor tweaks were made to commiter names and mail addresses.
@@ -10,13 +10,13 @@ minor tweaks were made to commiter names and mail addresses.
 === Getting The _LEDE_ Code
 
 ----
-git clone git@git.lede-project.org:openwrt/source.git
+git clone git@git.lede-project.org:source.git
 ----
 
 === Getting the OpenWrt Code
 
 ----
-git clone git@git.lede-project.org:source.git
+git clone git@git.lede-project.org:openwrt/source.git
 ----
 
 === The Web Presence
