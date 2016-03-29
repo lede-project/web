@@ -1,4 +1,4 @@
-== image:images/mock.png[width="128"] Linux Embedded Developement Environment
+== image:logo/logo_small.png[width="39"] Linux Embedded Developement Environment
 
 |====
 ^| link:index.html[About] ^| link:communication.html[Communication] ^| link:rules.html[Rules] ^| link:source.html[Source] ^| link:todo.html[Todo]
