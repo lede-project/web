@@ -4,8 +4,8 @@ include::header.txt[]
 
 The LEDE project source code start off with OpenWrt revision r49083. The code
 is stored inside a git tree which contains all branches and releases ever made
-by OpenWrt. While importing the sources the tree was normalized and some
-minor tweaks were made to commiter names and mail addresses.
+by OpenWrt. While importing the sources the tree was normalised and some
+minor tweaks were made to comitter names and mail addresses.
 
 All repositories can be browsed online through
 http://git.lede-project.org/[Gitweb] as well.
@@ -68,7 +68,7 @@ If the patch does not get listed in patchwork then it wont get processed.
   .. Steps to reproduce
   .. What you have already done to fix the problem
   .. Any additional info you thinks is important
-. Reporting a bug means that you reported a bug. It does not constitue a claim that
+. Reporting a bug means that you reported a bug. It does not constitute a claim that
   anyone has to work on fixing it.
 . Pointless/vague/silly/... bugs reports will be ignored
 . Feature requests are not Bugs. They will also be ignored.
@@ -81,7 +81,7 @@ it wont get processed.
 
 === Patch Merging And Tree Life Cycle
 
-We encourage commiters to host their own staging trees where they aggregate patches
+We encourage committers to host their own staging trees where they aggregate patches
 that they feel responsible for and/or ones that they created themselves. Once the tree
 has been reviewed and tested it can be proposed for inclusion in the master branch.
 
@@ -89,18 +89,18 @@ has been reviewed and tested it can be proposed for inclusion in the master bran
 . The date when the next merge window opens will be announced in advance
 . The window should be less than a week
 . Only bug fixes can be merged outside the merge window via the fixes branch (__LINK__)
-. No new features/update/... may be merged ourside the window
+. No new features/update/... may be merged outside the window
 . PRs can be sent to the patches mailing list from any source and will always be considered
   for inclusion if the quality of the tree is good and format of submission is correct
 
 
 === Kernel updates
 
-It has proven impratical and a timekiller to always be on the very latest kernel within
+It has proven impractical and a time killer to always be on the very latest kernel within
 2 days of its release. It has caused these issues.
 
 . diversification of kernel versions
-. pressure on maintainers to constantly upgrade rather than stabilize
+. pressure on maintainers to constantly upgrade rather than stabilise
 . huge effort invested to upgrade 3-4 times between releases
 . huge workload to maintain kmod-* packaging
 . Upgrade to kernels that might not be fully tested
@@ -128,7 +128,7 @@ tested images should be included in the binary release.
 Releases should
 
 . Happen at least once a year
-. Have at least one maintainance update
+. Have at least one maintenance update
 . Provide CVE/critical/... fixes for at least one year after the release
 . Only include maintained targets
 . Only include targets that have seen on device testing
