@@ -2,8 +2,8 @@ include::header.txt[]
 
 == About LEDE
 
-The LEDE project was founded in April 2016 as an OpenWrt based spinoff with a
-strong focus on transparency, user collaboration and decentralized structures.
+The LEDE project was founded in April 2016 as an OpenWrt based spin off with a
+strong focus on transparency, user collaboration and decentralised structures.
 
 === Goals
 
@@ -11,16 +11,16 @@ LEDE's stated goals are:
 
 . Transparent decision processes with broad community participation and public
   meetings
-. Only rely on decentralized infrastructure provided by free services and
+. Only rely on decentralised infrastructure provided by free services and
   volunteers while avoiding single points of failure to ensure maximum
-  avilability of the software
+  availability of the software
 . Avoidance of developer hierarchies, "core members" and the like
 
 === Name
 
 The name _LEDE_ is an abbreviation for Linux Embedded Development Environment,
 a reference to its flexibility and embedded buildroot origins, making it a
-solid choice for embedded Linux applications far beyound the wireless router
+solid choice for embedded Linux applications far beyond the wireless router
 and network appliance realm.
 
 The word _LEDE_ is also an alternation of the phrase _to lead_, describing
