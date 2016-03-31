@@ -1,5 +1,5 @@
 == image:logo/logo_small.png[width="39"] Linux Embedded Developement Environment
 
 |====
-^| link:index.html[About] ^| link:communication.html[Communication] ^| link:rules.html[Rules] ^| link:source.html[Source] ^| link:todo.html[Todo]
+^| link:index.html[About] ^| link:communication.html[Communication] ^| link:rules.html[Rules] ^| link:source.html[Source] ^| link:todo.html[Todo] ^| link:meetings.html[Meetings]
 |====

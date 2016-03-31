@@ -1,0 +1,28 @@
+include::header.txt[]
+
+== LEDE Project Meetings
+
+
+=== Next Meeting
+
+The next meeting will be held on Monday 4th April 2016 at 1pm CEST. The Agenda is as follows
+
+. Infrastructure
+ * Progress report
+. Engagements
+ * Communities
+  - When
+  - Who
+  - How
+ * Companies
+  - When
+  - Who
+  - How
+. Roadmap
+. Votes
+ * Agree/Refuse: Project rule revision (rewording + typos): http://piratepad.net/CEJ5YLNPTY
+ * Agree/Refuse: Put logo + documentation under CC BY-SA 4.0 unported: http://creativecommons.org/licenses/by-sa/4.0/
+
+=== Meeting Logs
+
+All meeting logs can be viewed under http://meetings.lede-project.org/lede-adm/[here]
