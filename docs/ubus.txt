@@ -1,0 +1,82 @@
+include::header.txt[]
+
+== uBus - IPC/RPC
+
+uBus is the interconnect system used by most service running on a _LEDE_ setup.
+Service can connect to the bus and provide methods that can be called by other services or clients.
+
+There is a CLI that can be used to communicate with services on the bus.
+
+----
+root@lede:/# ubus
+Usage: ubus [<options>] <command> [arguments...]
+Options:
+-s <socket>:		Set the unix domain socket to connect to
+-t <timeout>:		Set the timeout (in seconds) for a command to complete
+-S:			Use simplified output (for scripts)
+-v:			More verbose output
+
+Commands:
+- list [<path>]			List objects
+- call <path> <method> [<message>]	Call an object method
+- listen [<path>...]			Listen for events
+- send <type> [<message>]		Send an event
+- wait_for <object> [<object>...]	Wait for multiple objects to appear on ubus
+----
+
+To find out which services are currently running on the bus simply use the list command. This will show a complete list.
+
+----
+root@lede:/# ubus list
+dhcp
+log
+network
+network.device
+network.interface
+network.interface.loopback
+network.interface.wan
+network.interface.wan6
+network.wireless
+service
+system
+----
+
+To find out which methods a specific service provides also use the list command but add a few more parameters to see a complete list
+
+----
+root@OpenWrt:/# ubus -v list system
+'system' @6b093875
+	"board":{}
+	"info":{}
+	"upgrade":{}
+	"watchdog":{"frequency":"Integer","timeout":"Integer","stop":"Boolean"}
+	"signal":{"pid":"Integer","signum":"Integer"}
+----
+
+You can now call a remote method and receive a reply. A reply may be a simple integer return code or a more complete reply. Internally the bus uses a blob format, the CLI conveniently converts this to JSON.
+
+----
+root@lede:/# ubus call system board
+{
+	"kernel": "4.4.6",
+	"hostname": "lede",
+	"system": "MIPS Malta",
+	"release": {
+		"distribution": "LEDE",
+		"version": "HEAD",
+		"revision": "3",
+		"codename": "designated_driver",
+		"target": "malta\/le",
+		"description": "LEDE Designated Driver 3"
+	}
+}
+----
+
+You can call a method and pass it some parameters by simply appending a JSON structure to the CLI command.
+----
+root@lede:/# ubus call system signal '{ "pid": 123, "signum": 9 }'
+root@lede:/# echo $?
+0
+----
+
+

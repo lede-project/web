@@ -1,0 +1,13 @@
+include::header.txt[]
+
+=== The Web Presence
+
+The documentation  you're reading is generated from text files using the
+http://www.methods.co.nz/asciidoc/[AsciiDoc] suite. Any changes made to the
+projects documentation will be reflected in our +web.git+ repository:
+
+----
+git clone http://git.lede-project.org/web.git
+----
+
+If you would like to contribute to the documentation then please send patches to our lede-dev mailing list and use the prefix "doc:" in the patches subject.
