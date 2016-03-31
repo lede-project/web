@@ -2,17 +2,43 @@ include::header.txt[]
 
 == TODO List
 
-This page lists the current project wide todos
+This page lists the current project wide todos. Items listed in random order without any prioritisation.
+
+=== Project Reboot
+
+. Announce publicly
+. Invite new developers
+. Write letter of invite to (mesh) communities using the code base
+. Ask communities to endorse _LEDE_
+. Announce feature freeze and start stabilising trunk
+. Prepare _LEDE_ #1 release
 
 === Infrastructure
 
+. Provide a master for the download mirroring infrastructure
 . Find mirroring capacity - we liberally distribute rsync keys if you have bandwidth and storage available on trusted infrastructure contact us
 . Setup an issue tracker
-. what shall we do about wiki and forum ?
+. What shall we do about wiki and forum ?
+. Setup IRC channels
+. Register mailing lists
+. Setup Patchwork
+. Find a Web Designer to do some CSS magic
+
+=== Code base
+
+. Review recent IPV6 changes
+. Review and fix procd, netfid, firewall issues/quirks
+. Bump all kernels to v4.4
+. Review PPPoE support
+. Convert ar71xx to devicetree
+. Document core services (procd, netifd, ...)
+. Build new UCI docs
+. Define rules for board support status Green, Orange, Red and start testing all supported boards
 
 === Releases
 
-. Define pre release testing rules/guidelines
+. Define the scope of the first release
+. Define pre-release testing rules/guidelines
 . Decide on new naming scheme - YY.MM + animal names have been proposed as an naming option
 
 === Buildbot Setup
