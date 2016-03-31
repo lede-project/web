@@ -39,7 +39,7 @@ git clone http://git.lede-project.org/openwrt/docs.git
 
 The pages you're reading are generated from text files using the
 http://www.methods.co.nz/asciidoc/[AsciiDoc] suite. Any changes made to the
-projects web site will be reflected in out +web.git+ repository:
+projects web site will be reflected in our +web.git+ repository:
 
 ----
 git clone http://git.lede-project.org/web.git
