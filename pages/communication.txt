@@ -19,7 +19,7 @@ its best to post updates link:https://twitter.com/lede_project[here]
 
 The project offers the following mailing lists
 
-. lede-dev - this list is used for submitting patches and general developement
+. lede-dev - this list is used for submitting patches and general development
   related work
 . lede-adm - this list is used for project organisational purposes. anyone can
   subscribe and read this list. Only committers may write to this list.
@@ -36,12 +36,12 @@ The project provides 2 IRC channels on freenode
 
 === Corporate Contact
 
-There is a special email address that companies wanting to colaborate with the
-project can contact commiters confidentially. These type of "first contact" only
-have the purpose of helping companies understand the mode of operations. Once the
+There is a special email address that companies wanting to collaborate with the
+project can use to contact committers confidentially. These types of "first contact"
+only have the purpose of helping companies understand the mode of operations. Once the
 intent is communicated, companies are invited to participate in the project just
 like any other community member. This means that engagement should be done in
 public. Ideally companies simply allow part of their R&D team to participate
-in the normal developement process as normal community members. There will be
+in the normal development process as normal community members. There will be
 no special treatment beyond the "first contact". Please see the project
 link:rules.html[rules] for further information.
