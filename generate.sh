@@ -7,5 +7,6 @@
 
 D="$(pwd)"
 
-mkdir -p "$D/html"
+mkdir -p "$D/html/docs"
 find "$D/pages/" -type f | xargs -L1 a2x -f xhtml -r "$D/" -a "toc!" -a "numbered!" -D "$D/html/"
+find "$D/docs/" -type f | xargs -L1 a2x -f xhtml -r "$D/" -a "toc!" -a "numbered!" -D "$D/html/docs/"
