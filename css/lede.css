@@ -61,7 +61,8 @@ h1 {
 }
 
 .menu ol li p a:hover,
-.menu ol li p a:active {
+.menu ol li p a:active,
+.menu ol li p a.active {
 	background: #527bbd;
 	color: #fff;
 }
