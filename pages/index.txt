@@ -9,12 +9,12 @@ strong focus on transparency, user collaboration and decentralised structures.
 
 LEDE's stated goals are:
 
-. Transparent decision processes with broad community participation and public
-  meetings
-. Only rely on decentralised infrastructure provided by free services and
-  volunteers while avoiding single points of failure to ensure maximum
-  availability of the software
-. Avoidance of developer hierarchies, "core members" and the like
+. Building a great embedded distribution with focus on stability and
+  functionality.
+. Having regular, predictable release cycles coupled with better testing
+  procedures.
+. Establishing transparent decision processes with broad community
+  participation and public meetings.
 
 === Name
 
