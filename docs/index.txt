@@ -1,6 +1,9 @@
-include::header.txt[]
+Documentation Index
+===================
 
-=== The Web Presence
+include::menu.inc[]
+
+== The Web Presence
 
 The documentation  you're reading is generated from text files using the
 http://www.methods.co.nz/asciidoc/[AsciiDoc] suite. Any changes made to the

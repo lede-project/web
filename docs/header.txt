@@ -1,5 +1,0 @@
-== image:../logo/logo_small.png[width="39"] Linux Embedded Developement Environment
-
-|====
-^| link:index.html[Index] ^| link:uci.html[Configuration] ^| link:ubus.html[uBus] ^| link:procd.html[Procd]
-|====

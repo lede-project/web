@@ -1,6 +1,9 @@
-include::header.txt[]
+LEDE Project Rules
+==================
 
-== LEDE Project Rules
+include::menu.inc[]
+
+== Current Rules
 
 . There is two roles in the project: committer and non-committer
 . Committers have the right to vote on general project decisions

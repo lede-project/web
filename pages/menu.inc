@@ -1,0 +1,8 @@
+[role="menu"]
+. link:index.html[About]
+. link:communication.html[Communication]
+. link:rules.html[Rules]
+. link:source.html[Source]
+. link:todo.html[Todo]
+. link:meetings.html[Meetings]
+. link:docs/index.html[Documentation]

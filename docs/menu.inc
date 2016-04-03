@@ -1,0 +1,5 @@
+[role="menu"]
+. link:index.html[Index]
+. link:uci.html[Configuration]
+. link:ubus.html[uBus]
+. link:procd.html[Procd]

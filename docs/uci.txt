@@ -1,4 +1,7 @@
-include::header.txt[]
+The UCI Configuration System
+============================
+
+include::menu.inc[]
 
 == UCI - Unified Configuration Interface
 

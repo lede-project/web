@@ -1,4 +1,7 @@
-include::header.txt[]
+Source Code Repositories
+========================
+
+include::menu.inc[]
 
 == The Source Code
 

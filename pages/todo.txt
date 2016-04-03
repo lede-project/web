@@ -1,4 +1,7 @@
-include::header.txt[]
+Project ToDos
+=============
+
+include::menu.inc[]
 
 == TODO List
 

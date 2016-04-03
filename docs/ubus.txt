@@ -1,4 +1,7 @@
-include::header.txt[]
+uBus IPC/RPC System
+===================
+
+include::menu.inc[]
 
 == uBus - IPC/RPC
 

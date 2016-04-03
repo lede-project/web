@@ -1,4 +1,7 @@
-include::header.txt[]
+Project Communication
+=====================
+
+include::menu.inc[]
 
 == Communication
 
