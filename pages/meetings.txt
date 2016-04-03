@@ -5,23 +5,9 @@ include::menu.inc[]
 
 == Next Meeting
 
-The next meeting will be held on Monday 4th April 2016 at 1pm CEST. The Agenda is as follows
+The next meeting will be held on Monday 5th April 2016 at 15:00 till 17:00 CEST.
 
-. Infrastructure
- * Progress report
-. Engagements
- * Communities
-  - When
-  - Who
-  - How
- * Companies
-  - When
-  - Who
-  - How
-. Roadmap
-. Votes
- * Agree/Refuse: Project rule revision (rewording + typos): http://piratepad.net/CEJ5YLNPTY
- * Agree/Refuse: Put logo + documentation under CC BY-SA 4.0 unported: http://creativecommons.org/licenses/by-sa/4.0/
+For the agenda of the upcoming meeting refer to http://piratepad.net/2kWeQi567r.
 
 == Meeting Logs
 
