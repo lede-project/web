@@ -22,8 +22,8 @@ LEDE's stated goals are:
 
 . Building a great embedded distribution with focus on stability and
   functionality.
-. Having regular, predictable release cycles coupled with better testing
-  procedures.
+. Having regular, predictable release cycles coupled with community provided
+  device testing feedback.
 . Establishing transparent decision processes with broad community
   participation and public meetings.
 
