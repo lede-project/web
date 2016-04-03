@@ -1,0 +1,68 @@
+html {
+	background: #aaa;
+}
+
+body.article {
+	max-width: 800px;
+	border: 1px solid #999;
+	border-width: 0 1px;
+	margin: auto;
+	padding: 10px;
+	background: #fff;
+}
+
+.image.left {
+	margin: 0 10px 0 0;
+	float: left;
+}
+
+h1 {
+	margin: 0.5em 0;
+}
+
+#footer-text {
+	float: none;
+	text-align: right;
+	padding: 0;
+	font-size: 0.8em;
+	color: #444;
+}
+
+.menu ol,
+.menu ol li,
+.menu ol li p {
+	padding: 0;
+	margin: 0;
+}
+
+.menu ol::after {
+	content: " ";
+	display: table;
+}
+
+.menu ol li {
+	border: 2px solid #527bbd;
+	border-right: none;
+	list-style: none;
+	float: left;
+}
+
+.menu ol li:last-child {
+	border-right: 2px solid #527bbd;
+}
+
+.menu ol li p a:link,
+.menu ol li p a:visited {
+	color: #527bbd;
+	font-size: 1.1em;
+	text-decoration: none;
+	display: block;
+	padding: 0 0.25em;
+}
+
+.menu ol li p a:hover,
+.menu ol li p a:active {
+	background: #527bbd;
+	color: #fff;
+}
+
