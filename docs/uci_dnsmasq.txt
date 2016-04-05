@@ -41,7 +41,7 @@ config 'dnsmasq'
 * Options "enable_tftp" and "tftp_root" turn on the TFTP server and serve files from tftp_root.  You may need to set the server's IP on the client.  On the client,  change it by setting "serverip" (e.g. "setenv serverip 192.168.1.10").
 
 === All Options
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Default | Option | Description 
 | 'add_local_domain' | boolean | '1' | | Add the local domain as search directive in resolv.conf. 
@@ -117,7 +117,7 @@ config 'dhcp' 'lan'
 
 Below is a listing of legal options for 'dhcp' sections.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'dhcp_option' | list of strings | no | _(none)_ | The ID dhcp_option here must be with written with an underscore. OpenWrt will translate this to --dhcp-option, with a hyphen, as ultimately used by dnsmasq. Multiple option values can be given for this _network-id_, with a a space between them and the total string between "". E.g. '26,1470' or 'option:mtu, 1470' that can assign an MTU per DHCP. Your client must accept MTU by DHCP for this to work. Or "3,192.168.1.1 6,192.168.1.1" to give out gateway and dns server addresses. 
@@ -163,7 +163,7 @@ config host
 ----
 This adds the fixed IP address 192.168.1.3 and the name "mylaptop" for a machine with the (Ethernet) hardware address 11:22:33:44:55:66 or aa:bb:cc:dd:ee:ff. Note that this is **unreliable** if more than one of the listed mac addresses is on the network simultaneously. It's useful for cases such as a laptop with both wireless and wired interfaces, provided that only one will be active at a given time.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'ip' | string | yes | _(none)_ | 'ignore' or the IP address to be used for this host. 
@@ -212,7 +212,7 @@ config boot linux
 	list   dhcp_option      'option:root-path,192.168.1.2:/data/netboot/root'
 ----
 This tells the client to load pxelinux.0 from the server at 192.168.1.2, and mount root from /data/netboot/root on the same server.
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'dhcp_option' | list of strings | no | _(none)_ | Additional options to be added for this network-id. CAUTION: If you specify this, you also need to specify the network-id. 
@@ -239,7 +239,7 @@ config _classifier_
 ----
 
 The placeholder '_classifier_' can be one of these values:
-[options="header"]
+[cols="1,4",options="header"]
 |====
 | Classifier | Description 
 | 'mac'  | Hardware address of the client 

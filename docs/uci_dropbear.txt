@@ -11,7 +11,7 @@ The 'dropbear' configuration contains settings for the dropbear SSH server in a 
 
 The 'dropbear' section contains these settings:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'enable' | boolean | no | 1 | Set to '0' to disable starting dropbear at system boot. 

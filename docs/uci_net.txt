@@ -1,12 +1,12 @@
 Network configuration
 =====================
 
-The central network configuration is located in the file '/etc/config/network'. This configuration file is responsible for defining _switch VLANs_, _interface configurations_ and _network routes_. After editing and saving '/etc/config/network' you need to execute ----
-/etc/init.d/network reload
----- to stop and restart the network before any changes take effect. Rebooting the router is not necessary.
+The central network configuration is located in the file '/etc/config/network'. This configuration file is responsible for defining _switch VLANs_, _interface configurations_ and _network routes_.
 
-* https:_dev.openwrt.org/browser/branches/attitude_adjustment/package/base-files/files/etc/config/network
-* https:_dev.openwrt.org/browser/trunk/package/base-files/files/etc/config/network
+After editing and saving '/etc/config/network' you need to execute '/etc/init.d/network reload' to stop and restart the network before any changes take effect. Rebooting the router is not necessary.
+
+ * https://dev.openwrt.org/browser/branches/attitude_adjustment/package/base-files/files/etc/config/network
+ * https://dev.openwrt.org/browser/trunk/package/base-files/files/etc/config/network
 
 Feel free to inform yourself about [[doc/techref/netifd|netifd]] (Network Interface Daemon).
 
@@ -20,7 +20,7 @@ CAUTION: The globals section is available in Barrier Breaker and later releases.
 
 The 'globals' section contains interface-independent options affecting the network configuration in general.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'ula_prefix' | IPv6-prefix | no | _(none)_ | IPv6 [[wp>Unique local address|ULA]]-Prefix for this device 
@@ -95,7 +95,7 @@ CAUTION: The system limits the interface name length to 15 characters including 
 
 The _interface protocol_ may be one of the following:
 
-[options="header"]
+[cols="1,4,2",options="header"]
 |====
 | Protocol | Description | Program 
 | 'static' | Static configuration with fixed address and netmask |  'ip'/'ifconfig'  
@@ -131,7 +131,7 @@ CAUTION: In openwrt 12.09, if an interface section has no protocol defined (not 
 
 === Options valid for all protocol types ===
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'ifname' | interface name(s) | yes(*) | _(none)_ | Physical interface name to assign to this section, list of interfaces if type bridge is set. _(*) This option may be empty or missing if only a wireless interface references this network or if the protocol type is 'pptp', 'pppoa' or '6in4'_ 
@@ -153,7 +153,7 @@ CAUTION: In openwrt 12.09, if an interface section has no protocol defined (not 
 
 === Protocol "static" ===
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'ipaddr' | ip address | yes, if no 'ip6addr' is set. | _(none)_ | IP address. [openwrt 12.09] It could be a list of ipaddr , that is: several ipaddresses will be assigned to the interface. If, instead of a list, several ipaddr are specified as options, only the last is applied. 
@@ -174,7 +174,7 @@ CAUTION: In openwrt 12.09, if an interface section has no protocol defined (not 
 
 === Protocol "dhcp" ===
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | '[line-through]*gateway*' | [line-through]*string* | [line-through]*no* | [line-through]*_(none)_* | [line-through]*Suppresses DHCP-assigned default gateway if set to 0.0.0.0* 
@@ -237,7 +237,7 @@ Both default routes set up by wan and wan2 will appear in the routing table.
 
 CAUTION: The package 'odhcp6c' must be installed to use dhcpv6.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'reqaddress' | [try,force,none] | no | try | Behaviour for requesting addresses 
@@ -260,7 +260,7 @@ CAUTION: The package 'odhcp6c' must be installed to use dhcpv6.
 
 CAUTION: The package 'ppp' must be installed to use PPP.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'device' | file path | yes | _(none)_ | Modem device node 
@@ -286,7 +286,7 @@ opkg update
 opkg install ppp kmod-pppoe ppp-mod-pppoe
 ----
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'username' | string | no(?) | _(none)_ | Username for PAP/CHAP authentication 
@@ -308,7 +308,7 @@ opkg install ppp kmod-pppoe ppp-mod-pppoe
 
 CAUTION: The package 'ppp-mod-pppoa' must be installed to use PPPoA.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'vci' | number | no | '35' | PPPoA VCI 
@@ -334,7 +334,7 @@ CAUTION: The package 'ppp-mod-pppoa' must be installed to use PPPoA.
 CAUTION: The package 'comgt' must be installed to use 3G. Check [[doc:recipes:3gdongle]] for further help with that.
 
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'device' | file path | yes | _(none)_ | Modem device node 
@@ -358,7 +358,7 @@ CAUTION: The package 'comgt' must be installed to use 3G. Check [[doc:recipes:3g
 
 CAUTION: The package 'uqmi' must be installed to use QMI.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'device' | file path | yes | _(none)_ | QMI device node, typically /dev/cdc-wdm0 
@@ -375,7 +375,7 @@ CAUTION: The package 'uqmi' must be installed to use QMI.
 
 CAUTION: The package 'comgt-ncm' + modem specific driver must be installed to use NCM.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'device' | file path | yes | _(none)_ | NCM device node, typically /dev/cdc-wdm0 or /dev/ttyUSB# 
@@ -393,7 +393,7 @@ CAUTION: The package 'comgt-ncm' + modem specific driver must be installed to us
 
 CAUTION: The package 'wwan' must be installed to use this feature. The "wwan" protocol detects the right protocol (3G/QMI/NCM/MBIM) for the USB Modem model and passes the configuration to the protocol.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'apn' | string | yes | _(none)_ | Used APN 
@@ -410,7 +410,7 @@ CAUTION: The package 'wwan' must be installed to use this feature. The "wwan" pr
 CAUTION: The package 'hnet-full' must be installed to use hnet.
 CAUTION: See http:_tools.ietf.org/html/draft-ietf-homenet-hncp for details.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'mode' | string | no | auto | Interface mode. One of external, guest, adhoc or hybrid. 
@@ -423,7 +423,7 @@ CAUTION: See http:_tools.ietf.org/html/draft-ietf-homenet-hncp for details.
 
 CAUTION: The package 'pptp' must be installed to use PPtP. There is a separate Howto for this: [[doc:howto:vpn.client.pptp]]. You need to have another section to configure the "parent" device, and you might need to add "<vpn>" to your "wan" zone in the firewall (<vpn> being the "logical interface name" of this section).
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'server' | ip address | yes | _(none)_ | Remote PPtP server 
@@ -441,7 +441,7 @@ CAUTION: The package 'pptp' must be installed to use PPtP. There is a separate H
 
 CAUTION: The package '6in4' must be installed to use this protocol.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'ipaddr' | IPv4 address | no | Current WAN IPv4 address | Local IPv4 endpoint address 
@@ -474,7 +474,7 @@ CAUTION: The package 'aiccu' must be installed to use this protocol. This utilit
 
 CAUTION: This protocol is available for Barrier Breaker and newer versions only.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'username' | string | yes | _(none)_ | Server username 
@@ -500,7 +500,7 @@ CAUTION: This protocol is available for Barrier Breaker and newer versions only.
 
 CAUTION: The package '6to4' must be installed to use this protocol.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'ipaddr' | IPv4 address | no | Current WAN IPv4 address | Local IPv4 endpoint address 
@@ -525,7 +525,7 @@ CAUTION: The package '6rd' must be installed to use this protocol.
 
 CAUTION: The needed tunnel values are usually obtained via the DHCPv4 request for the WAN interface. Try that [[doc/uci/network6#rd_tunnel_isp-provided_ipv6_transition|first]]. Below is only needed for hardcoding the tunnel.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'peeraddr' | IPv4 address | yes | no | 6rd - Gateway  
@@ -548,7 +548,7 @@ CAUTION: The needed tunnel values are usually obtained via the DHCPv4 request fo
 
 CAUTION: The package 'ds-lite' must be installed to use this protocol.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'peeraddr' | IPv6 address | yes | no | DS-Lite AFTR address  
@@ -570,7 +570,7 @@ CAUTION: The package 'xl2tpd' must be installed to use this protocol.
 
 Most options are similar to protocol "ppp".
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'server' | string | yes | _(none)_ | L2TP server to connect to.  Acceptable datatypes are hostname or IP address, with optional port separated by colon ':'.  Note that specifying port is only supported recently and should appear in DD release 
@@ -589,7 +589,7 @@ The name of the physical interface will be "l2tp-<logical interface name>".
 
 CAUTION: The package 'relayd' must be installed to use this protocol.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'network' | list of _logical interface names_ | yes | _(none)_ | Specifies the networks between which traffic is relayed 
@@ -611,7 +611,7 @@ The name of the GRE interface will be 'gre-<logical interface name>' for "gre" a
 
 All four protocols accept the following common options:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'mtu' | integer | no | 1280 | MTU 
@@ -631,7 +631,7 @@ All four protocols accept the following common options:
 
 The following options are supported, in addition to all common options above:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'ipaddr' | IPv4 address | no | WAN IP | Local endpoint 
@@ -643,7 +643,7 @@ The following options are supported, in addition to all common options above:
 
 The following options are supported, in addition to all common options above:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'ipaddr' | IPv4 address | no | WAN IP | Local endpoint 
@@ -656,7 +656,7 @@ The following options are supported, in addition to all common options above:
 
 The following options are supported, in addition to all common options above:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'ip6addr' | IPv6 address | no | WAN IP | Local endpoint 
@@ -668,7 +668,7 @@ The following options are supported, in addition to all common options above:
 
 The following options are supported, in addition to all common options above:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'ip6addr' | IPv6 address | no | WAN IP | Local endpoint 
@@ -683,7 +683,7 @@ The following options are supported, in addition to all common options above:
 
 VTI Tunnels are IPsec policies with a fwmark set. The traffic is redirected to the matching VTI interface.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'ipaddr' | IPv4 address | no | WAN IP | Local endpoint 
@@ -699,7 +699,7 @@ VTI Tunnels are IPsec policies with a fwmark set. The traffic is redirected to t
 
 The following options are supported, in addition to all common options above:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'ip6addr' | IPv6 address | no | WAN IP | Local endpoint 
@@ -725,7 +725,7 @@ config device 'eth0.106'
 VLAN Interfaces may be configured also. If not, they are created on the fly by netifd. Defining VLANs gives more options.
 The following options are supported:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'type' | VLAN Type | no | 802.1q | VLAN type, possible values: 8021q or 8021ad 
@@ -757,7 +757,7 @@ config atm-bridge
 
 The 'atm-bridge' section allows the following options:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'unit' | number | yes | '0' | Specifies the br2684 interface number. If ommitted, '0' is assumed which would result in a 'nas0' pseudo interface. 
@@ -783,7 +783,7 @@ config vdsl 'dsl'
 
 The 'dsl' section allows the following options:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'annex' | string | yes | 'b' | Specifies the Annex setting (ISP/line dependent). Supported values on lantiq AMAZON and DANUBE devices: b, bdmt, b2, b2p, a, at1, alite, admt, a2, a2p, l, m, m2, m2p. Supported values on lantiq ARX100 "AR9" and VRX200 "VR9" devices: a, b, j
@@ -879,7 +879,7 @@ config 'route' 'name_your_route'
 
 Legal options for _IPv4 routes_ are:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'interface' | string | yes | _(none)_ | Specifies the _logical interface name_ of the parent (or master) interface this route belongs to; must refer to one of the defined 'interface' sections 
@@ -921,7 +921,7 @@ config 'route6'
 
 Legal options for _IPv6 routes_ are:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'interface' | string | yes | _(none)_ | Specifies the _logical interface name_ of the parent (or master) interface this route belongs to; must refer to one of the defined 'interface' sections 
@@ -937,7 +937,7 @@ Legal options for _IPv6 routes_ are:
 
 === Routing Types ===
 
-[options="header"]
+[cols="1,4",options="header"]
 |====
 | Type | Description 
 | 'unicast' | the route entry describes real paths to the destinations covered by the route prefix. 
@@ -986,7 +986,7 @@ config rule6
 
 The options below are defined for _IP rule_ ('rule' and 'rule6') sections:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'in' | string | no | _(none)_ | Specifies the incoming _logical interface name_ 
@@ -1004,7 +1004,7 @@ The options below are defined for _IP rule_ ('rule' and 'rule6') sections:
 
 === Routing Actions ===
 
-[options="header"]
+[cols="1,4",options="header"]
 |====
 | Action | Description 
 | 'prohibit' | When reaching the rule, respond with _ICMP prohibited_ messages and abort route lookup 

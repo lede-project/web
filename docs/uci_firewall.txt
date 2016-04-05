@@ -27,7 +27,7 @@ A minimal firewall configuration for a router usually consists of one _defaults_
 The 'defaults' section declares global firewall settings which do not belong to specific zones.
 The following options are defined within this section:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'input' | string | no | 'REJECT' | Set policy for the 'INPUT' chain of the 'filter' table. 
@@ -58,7 +58,7 @@ A 'zone' section groups one or more _interfaces_ and serves as a _source_ or _de
 
 The options below are defined within 'zone' sections:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'name' | zone name | yes | _(none)_ | Unique zone name. 11 characters is the maximum working firewall zone name length. 
@@ -87,7 +87,7 @@ The 'forwarding' sections control the traffic flow between _zones_ and may enabl
 
 Below is a listing of allowed option within _forwardings_:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'src' | zone name | yes | _(none)_ | Specifies the traffic _source zone_. Must refer to one of the defined _zone names_ 
@@ -109,7 +109,7 @@ Port ranges are specified as 'start:stop', for instance '6666:6670'.  This is si
 
 The options below are valid for _redirects_:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'src' | zone name | yes for 'DNAT' target | _(none)_ | Specifies the traffic _source zone_. Must refer to one of the defined _zone names_. For typical port forwards this usually is 'wan' 
@@ -159,7 +159,7 @@ Port ranges are specified as 'start:stop', for instance '6666:6670'. This is sim
 
 Valid options for this section are:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'src' | zone name | yes (CAUTION: optional since Firewall v2, version 58 and above) | _(none)_ | Specifies the traffic _source zone_. Must refer to one of the defined _zone names_. 
@@ -212,7 +212,7 @@ It is possible to include custom firewall scripts by specifying one or more 'inc
 
 There is only one possible parameter for _includes_:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'enabled' | boolean | no | '1' | Allows to disable the corresponding include without having to delete the section 
@@ -234,7 +234,7 @@ huge address or port lists without the need for creating one rule per item to ma
 
 The following options are defined for _ipsets_:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'enabled' | boolean | no | '1' | Allows to disable the declaration fo the ipset without the need to delete the section. 

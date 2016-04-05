@@ -17,7 +17,7 @@ config 'system'
 
 These options can be set in the system section:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'hostname' | string | no | 'OpenWrt' | The hostname for this system. Avoid points, even if they are within single7double quotes. For example ' 'my.hostname' ' will show only the ' 'my' ' part 
@@ -60,7 +60,7 @@ config 'timeserver' 'ntp'
 
 There are at least two valid option defined for the 'timeserver' 'ntp' section:
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'server'        | list of hostnames | no | _(none)_ | Defines the pool of NTP servers to poll the time from. If the list is empty, the builtin NTP daemon is not started. 
@@ -108,7 +108,7 @@ opkg install kmod-ledtrig-morse --force-depends
 
 The LED is always in default state. Unlisted LED are default OFF, so this is only useful to declare a LED to be always ON.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
@@ -123,7 +123,7 @@ The LED blinks with the configured on/off frequency.
 opkg install kmod-ledtrig-timer
 ----
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
@@ -140,7 +140,7 @@ The LED is ON. Deprecated, use default=1 trigger=none instead.
 opkg install kmod-ledtrig-default-on
 ----
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
@@ -154,7 +154,7 @@ The LED flashes to simulate actual heart beat _thump-thump-pause_. The frequency
 ----
 opkg install kmod-ledtrig-heartbeat
 ----
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
@@ -168,7 +168,7 @@ Note:_to test the heartbeat take a look at [[doc:howto:snippets#generate.100.cpu
 
 The LED flashes as data is written to flash memory.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
@@ -183,7 +183,7 @@ The LED flashes with link status and/or send and receive activity on the configu
 opkg install kmod-ledtrig-netdev
 ----
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
@@ -202,7 +202,7 @@ triggers have more events, it also provides possibility of static LED setup in c
 radio ('phy0' usually) and 5 GHz radio ('phy1' usually) separately. 'netdev' can't guarantee this distinguishing
 since 'wlan0' may be referring to 2.4 GHz or 5 GHz radio based on current network setup.
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
@@ -223,7 +223,7 @@ The LED turns ON if USB device is connected.
 opkg install kmod-ledtrig-usbdev
 ----
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
@@ -244,7 +244,7 @@ Requires the kmod-ledtrig-morse package. UCI configuration was added in revision
 opkg install kmod-ledtrig-morse
 ----
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
@@ -264,7 +264,7 @@ Allows LEDs to be controlled by gpio events.
 opkg install kmod-ledtrig-gpio
 ----
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
@@ -289,7 +289,7 @@ opkg install kmod-ledtrig-netfilter
 ----
 
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description 
 | 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
