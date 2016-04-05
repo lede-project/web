@@ -5,19 +5,44 @@ include::menu.inc[]
 
 == Current Rules
 
-. There is two roles in the project: committer and non-committer
-. Committers have the right to vote on general project decisions
-. General project questions are decided with a simple majority vote
-. Committers being unreachable for three months in a row loose their commit
-  and voting rights
-. Commit means full commit. there is no partial or restricted commit.
-. Frequent contributors may become committers when a simple majority among
-  existing committers agrees
-. Votes and decisions will be made public
-. Infrastructure should be outsourced where possible
-. Any Infrastructure that cannot be outsourced needs to be accessible
-  by at elast 3 people.
-. the project does not offer email accounts under the project domain
-  (apart from abuse, admin, ...)
+. The only role distinction within the _LEDE_ project is between committers
+  and non-committers, there is no core developer group or other specially
+  privileged members.
+. All committers have the right to vote and are invited to liberally exercise
+  this voting right in order to keep a broad consensus on project matters.
+. Project matters, overall development directions etc. are decided by simple
+  majority votes. Votes may be held in different ways like simple yes/no
+  decisions, majority decisions among multiple proposed choices etc.
+. Committers being unreachable for three months in a row shall get their
+  commit and voting rights revoked in order to retain the ability to do
+  majority votes among the remaining active committers.
+. There shall be only full commit rights in any case, no partial access or
+  otherwise restricted access to the repositories.
+. Frequent contributors may become committers after a simple majority
+  agreement among existing committers. Project members are free to suggest
+  suitable people.
+. Any votes and decisions made will be made public on the project websites.
+. Project infrastructure should be outsourced FOSS community operated
+  services whenever possible in order to allow project members to focus on
+  actual development efforts.
+. Any infrastructure that cannot be outsourced and/or is operated by the
+  project itself shall be administrable by at least three different people
+  to reduce the likelyhood of the project getting locked out due to operators
+  being unreachable. Responsible operators for the various services shall be
+  documented publicly.
+. The project will not offer email accounts under its project domain for
+  privacy and equality reasons.
 . Changes to these rules require a two third majority among the committers
-  holding voting rights and shall be documented
+  holding voting rights and shall be documented.
+
+=== Changes to these rules ===
+
+==== Tue, 5 Apr 2016
+Changed wording of the rules and removed typos. Extended infrastructure
+rule to emphasize the FOSS character of used hosting services, added
+requirement of documented responsibilities.
+http://meetings.lede-project.org/lede-adm/2016/lede-adm.2016-04-05-12.59.html[Agreed upon]
+by 6 of 6 attending and 6 of 8 total people.
+
+==== Thu, 24 Mar 2016
+Initial draft, http://meetings.lede-project.org/lede-adm/2016/lede-adm.2016-03-30-11.05.html[agreed upon by 6 of 6 attending people].
