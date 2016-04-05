@@ -1,0 +1,749 @@
+System configuration
+====================
+
+== Sections
+
+The 'system' configuration contains basic settings for the whole router. Larger subsystems such as the network configuration, the DHCP and DNS server, and similar, have their own configuration file.
+
+=== System
+
+The 'system' section contains settings that apply to the most basic operation of the system, such as the hostname, the time zone, and how and where to write logging information to. OpenWRT creates these default settings:
+
+----
+config 'system'
+	option 'hostname'	'OpenWrt'
+	option 'timezone'	'UTC'
+----
+
+These options can be set in the system section:
+
+[options="header"]
+|====
+| Name | Type | Required | Default | Description 
+| 'hostname' | string | no | 'OpenWrt' | The hostname for this system. Avoid points, even if they are within single7double quotes. For example ' 'my.hostname' ' will show only the ' 'my' ' part 
+| 'buffersize' | integer | no | kernel specific | Size of the kernel message buffer. 
+| 'conloglevel' | integer | no | '7' | Number between 1-8. The maximum log level for kernel messages to be logged to the console. Only messages with a level lower than this will be printed to the console. Higher level messages have lower log level number. Highest level messages are ones with log level 0. If you want more verbous messages in console put conloglevel to 8 if you want less messages lower conloglevel to 4 or even less.
+| 'cronloglevel' | integer | no | '5' | The minimul level for cron messages to be logged to syslog. '0' will print all debug messages, '8' will log command executions, and '9' or higher will only log error messages. 
+| 'klogconloglevel' | integer | no | '7' | The maximum log level for kernel messages to be logged to the console. Only messages with a level lower than this will be printed to the console. Identical to 'conloglevel' and will override it. 
+| 'log_buffer_size' | integer | no | 16 | Size of the log buffer of the "new" procd based system log, that is output by the  _logread_ command. Tried 32 kB, more should be possible. 
+| 'log_file' | string | no | no log file | File to write log messages to (type 'file'). The default is to not write a log in a file. The most often used location for a system log file is '/var/log/messages'.
+| 'log_ip' | IP address | no | _(none)_ | IP address of a syslog server to which the log messages should be sent in addition to the local destination. 
+| 'log_port' | integer | no | '514' | Port number of the remote syslog server specified with 'log_ip'. 
+| 'log_prefix' | string | no |_(none)_| Adds a prefix to all log messages send over network. 
+| 'log_proto' | string | no | 'udp'| Sets the protocol to use for the connection, either 'tcp' or 'udp'. 
+| 'log_remote' | bool | no | '1' | Enables remote logging. 
+| 'log_size' | integer | no | '16' | Size of the file or circular memory buffer in KiB. 
+| 'log_trailer_null' | bool | no | '0' | Use \0 instead of \n as trailer when using TCP. 
+| 'log_type' | string | no | 'circular' | Either 'circular' or 'file'. 
+| 'timezone' | string | no | 'UTC' | The time zone that date and time should be rendered in by default. 
+| 'zonename' | string | no | 'UTC' | Only useful when using eglibc and zoneinfo! ('LIBC_USE_EGLIBC', 'PACKAGE_zoneinfo-*') The time zone that date and time should be rendered in by default. Suppose you want to use Brussels' timezone, set this value to 'Europe/Brussels'. Possible values can be found by running '(cd /usr/share/zoneinfo; find *)' 
+|====
+
+* WARNING:  If you want to change 'hostname' instead of _localhost.localdomain_ in remote syslog, you have to add -h <hostname> parameter in /etc/init.d/log start parameters. It should be read from system config, but it's not (yet) - remove after fix.
+* WARNING:  There should be tcp/udp field in LuCI syslog settings. Now it's hard to tell if OpenWRT supports TCP syslog.
+
+=== Remote Time (ntp)
+
+| {{:meta:icons:tango:48px-outdated.svg.png?nolink}}  | In '/etc/config/system' 'busybox-rdate' (was invoked by scripts) has been replaced with 'busybox-nptd' (can run as a daemon) to avoid race condition and also to use current NTP. The remote time is since configured in '/etc/config/system' and not in '/etc/config/timeserver' any longer. 
+
+* WARNING:  Old scripts first checked if a lease time server is defined for the interface in the [[doc:uci:network|network config]].
+* WARNING:  If not available or syncing fails, then it searches for time servers in the [[doc:uci:timeserver|timeserver config]] that are either explicitly defined for that interface or via the global setting in the system config.
+
+----
+config 'timeserver' 'ntp'
+	list 'server'     '0.openwrt.pool.ntp.org'
+	list 'server'     '1.openwrt.pool.ntp.org'
+	list 'server'     '2.openwrt.pool.ntp.org'
+	list 'server'     '3.openwrt.pool.ntp.org'
+	option enable_server 0
+----
+
+There are at least two valid option defined for the 'timeserver' 'ntp' section:
+
+[options="header"]
+|====
+| Name | Type | Required | Default | Description 
+| 'server'        | list of hostnames | no | _(none)_ | Defines the pool of NTP servers to poll the time from. If the list is empty, the builtin NTP daemon is not started. 
+| 'enable_server' | boolean           | no |  0  | You can put busybox-ntpd in\\ client mode only: by defining at least one host to 'server' and puting 'enable_server' 0 \\ client & server mode: by putting 'enable_server' to 1, (busybox-ntpd listens to UDP 123 by default),\\ server mode only: by not defining any servers in the config and just put 'enable_server' 1 (ntpd will answer with the time of the router) 
+|====
+
+TODO: I've replaced "config_foreach getpeers timeserver" with "config_get peers ntp server" because we want ntp timeserver, not random ones (to pre-answer if someone want to say that it's intrusive ...)
+
+
+If the above configuration is missing in the file '/etc/config/system' (or faulty), busybox-nptd will not be started! You can manually invoke it by e.g.
+
+----
+ntpd -q -p openwrt.pool.ntp.org
+----
+
+
+=== Leds 
+
+OpenWRT supports using the router's LEDs to give feedback about its status. Which LEDs are available to be controlled through OpenWRT depends on the specific router model.
+
+LEDs are represented by entries in the 'sys' filesystem. You can check which LEDs are available in the '/sys/class/leds' directory. The name of an entry typically consists of the name of the hardware providing the LED (the router model), the color of the LED, and it's designation (usually the label on the case). Some LEDs can show different colors. In this case, you will find one entry per color.
+
+The LED can be controlled by various events in the system, which is selected by the 'trigger' option. Depending on the trigger, additional options must be specified.
+
+First of all, you need to know which triggers are available for a led, to do that simply look at 'trigger' file of that led. Example:
+
+----
+cat /sys/class/leds/**LED**/trigger
+[none] timer default-on netdev morse usbdev
+----
+----
+opkg list-installed kmod-ledtrig*
+opkg list kmod-ledtrig*
+----
+
+To allow more triggers it's necessary to build your own OpenWRT or install some packages (like ledtrig-morse).
+
+If you build your own OpenWrt and try to install any kmod-* package from OpenWrt repository, it will fail. In this case is safe to force install:
+----
+opkg install kmod-ledtrig-morse --force-depends
+----
+
+
+=== None ===
+
+The LED is always in default state. Unlisted LED are default OFF, so this is only useful to declare a LED to be always ON.
+
+[options="header"]
+|====
+| Name | Type | Required | Default | Description 
+| 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
+| 'sysfs' | string | yes | _(none)_ | LED device name 
+| 'trigger' | string | yes | _(none)_ | 'none' 
+|====
+
+=== Timer ===
+
+The LED blinks with the configured on/off frequency.
+----
+opkg install kmod-ledtrig-timer
+----
+
+[options="header"]
+|====
+| Name | Type | Required | Default | Description 
+| 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
+| 'delayoff' | integer | yes | _(none)_ | How long (in milliseconds) the LED should be off. 
+| 'delayon' | integer | yes | _(none)_ | How long (in milliseconds) the LED should be on. 
+| 'sysfs' | string | yes | _(none)_ | LED device name 
+| 'trigger' | string | yes | _(none)_ | 'timer' 
+|====
+
+=== Default-on ===
+
+The LED is ON. Deprecated, use default=1 trigger=none instead.
+----
+opkg install kmod-ledtrig-default-on
+----
+
+[options="header"]
+|====
+| Name | Type | Required | Default | Description 
+| 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
+| 'sysfs' | string | yes | _(none)_ | LED device name 
+| 'trigger' | string | yes | _(none)_ | 'default-on' 
+|====
+
+=== Heartbeat ===
+
+The LED flashes to simulate actual heart beat _thump-thump-pause_. The frequency is in direct proportion to 1-minute average CPU load.
+----
+opkg install kmod-ledtrig-heartbeat
+----
+[options="header"]
+|====
+| Name | Type | Required | Default | Description 
+| 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
+| 'sysfs' | string | yes | _(none)_ | LED device name 
+| 'trigger' | string | yes | _(none)_ | 'heartbeat' 
+|====
+
+Note:_to test the heartbeat take a look at [[doc:howto:snippets#generate.100.cpu.load|snippets]]._
+
+=== Flash Writes ===
+
+The LED flashes as data is written to flash memory.
+
+[options="header"]
+|====
+| Name | Type | Required | Default | Description 
+| 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
+| 'sysfs' | string | yes | _(none)_ | LED device name 
+| 'trigger' | string | yes | _(none)_ | 'nand-disk' 
+|====
+
+=== Network Activity ===
+
+The LED flashes with link status and/or send and receive activity on the configured interface.
+----
+opkg install kmod-ledtrig-netdev
+----
+
+[options="header"]
+|====
+| Name | Type | Required | Default | Description 
+| 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
+| 'dev' | string | yes | _(none)_ | Name of the network interface which status should be reflected 
+| 'mode' | string | yes | _(none)_ | One or more of 'link', 'tx', or 'rx', seperated by spaces 
+| 'sysfs' | string | yes | _(none)_ | LED device name 
+| 'trigger' | string | yes | _(none)_ | 'netdev' 
+|====
+
+=== WiFi Activity ===
+
+WARNING:  this subsection requires expert's review.
+
+The LED flashes on events triggered in physical interface, rather than in software network interface. Besides 'phy'
+triggers have more events, it also provides possibility of static LED setup in case you want to monitor your 2.4 GHz
+radio ('phy0' usually) and 5 GHz radio ('phy1' usually) separately. 'netdev' can't guarantee this distinguishing
+since 'wlan0' may be referring to 2.4 GHz or 5 GHz radio based on current network setup.
+
+[options="header"]
+|====
+| Name | Type | Required | Default | Description 
+| 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
+| 'sysfs' | string | yes | _(none)_ | LED device name 
+| 'trigger' | string | yes | _(none)_ | 'phy0rx', 'phy0tx', 'phy0assoc', 'phy0radio' or 'phy0tpt' 
+|====
+
+* **phy0rx** - flashes on reception.
+* **phy0tx** - flashes on transmission.
+* **phy0assoc** - flashes on client association.
+* **phy0radio** - (WARNING:  hard to say what this is supposed to do; this option did nothing on my tl-wr1043nd with Backfire 10.03.1, r29592 and Attitude Adjustment r32793)
+* **phy0tpt** - flashes slowly and steadily on network activity.((in comparison to energetic flashes of tx and rx modes))
+
+=== USB Device ===
+
+The LED turns ON if USB device is connected.
+----
+opkg install kmod-ledtrig-usbdev
+----
+
+[options="header"]
+|====
+| Name | Type | Required | Default | Description 
+| 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
+| 'dev' | string | yes | _(none)_ | Name of USB device to monitor (in this example '1-1'). 
+| 'interval' | integer | yes | _(none)_ | Interval in ms when device is active. 
+| 'sysfs' | string | yes | _(none)_ | LED device name 
+| 'trigger' | string | yes | _(none)_ | 'usbdev' 
+|====
+
+To find out device name use 'logread' to search for it or list '/sys/bus/usb/devices' (for this example, there would be '/sys/bus/usb/devices/1-1' device).
+
+=== Morse Code ===
+
+The LED signals a message using Morse code.
+
+Requires the kmod-ledtrig-morse package. UCI configuration was added in revision r34380.
+----
+opkg install kmod-ledtrig-morse
+----
+
+[options="header"]
+|====
+| Name | Type | Required | Default | Description 
+| 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
+| 'delay' | integer | no | 150 | Dit length in milliseconds 
+| 'dev' | string | yes | _(none)_ | Name of USB device to monitor (in this example '1-1'). 
+| 'message' | string | no | _(none)_ | The message to signal 
+| 'sysfs' | string | yes | _(none)_ | LED device name 
+| 'trigger' | string | yes | _(none)_ | 'morse' 
+|====
+
+If you don't have a recent enough version, you can set trigger to "morse" and control the behavior by writing to the 'message' and 'delay' files in '/sys/class/leds/<name>'.
+
+=== GPIO ===
+
+Allows LEDs to be controlled by gpio events.
+----
+opkg install kmod-ledtrig-gpio
+----
+
+[options="header"]
+|====
+| Name | Type | Required | Default | Description 
+| 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
+|====
+WARNING: 
+
+=== Net filter ===
+
+Flash LED when a particular packets passing through your machine.
+
+For example to create an LED trigger for incoming SSH traffic:
+----
+iptables -A INPUT -p tcp --dport 22 -j LED --led-trigger-id ssh --led-delay 1000
+----
+Then attach the new trigger to an LED on your system:
+----
+echo netfilter-ssh > /sys/class/leds/<ledname>/trigger
+----
+
+----
+opkg install kmod-ledtrig-netfilter
+----
+
+
+[options="header"]
+|====
+| Name | Type | Required | Default | Description 
+| 'default' | integer | no | 0 | LED state before trigger: '0' means OFF and '1' means ON 
+|====
+WARNING: 
+
+== Examples
+
+Please remember to change the 'sysfs' option to LEDs that are actually present on your router. This can be done easily through LuCI. You may find some other examples in [[doc:howto:snippets#ipv6.activity.led|snippets]]. Following examples are from '/etc/config/system' file:
+
+=== Heartbeat led
+
+----
+config 'led'
+	option 'sysfs'		'wrt160nl:amber:wps'
+	option 'trigger'	'heartbeat'
+----
+
+=== WLAN led
+
+----
+config 'led' 'wlan_led'
+	option 'name'           'WLAN'
+	option 'sysfs'          'tl-wr1043nd:green:wlan'
+	option 'trigger'        'netdev'
+	option 'dev'            'wlan0'
+	option 'mode'           'link tx rx'
+----
+
+=== 3G led
+
+The 3G LED lits up in blue when an USB-dongle properly registers with the 3G/EDGE/GPRS network. Tested on Asus's WL-330N3G router.
+
+----
+config 'led'
+	option 'name'           '3G'
+	option 'sysfs'          'asus:blue:3g'
+	option 'trigger'        'netdev'
+	option 'dev'            '3g-wan'
+	option 'mode'           'link'
+----
+
+=== Timer led - 500ms ON, 2000ms OFF
+
+----
+config 'led'
+	option 'sysfs'		'wrt160nl:blue:wps'
+	option 'trigger'	'timer'
+	option 'delayon'	'500'
+	option 'delayoff'	'2000'
+----
+
+
+
+== Time Zones
+
+[options="header"]
+|====
+| Location | TZ string 
+| Africa/Abidjan | GMT0 
+| Africa/Accra | GMT0 
+| Africa/Addis Ababa | EAT-3 
+| Africa/Algiers | CET-1 
+| Africa/Asmara | EAT-3 
+| Africa/Bamako | GMT0 
+| Africa/Bangui | WAT-1 
+| Africa/Banjul | GMT0 
+| Africa/Bissau | GMT0 
+| Africa/Blantyre | CAT-2 
+| Africa/Brazzaville | WAT-1 
+| Africa/Bujumbura | CAT-2 
+| Africa/Casablanca | WET0 
+| Africa/Ceuta | CET-1CEST,M3.5.0,M10.5.0/3 
+| Africa/Conakry | GMT0 
+| Africa/Dakar | GMT0 
+| Africa/Dar es Salaam | EAT-3 
+| Africa/Djibouti | EAT-3 
+| Africa/Douala | WAT-1 
+| Africa/El Aaiun | WET0 
+| Africa/Freetown | GMT0 
+| Africa/Gaborone | CAT-2 
+| Africa/Harare | CAT-2 
+| Africa/Johannesburg | SAST-2 
+| Africa/Kampala | EAT-3 
+| Africa/Khartoum | EAT-3 
+| Africa/Kigali | CAT-2 
+| Africa/Kinshasa | WAT-1 
+| Africa/Lagos | WAT-1 
+| Africa/Libreville | WAT-1 
+| Africa/Lome | GMT0 
+| Africa/Luanda | WAT-1 
+| Africa/Lubumbashi | CAT-2 
+| Africa/Lusaka | CAT-2 
+| Africa/Malabo | WAT-1 
+| Africa/Maputo | CAT-2 
+| Africa/Maseru | SAST-2 
+| Africa/Mbabane | SAST-2 
+| Africa/Mogadishu | EAT-3 
+| Africa/Monrovia | GMT0 
+| Africa/Nairobi | EAT-3 
+| Africa/Ndjamena | WAT-1 
+| Africa/Niamey | WAT-1 
+| Africa/Nouakchott | GMT0 
+| Africa/Ouagadougou | GMT0 
+| Africa/Porto-Novo | WAT-1 
+| Africa/Sao Tome | GMT0 
+| Africa/Tripoli | EET-2 
+| Africa/Tunis | CET-1 
+| Africa/Windhoek | WAT-1WAST,M9.1.0,M4.1.0 
+| America/Adak | HAST10HADT,M3.2.0,M11.1.0 
+| America/Anchorage | AKST9AKDT,M3.2.0,M11.1.0 
+| America/Anguilla | AST4 
+| America/Antigua | AST4 
+| America/Araguaina | BRT3 
+| America/Argentina/Buenos Aires | ART3 
+| America/Argentina/Catamarca | ART3 
+| America/Argentina/Cordoba | ART3 
+| America/Argentina/Jujuy | ART3 
+| America/Argentina/La Rioja | ART3 
+| America/Argentina/Mendoza | ART3 
+| America/Argentina/Rio Gallegos | ART3 
+| America/Argentina/Salta | ART3 
+| America/Argentina/San Juan | ART3 
+| America/Argentina/Tucuman | ART3 
+| America/Argentina/Ushuaia | ART3 
+| America/Aruba | AST4 
+| America/Asuncion | PYT4PYST,M10.1.0/0,M4.2.0/0 
+| America/Atikokan | EST5 
+| America/Bahia | BRT3 
+| America/Barbados | AST4 
+| America/Belem | BRT3 
+| America/Belize | CST6 
+| America/Blanc-Sablon | AST4 
+| America/Boa Vista | AMT4 
+| America/Bogota | COT5 
+| America/Boise | MST7MDT,M3.2.0,M11.1.0 
+| America/Cambridge Bay | MST7MDT,M3.2.0,M11.1.0 
+| America/Campo Grande | AMT4AMST,M10.3.0/0,M2.3.0/0 
+| America/Cancun | CST6CDT,M4.1.0,M10.5.0 
+| America/Caracas | VET4:30 
+| America/Cayenne | GFT3 
+| America/Cayman | EST5 
+| America/Chicago | CST6CDT,M3.2.0,M11.1.0 
+| America/Chihuahua | MST7MDT,M4.1.0,M10.5.0 
+| America/Costa Rica | CST6 
+| America/Cuiaba | AMT4AMST,M10.3.0/0,M2.3.0/0 
+| America/Curacao | AST4 
+| America/Danmarkshavn | GMT0 
+| America/Dawson | PST8PDT,M3.2.0,M11.1.0 
+| America/Dawson Creek | MST7 
+| America/Denver | MST7MDT,M3.2.0,M11.1.0 
+| America/Detroit | EST5EDT,M3.2.0,M11.1.0 
+| America/Dominica | AST4 
+| America/Edmonton | MST7MDT,M3.2.0,M11.1.0 
+| America/Eirunepe | AMT4 
+| America/El Salvador | CST6 
+| America/Fortaleza | BRT3 
+| America/Glace Bay | AST4ADT,M3.2.0,M11.1.0 
+| America/Goose Bay | AST4ADT,M3.2.0/0:01,M11.1.0/0:01 
+| America/Grand Turk | EST5EDT,M3.2.0,M11.1.0 
+| America/Grenada | AST4 
+| America/Guadeloupe | AST4 
+| America/Guatemala | CST6 
+| America/Guayaquil | ECT5 
+| America/Guyana | GYT4 
+| America/Halifax | AST4ADT,M3.2.0,M11.1.0 
+| America/Havana | CST5CDT,M3.2.0/0,M10.5.0/1 
+| America/Hermosillo | MST7 
+| America/Indiana/Indianapolis | EST5EDT,M3.2.0,M11.1.0 
+| America/Indiana/Knox | CST6CDT,M3.2.0,M11.1.0 
+| America/Indiana/Marengo | EST5EDT,M3.2.0,M11.1.0 
+| America/Indiana/Petersburg | EST5EDT,M3.2.0,M11.1.0 
+| America/Indiana/Tell City | CST6CDT,M3.2.0,M11.1.0 
+| America/Indiana/Vevay | EST5EDT,M3.2.0,M11.1.0 
+| America/Indiana/Vincennes | EST5EDT,M3.2.0,M11.1.0 
+| America/Indiana/Winamac | EST5EDT,M3.2.0,M11.1.0 
+| America/Inuvik | MST7MDT,M3.2.0,M11.1.0 
+| America/Iqaluit | EST5EDT,M3.2.0,M11.1.0 
+| America/Jamaica | EST5 
+| America/Juneau | AKST9AKDT,M3.2.0,M11.1.0 
+| America/Kentucky/Louisville | EST5EDT,M3.2.0,M11.1.0 
+| America/Kentucky/Monticello | EST5EDT,M3.2.0,M11.1.0 
+| America/La Paz | BOT4 
+| America/Lima | PET5 
+| America/Los Angeles | PST8PDT,M3.2.0,M11.1.0 
+| America/Maceio | BRT3 
+| America/Managua | CST6 
+| America/Manaus | AMT4 
+| America/Marigot | AST4 
+| America/Martinique | AST4 
+| America/Matamoros | CST6CDT,M3.2.0,M11.1.0 
+| America/Mazatlan | MST7MDT,M4.1.0,M10.5.0 
+| America/Menominee | CST6CDT,M3.2.0,M11.1.0 
+| America/Merida | CST6CDT,M4.1.0,M10.5.0 
+| America/Mexico City | CST6CDT,M4.1.0,M10.5.0 
+| America/Miquelon | PMST3PMDT,M3.2.0,M11.1.0 
+| America/Moncton | AST4ADT,M3.2.0,M11.1.0 
+| America/Monterrey | CST6CDT,M4.1.0,M10.5.0 
+| America/Montevideo | UYT3UYST,M10.1.0,M3.2.0 
+| America/Montreal | EST5EDT,M3.2.0,M11.1.0 
+| America/Montserrat | AST4 
+| America/Nassau | EST5EDT,M3.2.0,M11.1.0 
+| America/New York | EST5EDT,M3.2.0,M11.1.0 
+| America/Nipigon | EST5EDT,M3.2.0,M11.1.0 
+| America/Nome | AKST9AKDT,M3.2.0,M11.1.0 
+| America/Noronha | FNT2 
+| America/North Dakota/Center | CST6CDT,M3.2.0,M11.1.0 
+| America/North Dakota/New Salem | CST6CDT,M3.2.0,M11.1.0 
+| America/Ojinaga | MST7MDT,M3.2.0,M11.1.0 
+| America/Panama | EST5 
+| America/Pangnirtung | EST5EDT,M3.2.0,M11.1.0 
+| America/Paramaribo | SRT3 
+| America/Phoenix | MST7 
+| America/Port of Spain | AST4 
+| America/Port-au-Prince | EST5 
+| America/Porto Velho | AMT4 
+| America/Puerto Rico | AST4 
+| America/Rainy River | CST6CDT,M3.2.0,M11.1.0 
+| America/Rankin Inlet | CST6CDT,M3.2.0,M11.1.0 
+| America/Recife | BRT3 
+| America/Regina | CST6 
+| America/Rio Branco | AMT4 
+| America/Santa Isabel | PST8PDT,M4.1.0,M10.5.0 
+| America/Santarem | BRT3 
+| America/Santo Domingo | AST4 
+| America/Sao Paulo | BRT3BRST,M10.3.0/0,M2.3.0/0 
+| America/Scoresbysund | EGT1EGST,M3.5.0/0,M10.5.0/1 
+| America/Shiprock | MST7MDT,M3.2.0,M11.1.0 
+| America/St Barthelemy | AST4 
+| America/St Johns | NST3:30NDT,M3.2.0/0:01,M11.1.0/0:01 
+| America/St Kitts | AST4 
+| America/St Lucia | AST4 
+| America/St Thomas | AST4 
+| America/St Vincent | AST4 
+| America/Swift Current | CST6 
+| America/Tegucigalpa | CST6 
+| America/Thule | AST4ADT,M3.2.0,M11.1.0 
+| America/Thunder Bay | EST5EDT,M3.2.0,M11.1.0 
+| America/Tijuana | PST8PDT,M3.2.0,M11.1.0 
+| America/Toronto | EST5EDT,M3.2.0,M11.1.0 
+| America/Tortola | AST4 
+| America/Vancouver | PST8PDT,M3.2.0,M11.1.0 
+| America/Whitehorse | PST8PDT,M3.2.0,M11.1.0 
+| America/Winnipeg | CST6CDT,M3.2.0,M11.1.0 
+| America/Yakutat | AKST9AKDT,M3.2.0,M11.1.0 
+| America/Yellowknife | MST7MDT,M3.2.0,M11.1.0 
+| Antarctica/Casey | WST-8 
+| Antarctica/Davis | DAVT-7 
+| Antarctica/DumontDUrville | DDUT-10 
+| Antarctica/Macquarie | MIST-11 
+| Antarctica/Mawson | MAWT-5 
+| Antarctica/McMurdo | NZST-12NZDT,M9.5.0,M4.1.0/3 
+| Antarctica/Rothera | ROTT3 
+| Antarctica/South Pole | NZST-12NZDT,M9.5.0,M4.1.0/3 
+| Antarctica/Syowa | SYOT-3 
+| Antarctica/Vostok | VOST-6 
+| Arctic/Longyearbyen | CET-1CEST,M3.5.0,M10.5.0/3 
+| Asia/Aden | AST-3 
+| Asia/Almaty | ALMT-6 
+| Asia/Anadyr | ANAT-11ANAST,M3.5.0,M10.5.0/3 
+| Asia/Aqtau | AQTT-5 
+| Asia/Aqtobe | AQTT-5 
+| Asia/Ashgabat | TMT-5 
+| Asia/Baghdad | AST-3 
+| Asia/Bahrain | AST-3 
+| Asia/Baku | AZT-4AZST,M3.5.0/4,M10.5.0/5 
+| Asia/Bangkok | ICT-7 
+| Asia/Beirut | EET-2EEST,M3.5.0/0,M10.5.0/0 
+| Asia/Bishkek | KGT-6 
+| Asia/Brunei | BNT-8 
+| Asia/Choibalsan | CHOT-8 
+| Asia/Chongqing | CST-8 
+| Asia/Colombo | IST-5:30 
+| Asia/Damascus | EET-2EEST,M4.1.5/0,M10.5.5/0 
+| Asia/Dhaka | BDT-6 
+| Asia/Dili | TLT-9 
+| Asia/Dubai | GST-4 
+| Asia/Dushanbe | TJT-5 
+| Asia/Gaza | EET-2EEST,M3.5.6/0:01,M9.1.5 
+| Asia/Harbin | CST-8 
+| Asia/Ho Chi Minh | ICT-7 
+| Asia/Hong Kong | HKT-8 
+| Asia/Hovd | HOVT-7 
+| Asia/Irkutsk | IRKT-8IRKST,M3.5.0,M10.5.0/3 
+| Asia/Jakarta | WIT-7 
+| Asia/Jayapura | EIT-9 
+| Asia/Kabul | AFT-4:30 
+| Asia/Kamchatka | PETT-11PETST,M3.5.0,M10.5.0/3 
+| Asia/Karachi | PKT-5 
+| Asia/Kashgar | CST-8 
+| Asia/Kathmandu | NPT-5:45 
+| Asia/Kolkata | IST-5:30 
+| Asia/Krasnoyarsk | KRAT-7KRAST,M3.5.0,M10.5.0/3 
+| Asia/Kuala Lumpur | MYT-8 
+| Asia/Kuching | MYT-8 
+| Asia/Kuwait | AST-3 
+| Asia/Macau | CST-8 
+| Asia/Magadan | MAGT-11MAGST,M3.5.0,M10.5.0/3 
+| Asia/Makassar | CIT-8 
+| Asia/Manila | PHT-8 
+| Asia/Muscat | GST-4 
+| Asia/Nicosia | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Asia/Novokuznetsk | NOVT-6NOVST,M3.5.0,M10.5.0/3 
+| Asia/Novosibirsk | NOVT-6NOVST,M3.5.0,M10.5.0/3 
+| Asia/Omsk | OMST-7 
+| Asia/Oral | ORAT-5 
+| Asia/Phnom Penh | ICT-7 
+| Asia/Pontianak | WIT-7 
+| Asia/Pyongyang | KST-9 
+| Asia/Qatar | AST-3 
+| Asia/Qyzylorda | QYZT-6 
+| Asia/Rangoon | MMT-6:30 
+| Asia/Riyadh | AST-3 
+| Asia/Sakhalin | SAKT-10SAKST,M3.5.0,M10.5.0/3 
+| Asia/Samarkand | UZT-5 
+| Asia/Seoul | KST-9 
+| Asia/Shanghai | CST-8 
+| Asia/Singapore | SGT-8 
+| Asia/Taipei | CST-8 
+| Asia/Tashkent | UZT-5 
+| Asia/Tbilisi | GET-4 
+| Asia/Tehran | IRST-3:30IRDT,80/0,264/0 
+| Asia/Thimphu | BTT-6 
+| Asia/Tokyo | JST-9 
+| Asia/Ulaanbaatar | ULAT-8 
+| Asia/Urumqi | CST-8 
+| Asia/Vientiane | ICT-7 
+| Asia/Vladivostok | VLAT-10VLAST,M3.5.0,M10.5.0/3 
+| Asia/Yakutsk | YAKT-9YAKST,M3.5.0,M10.5.0/3 
+| Asia/Yekaterinburg | YEKT-5YEKST,M3.5.0,M10.5.0/3 
+| Asia/Yerevan | AMT-4AMST,M3.5.0,M10.5.0/3 
+| Atlantic/Azores | AZOT1AZOST,M3.5.0/0,M10.5.0/1 
+| Atlantic/Bermuda | AST4ADT,M3.2.0,M11.1.0 
+| Atlantic/Canary | WET0WEST,M3.5.0/1,M10.5.0 
+| Atlantic/Cape Verde | CVT1 
+| Atlantic/Faroe | WET0WEST,M3.5.0/1,M10.5.0 
+| Atlantic/Madeira | WET0WEST,M3.5.0/1,M10.5.0 
+| Atlantic/Reykjavik | GMT0 
+| Atlantic/South Georgia | GST2 
+| Atlantic/St Helena | GMT0 
+| Atlantic/Stanley | FKT4FKST,M9.1.0,M4.3.0 
+| Australia/Adelaide | CST-9:30CST,M10.1.0,M4.1.0/3 
+| Australia/Brisbane | EST-10 
+| Australia/Broken Hill | CST-9:30CST,M10.1.0,M4.1.0/3 
+| Australia/Currie | EST-10EST,M10.1.0,M4.1.0/3 
+| Australia/Darwin | CST-9:30 
+| Australia/Eucla | CWST-8:45 
+| Australia/Hobart | EST-10EST,M10.1.0,M4.1.0/3 
+| Australia/Lindeman | EST-10 
+| Australia/Lord Howe | LHST-10:30LHST-11,M10.1.0,M4.1.0 
+| Australia/Melbourne | EST-10EST,M10.1.0,M4.1.0/3 
+| Australia/Perth | WST-8 
+| Australia/Sydney | EST-10EST,M10.1.0,M4.1.0/3 
+| Europe/Amsterdam | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Andorra | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Athens | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Europe/Belgrade | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Berlin | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Bratislava | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Brussels | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Bucharest | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Europe/Budapest | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Chisinau | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Europe/Copenhagen | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Dublin | GMT0IST,M3.5.0/1,M10.5.0 
+| Europe/Gibraltar | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Guernsey | GMT0BST,M3.5.0/1,M10.5.0 
+| Europe/Helsinki | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Europe/Isle of Man | GMT0BST,M3.5.0/1,M10.5.0 
+| Europe/Istanbul | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Europe/Jersey | GMT0BST,M3.5.0/1,M10.5.0 
+| Europe/Kaliningrad | EET-2EEST,M3.5.0,M10.5.0/3 
+| Europe/Kiev | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Europe/Lisbon | WET0WEST,M3.5.0/1,M10.5.0 
+| Europe/Ljubljana | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/London | GMT0BST,M3.5.0/1,M10.5.0 
+| Europe/Luxembourg | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Madrid | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Malta | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Mariehamn | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Europe/Minsk | EET-2EEST,M3.5.0,M10.5.0/3 
+| Europe/Monaco | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Moscow | MSK-4 
+| Europe/Oslo | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Paris | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Podgorica | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Prague | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Riga | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Europe/Rome | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Samara | SAMT-3SAMST,M3.5.0,M10.5.0/3 
+| Europe/San Marino | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Sarajevo | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Simferopol | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Europe/Skopje | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Sofia | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Europe/Stockholm | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Tallinn | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Europe/Tirane | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Uzhgorod | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Europe/Vaduz | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Vatican | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Vienna | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Vilnius | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Europe/Volgograd | VOLT-3VOLST,M3.5.0,M10.5.0/3 
+| Europe/Warsaw | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Zagreb | CET-1CEST,M3.5.0,M10.5.0/3 
+| Europe/Zaporozhye | EET-2EEST,M3.5.0/3,M10.5.0/4 
+| Europe/Zurich | CET-1CEST,M3.5.0,M10.5.0/3 
+| Indian/Antananarivo | EAT-3 
+| Indian/Chagos | IOT-6 
+| Indian/Christmas | CXT-7 
+| Indian/Cocos | CCT-6:30 
+| Indian/Comoro | EAT-3 
+| Indian/Kerguelen | TFT-5 
+| Indian/Mahe | SCT-4 
+| Indian/Maldives | MVT-5 
+| Indian/Mauritius | MUT-4 
+| Indian/Mayotte | EAT-3 
+| Indian/Reunion | RET-4 
+| Pacific/Apia | WST11 
+| Pacific/Auckland | NZST-12NZDT,M9.5.0,M4.1.0/3 
+| Pacific/Chatham | CHAST-12:45CHADT,M9.5.0/2:45,M4.1.0/3:45 
+| Pacific/Efate | VUT-11 
+| Pacific/Enderbury | PHOT-13 
+| Pacific/Fakaofo | TKT10 
+| Pacific/Fiji | FJT-12 
+| Pacific/Funafuti | TVT-12 
+| Pacific/Galapagos | GALT6 
+| Pacific/Gambier | GAMT9 
+| Pacific/Guadalcanal | SBT-11 
+| Pacific/Guam | ChST-10 
+| Pacific/Honolulu | HST10 
+| Pacific/Johnston | HST10 
+| Pacific/Kiritimati | LINT-14 
+| Pacific/Kosrae | KOST-11 
+| Pacific/Kwajalein | MHT-12 
+| Pacific/Majuro | MHT-12 
+| Pacific/Marquesas | MART9:30 
+| Pacific/Midway | SST11 
+| Pacific/Nauru | NRT-12 
+| Pacific/Niue | NUT11 
+| Pacific/Norfolk | NFT-11:30 
+| Pacific/Noumea | NCT-11 
+| Pacific/Pago Pago | SST11 
+| Pacific/Palau | PWT-9 
+| Pacific/Pitcairn | PST8 
+| Pacific/Ponape | PONT-11 
+| Pacific/Port Moresby | PGT-10 
+| Pacific/Rarotonga | CKT10 
+| Pacific/Saipan | ChST-10 
+| Pacific/Tahiti | TAHT10 
+| Pacific/Tarawa | GILT-12 
+| Pacific/Tongatapu | TOT-13 
+| Pacific/Truk | TRUT-10 
+| Pacific/Wake | WAKT-12 
+| Pacific/Wallis | WFT-12 
+|====
