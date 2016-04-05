@@ -6,7 +6,7 @@
 }
 
 D="$(pwd)"
-O="-b html5 -a linkcss -a stylesdir=/css -a stylesheet=lede.css -a disable-javascript"
+O="-b html5 -a linkcss -a stylesdir=/css -a stylesheet=lede.css -a disable-javascript -a icons -a iconsdir=/icon"
 
 copy() {(
 	cd "$1"
@@ -28,6 +28,7 @@ render() {(
 
 copy "$D/logo" "$D/html/logo"
 copy "$D/css" "$D/html/css"
+copy "$D/icon" "$D/html/icon"
 
 render "$D/pages" "$D/html"
 render "$D/docs" "$D/html/docs"
