@@ -1,5 +1,5 @@
-LEDE Project Meetings
-=====================
+Project Meetings
+================
 
 include::menu.inc[]
 

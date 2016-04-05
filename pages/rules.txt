@@ -1,5 +1,5 @@
-LEDE Project Rules
-==================
+Project Rules
+=============
 
 include::menu.inc[]
 

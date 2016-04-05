@@ -1,5 +1,5 @@
-LEDE Development
-================
+Development
+===========
 
 include::menu.inc[]
 
