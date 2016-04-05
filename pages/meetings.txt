@@ -5,9 +5,10 @@ include::menu.inc[]
 
 == Next Meeting
 
-The next meeting will be held on Tuesday 5th April 2016 at 15:00 till 17:00 CEST.
+The next meeting date is yet to be decided.
 
-For the agenda of the upcoming meeting refer to http://piratepad.net/2kWeQi567r.
+For the agenda of the upcoming meeting refer to the
+http://piratepad.net/ep/pad/view/ro.M3TfdfVpX1f/latest[agenda pad].
 
 == Meeting Logs
 
