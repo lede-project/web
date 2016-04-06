@@ -13,20 +13,20 @@ The 'dropbear' section contains these settings:
 
 [cols="4*1,4",options="header"]
 |====
-| Name | Type | Required | Default | Description 
-| 'enable' | boolean | no | 1 | Set to '0' to disable starting dropbear at system boot. 
-| 'verbose' | boolean | no | 0 | Set to '1' to enable verbose output by the start script. 
-| 'BannerFile' | string | no | _(none)_ | Name of a file to be printed before the user has authenticated successfully. 
-| 'PasswordAuth' | boolean | no | 1 | Set to '0' to disable authenticating with passwords. 
-| 'Port' | integer | no | 22 | Port number to listen on. 
-| 'RootPasswordAuth' | boolean | no | 1 | Set to '0' to disable authenticating as root with passwords. 
-| 'RootLogin' | boolean | no | 1 | Set to '0' to disable SSH logins as root. 
-| 'GatewayPorts' | boolean | no | 0 | Set to '1' to allow remote hosts to connect to forwarded ports. 
-| 'Interface' | string | no | _(none)_ | Tells dropbear to listen only on the specified interface.((e.g. 'lan', 'wan', 'henet')) 
-| 'rsakeyfile' | file| no | _(none)_ | Path to RSA file 
-| 'dsskeyfile' | file| no | _(none)_ | Path to DSS/DSA file 
-| 'SSHKeepAlive' | integer| no | 300 | Keep Alive 
-| 'IdleTimeout' | integer| no | 0| Idle Timeout 
+| Name | Type | Required | Default | Description
+| 'enable' | boolean | no | 1 | Set to '0' to disable starting dropbear at system boot.
+| 'verbose' | boolean | no | 0 | Set to '1' to enable verbose output by the start script.
+| 'BannerFile' | string | no | _(none)_ | Name of a file to be printed before the user has authenticated successfully.
+| 'PasswordAuth' | boolean | no | 1 | Set to '0' to disable authenticating with passwords.
+| 'Port' | integer | no | 22 | Port number to listen on.
+| 'RootPasswordAuth' | boolean | no | 1 | Set to '0' to disable authenticating as root with passwords.
+| 'RootLogin' | boolean | no | 1 | Set to '0' to disable SSH logins as root.
+| 'GatewayPorts' | boolean | no | 0 | Set to '1' to allow remote hosts to connect to forwarded ports.
+| 'Interface' | string | no | _(none)_ | Tells dropbear to listen only on the specified interface.((e.g. 'lan', 'wan', 'henet'))
+| 'rsakeyfile' | file| no | _(none)_ | Path to RSA file
+| 'dsskeyfile' | file| no | _(none)_ | Path to DSS/DSA file
+| 'SSHKeepAlive' | integer| no | 300 | Keep Alive
+| 'IdleTimeout' | integer| no | 0| Idle Timeout
 |====
 
 This is the default configuration:
@@ -59,17 +59,4 @@ config dropbear
 	option PasswordAuth 'off'
 	option Interface 'wan'
 	option Port '2022'
-----
-
-If you try to run multiple dropbear instances and they are not started you probably have a timing issue. To fix the timing issue just create a small hotplug script in /etc/hotplug.d/iface/40-dropbear that simply restarts dropbear after the WAN interface is restarted.
-
-/etc/hotplug.d/iface/40-dropbear
-
-----
-#!/bin/sh
-
-if [ "$INTERFACE" = "wan" ] && [ "$ACTION" = "ifup" ]
-then
-/etc/init.d/dropbear restart
-fi
 ----
