@@ -15,11 +15,11 @@ using direct means of communication.
 
 The project offers the following mailing lists
 
-. lede-dev - this list is used for submitting patches and general development
-  related work
-. lede-adm - this list is used for project organisational purposes. anyone can
-  subscribe and read this list. Only committers may write to this list.
-. lede-bugs - this list is used for reporting bugs
+. http://lists.infradead.org/mailman/listinfo/lede-dev[lede-dev@lists.infradead.org] -
+  This list is used for submitting patches and general development related work
+. http://lists.infradead.org/mailman/listinfo/lede-adm[lede-adm@lists.infradead.org] - 
+  This list is used for project organisational purposes. Anyone can
+  subscribe and read this list, only committers may write to this list.
 
 
 === IRC Channels
