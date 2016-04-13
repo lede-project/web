@@ -1,9 +1,9 @@
 DNS and DHCP configuration
 ==========================
 
-The _dnsmasq_ and dhcpd configuration is located in '/etc/config/dhcp' and controls both DNS and DHCP server options on the device (both DHCP and DNS services are implemented using the same OpenWrt program, dnsmasq).
+The _dnsmasq_ and dhcpd configuration is located in '/etc/config/dhcp' and controls both DNS and DHCP server options on the device.
 
-In the default configuration this file contains one _common section_ to specify DNS and daemon related options and one or more _DHCP pools_ to define DHCP serving on network interfaces.
+In the default configuration this file contains one _common section_ to specify DNS and daemon related options and one or more _DHCP pools_ to define DHCP ranges serving on network interfaces.
 
 == Sections
 
@@ -11,7 +11,7 @@ Possible section types of the 'dhcp' configuration file are defined below. Not a
 
 === Common Options
 
-The config section type 'dnsmasq' determines values and options relevant to the overall operation of dnsmasq and the DHCP options on all interfaces served. The following table lists all available options, their default value, as well as the corresponding _dnsmasq_ command line option. See [[http:_www.thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html|the dnsmasq man page]] for further details.
+The config section type 'dnsmasq' determines values and options relevant to the overall operation of dnsmasq and the DHCP options on all interfaces served. The following table lists all available options, their default value, as well as the corresponding _dnsmasq_ command line option. See link:http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html[the dnsmasq man page] for further details.
 
 These are the default settings for the common options:
 
@@ -38,62 +38,60 @@ config 'dnsmasq'
 * Option 'authoritative' makes the router the only DHCP server on this network; clients get their IP lease a lot faster this way.
 * Option 'leasefile' stores the leases in a file, so that they can be picked up again if _dnsmasq_ is restarted.
 * Option 'resolvfile' tells _dnsmasq_ to use this file to find upstream name servers; it gets created by the WAN DHCP client or the PPP client.
-* Options "enable_tftp" and "tftp_root" turn on the TFTP server and serve files from tftp_root.  You may need to set the server's IP on the client.  On the client,  change it by setting "serverip" (e.g. "setenv serverip 192.168.1.10").
 
 === All Options
 [cols="4*1,4",options="header"]
 |====
-| Name | Type | Default | Option | Description 
-| 'add_local_domain' | boolean | '1' | | Add the local domain as search directive in resolv.conf. 
-| 'add_local_hostname' | boolean | '1' | | Add A and PTR records automatically for the local hostname. 
-| 'addnhosts' | list of file paths | _(none)_ | '-H' | Additional host files to read for serving DNS responses 
-| 'authoritative' | boolean | '0' | '-K' | Force _dnsmasq_ into authoritative mode. This speeds up DHCP leasing. Used if this is the only server on the network 
-| 'bogusnxdomain' | list of IP addresses | _(none)_ | '-B' | IP addresses to convert into NXDOMAIN responses (to counteract "helpful" upstream DNS servers that never return NXDOMAIN). 
-| 'boguspriv' | boolean | '0' | '-b' | Reject reverse lookups to private IP ranges where no corresponding entry exists in '/etc/hosts' 
-| 'cachelocal' | boolean | '1' | | When set to '0', use each network interface's 'dns' address in the local '/etc/resolv.conf'. Normally, only the loopback address is used, and all queries go through _dnsmasq_. 
-| 'cachesize' | integer | '150' | '-c' | Size of _dnsmasq_ query cache. 
-| 'dbus' | boolean | '0' | '-1' | Enable DBus messaging for _dnsmasq_.\\ CAUTION: Standard builds of _dnsmasq_ on OpenWRT do not include DBus support. 
-| 'dhcp_boot' | string | _(none)_ |--dhcp-boot>| Specifies BOOTP options, in most cases just the file name 
-| 'dhcphostsfile' | file path | _(none)_ | --dhcp-hostsfile | Specify an external file with per host DHCP options 
-| 'dhcpleasemax' | integer | '150' | '-X' | Maximum number of DHCP leases 
-| 'dnsforwardmax' | integer | '150' | '-0' (zero) | Maximum number of concurrent connections 
-| 'domain' | domain name | _(none)_ | '-s' | DNS domain handed out to DHCP clients 
-| 'domainneeded' | boolean | '0' | '-D' | Tells _dnsmasq_ never to forward queries for plain names, without dots or domain parts, to upstream nameservers. If the name is not known from /etc/hosts or DHCP then a "not found" answer is returned 
-| 'dnssec' | boolean | '0' | --dnssec | Validate DNS replies and cache DNSSEC data.\\ CAUTION: Requires the _dnsmasq-full_ package. 
-| 'dnsseccheckunsigned' | boolean | '0' | --dnssec-check-unsigned | Check the zones of unsigned replies to ensure that unsigned replies are allowed in those zones. This protects against an attacker forging unsigned replies for signed DNS zones, but is slower and requires that the nameservers upstream of _dnsmasq_ are DNSSEC-capable.\\ CAUTION: Requires the _dnsmasq-full_ package.\\ CAUTION: Caution: If you use this option on a device that doesn't have a hardware clock, dns resolution may break after a reboot of the device due to an incorrect system time. 
-| 'ednspacket_max' | integer | '1280' | '-P' | Specify the largest EDNS.0 UDP packet which is supported by the DNS forwarder 
-| 'enable_tftp' | boolean | '0' | --enable-tftp | Enable the builtin TFTP server 
-| 'expandhosts' | boolean | '0' | '-E' | Add the local domain part to names found in '/etc/hosts' 
-| 'filterwin2k' | boolean | '0' | '-f' | Do not forward requests that cannot be answered by public name servers 
-| 'fqdn' | boolean | '0' | --dhcp-fqdn | Do not resolve unqualifed local hostnames. Needs 'domain' to be set. 
-| 'interface' | list of interface names | _(all interfaces)_ | '-i' | List of interfaces to listen on. If unspecified, _dnsmasq_ will listen to all interfaces except those listed in 'notinterface'. Note that _dnsmasq_ listens on loopback by default. 
-| 'leasefile' | file path | _(none)_ | '-l' (ell) | Store DHCP leases in this file 
-| 'local' | string | _(none)_ | '-S' | Look up DNS entries for this domain from '/etc/hosts'. This follows the same syntax as 'server' entries, see the man page. 
-| 'localise_queries' | boolean | '0' | '-y' | Choose IP address to match the incoming interface if multiple addresses are assigned to a host name in '/etc/hosts'. CAUTION: Note well the spelling of this option. 
-| 'localservice' | boolean | '1' | --local-service | Accept DNS queries only from hosts whose address is on a local subnet, ie a subnet for which an interface exists on the server. 
-| 'logqueries' | boolean | '0' | '-q' | Log the results of DNS queries, dump cache on SIGUSR1 
-| 'nodaemon' | boolean | '0' | '-d' | Don't daemonize the _dnsmasq_ process 
-| 'nohosts' | boolean | '0' | '-h' | Don't read DNS names from '/etc/hosts' 
-| 'nonegcache' | boolean | '0' | '-N' | Disable caching of negative "no such domain" responses 
-| 'noresolv' | boolean | '0' | '-R' | Don't read upstream servers from '/etc/resolv.conf' 
-| 'notinterface' | list of interface names |  _(none)_ | '-I' (eye) | Interfaces _dnsmasq_ should not listen on. 
-| 'nonwildcard' | boolean | '0' | '-z' | Bind only configured interface addresses, instead of the wildcard address.  
-| 'port' | port number | '53' | '-p' | Listening port for DNS queries, disables DNS server functionality if set to '0' 
-| 'queryport' | integer | _(none)_ | '-Q' | Use a fixed port for outbound DNS queries 
-| 'readethers' | boolean | '0' | '-Z' | Read static lease entries from '/etc/ethers', re-read on SIGHUP 
-| 'rebind_protection' | boolean | '1' | --stop-dns-rebind | Enables DNS rebind attack protection by discarding upstream RFC1918 responses 
-| 'rebind_localhost' | boolean | '0' | --rebind-localhost-ok | Allows upstream 127.0.0.0/8 responses, required for DNS based blacklist services, only takes effect if rebind protection is enabled 
-| 'rebind_domain' | list of domain names | _(none)_ | --rebind-domain-ok | List of domains to allow RFC1918 responses for, only takes effect if rebind protection is enabled 
-| 'resolvfile' | file path | '/etc/resolv.conf' | '-r' | Specifies an alternative resolv file 
-| 'server' | list of strings | _(none)_ | '-S' | List of DNS servers to forward requests to. See the _dnsmasq_ man page for syntax details. 
-| 'strictorder' | boolean | '0' | '-o' | Obey order of DNS servers in '/etc/resolv.conf' 
-| 'tftp_root' | directory path | _(none)_ | --tftp-root | Specifies the TFTP root directory 
+| Name | Type | Default | Option | Description
+| 'add_local_domain' | boolean | '1' | | Add the local domain as search directive in resolv.conf.
+| 'add_local_hostname' | boolean | '1' | | Add A and PTR records automatically for the local hostname.
+| 'addnhosts' | list of file paths | _(none)_ | '-H' | Additional host files to read for serving DNS responses
+| 'authoritative' | boolean | '0' | '-K' | Force _dnsmasq_ into authoritative mode. This speeds up DHCP leasing. Used if this is the only server on the network
+| 'bogusnxdomain' | list of IP addresses | _(none)_ | '-B' | IP addresses to convert into NXDOMAIN responses (to counteract upstream DNS servers that never return NXDOMAIN).
+| 'boguspriv' | boolean | '0' | '-b' | Reject reverse lookups to private IP ranges where no corresponding entry exists in '/etc/hosts'
+| 'cachelocal' | boolean | '1' | | When set to '0', use each network interface's 'dns' address in the local '/etc/resolv.conf'. Normally, only the loopback address is used, and all queries go through _dnsmasq_.
+| 'cachesize' | integer | '150' | '-c' | Size of _dnsmasq_ query cache.
+| 'dbus' | boolean | '0' | '-1' | Enable DBus messaging for _dnsmasq_. *CAUTION*: Standard builds of _dnsmasq_ do not include DBus support.
+| 'dhcp_boot' | string | _(none)_ |--dhcp-boot>| Specifies BOOTP options, in most cases just the file name
+| 'dhcphostsfile' | file path | _(none)_ | --dhcp-hostsfile | Specify an external file with per host DHCP options
+| 'dhcpleasemax' | integer | '150' | '-X' | Maximum number of DHCP leases
+| 'dnsforwardmax' | integer | '150' | '-0' (zero) | Maximum number of concurrent connections
+| 'domain' | domain name | _(none)_ | '-s' | DNS domain handed out to DHCP clients
+| 'domainneeded' | boolean | '0' | '-D' | Tells _dnsmasq_ never to forward queries for plain names, without dots or domain parts, to upstream nameservers. If the name is not known from /etc/hosts or DHCP then a "not found" answer is returned
+| 'dnssec' | boolean | '0' | --dnssec | Validate DNS replies and cache DNSSEC data. *CAUTION*: Requires the _dnsmasq-full_ package.
+| 'dnsseccheckunsigned' | boolean | '0' | --dnssec-check-unsigned | Check the zones of unsigned replies to ensure that unsigned replies are allowed in those zones. This protects against an attacker forging unsigned replies for signed DNS zones, but is slower and requires that the nameservers upstream of _dnsmasq_ are DNSSEC-capable. *CAUTION*: Requires the _dnsmasq-full_ package.
+| 'ednspacket_max' | integer | '1280' | '-P' | Specify the largest EDNS.0 UDP packet which is supported by the DNS forwarder
+| 'enable_tftp' | boolean | '0' | --enable-tftp | Enable the builtin TFTP server
+| 'expandhosts' | boolean | '0' | '-E' | Add the local domain part to names found in '/etc/hosts'
+| 'filterwin2k' | boolean | '0' | '-f' | Do not forward requests that cannot be answered by public name servers
+| 'fqdn' | boolean | '0' | --dhcp-fqdn | Do not resolve unqualified local hostnames. Needs 'domain' to be set.
+| 'interface' | list of interface names | _(all interfaces)_ | '-i' | List of interfaces to listen on. If unspecified, _dnsmasq_ will listen to all interfaces except those listed in 'notinterface'. Note that _dnsmasq_ listens on loopback by default.
+| 'leasefile' | file path | _(none)_ | '-l' (ell) | Store DHCP leases in this file
+| 'local' | string | _(none)_ | '-S' | Look up DNS entries for this domain from '/etc/hosts'. This follows the same syntax as 'server' entries, see the man page.
+| 'localise_queries' | boolean | '0' | '-y' | Choose IP address to match the incoming interface if multiple addresses are assigned to a host name in '/etc/hosts'. *CAUTION*: Note well the spelling of this option.
+| 'localservice' | boolean | '1' | --local-service | Accept DNS queries only from hosts whose address is on a local subnet, ice. a subnet for which an interface exists on the server.
+| 'logqueries' | boolean | '0' | '-q' | Log the results of DNS queries, dump cache on SIGUSR1
+| 'nodaemon' | boolean | '0' | '-d' | Don't daemonize the _dnsmasq_ process
+| 'nohosts' | boolean | '0' | '-h' | Don't read DNS names from '/etc/hosts'
+| 'nonegcache' | boolean | '0' | '-N' | Disable caching of negative "no such domain" responses
+| 'noresolv' | boolean | '0' | '-R' | Don't read upstream servers from '/etc/resolv.conf'
+| 'notinterface' | list of interface names |  _(none)_ | '-I' (eye) | Interfaces _dnsmasq_ should not listen on.
+| 'nonwildcard' | boolean | '0' | '-z' | Bind only configured interface addresses, instead of the wildcard address.
+| 'port' | port number | '53' | '-p' | Listening port for DNS queries, disables DNS server functionality if set to '0'
+| 'queryport' | integer | _(none)_ | '-Q' | Use a fixed port for outbound DNS queries
+| 'readethers' | boolean | '0' | '-Z' | Read static lease entries from '/etc/ethers', re-read on SIGHUP
+| 'rebind_protection' | boolean | '1' | --stop-dns-rebind | Enables DNS rebind attack protection by discarding upstream RFC1918 responses
+| 'rebind_localhost' | boolean | '0' | --rebind-localhost-ok | Allows upstream 127.0.0.0/8 responses, required for DNS based blacklist services, only takes effect if rebind protection is enabled
+| 'rebind_domain' | list of domain names | _(none)_ | --rebind-domain-ok | List of domains to allow RFC1918 responses for, only takes effect if rebind protection is enabled
+| 'resolvfile' | file path | '/etc/resolv.conf' | '-r' | Specifies an alternative resolv file
+| 'server' | list of strings | _(none)_ | '-S' | List of DNS servers to forward requests to. See the _dnsmasq_ man page for syntax details.
+| 'strictorder' | boolean | '0' | '-o' | Obey order of DNS servers in '/etc/resolv.conf'
+| 'tftp_root' | directory path | _(none)_ | --tftp-root | Specifies the TFTP root directory
 |====
 
 === DHCP Pools
 
-Sections of the type 'dhcp' specify per interface lease pools and settings for serving DHCP requests.
-Typically there is at least one section of this type present in the '/etc/config/dhcp' file to cover the lan interface.
+Sections of the type 'dhcp' specify per interface lease pools and settings for serving DHCP requests. Typically there is at least one section of this type present in the '/etc/config/dhcp' file to cover the lan interface.
 
 You can disable a lease pool for a specific interface by specifying the 'ignore' option in the corresponding section.
 
@@ -119,19 +117,19 @@ Below is a listing of legal options for 'dhcp' sections.
 
 [cols="4*1,4",options="header"]
 |====
-| Name | Type | Required | Default | Description 
-| 'dhcp_option' | list of strings | no | _(none)_ | The ID dhcp_option here must be with written with an underscore. OpenWrt will translate this to --dhcp-option, with a hyphen, as ultimately used by dnsmasq. Multiple option values can be given for this _network-id_, with a a space between them and the total string between "". E.g. '26,1470' or 'option:mtu, 1470' that can assign an MTU per DHCP. Your client must accept MTU by DHCP for this to work. Or "3,192.168.1.1 6,192.168.1.1" to give out gateway and dns server addresses. 
-| 'dynamicdhcp' | boolean | no | '1' | Dynamically allocate client addresses, if set to '0' only clients present in the 'ethers' files are served 
-| 'force' | boolean | no | '0' | Forces DHCP serving on the specified interface even if another DHCP server is detected on the same network segment 
-| 'ignore' | boolean | no | '0' | Specifies whether _dnsmasq_ should ignore this pool if set to '1' 
-| 'dhcpv6' | string | no | 'none' | Specifies whether DHCPv6 server should be enabled ('server'), relayed ('relay') or disabled ('disabled') 
-| 'ra' | string | no | 'none' | Specifies whether Router Advertisements should be enabled ('server'), relayed ('relay') or disabled ('disabled') 
-| 'ndp' | string | no | 'none' | Specifies whether NDP should be relayed 'relay' or disabled 'none' 
-| 'master' | boolean | no | 0 | Specifies whether DHCPv6, RA and NDP in relay mode is a master interface or not. 
-| 'interface' | logical interface name | yes | _(none)_ | Specifies the interface associated with this DHCP address pool; must be one of the interfaces defined in '/etc/config/network'. 
-| 'leasetime' | string | yes | '12h' | Specifies the lease time of addresses handed out to clients, for example '12h' or '30m' 
-| 'limit' | integer | yes | '150' | Specifies the size of the address pool (e.g. with start=100, limit=150, maximum address will be .249) 
-| 'networkid' | string | no | _(value of 'interface')_ | The dhcp functionality defined in the dhcp section is limited to the interface indicated here through its _network-id_. In case omitted the system tries to know the network-id via the 'interface' setting in this dhcp section, through consultation of /etc/config/network. Some IDs get assigned dynamically, are not provided by network, but still can be set here.  
+| Name | Type | Required | Default | Description
+| 'dhcp_option' | list of strings | no | _(none)_ | The ID dhcp_option here must be with written with an underscore. The init script will translate this to --dhcp-option, with a hyphen, as ultimately used by dnsmasq. Multiple option values can be given for this _network-id_, with a a space between them and the total string between "". E.g. '26,1470' or 'option:mtu, 1470' that can assign an MTU per DHCP. Your client must accept MTU by DHCP for this to work. Or "3,192.168.1.1 6,192.168.1.1" to give out gateway and dns server addresses.
+| 'dynamicdhcp' | boolean | no | '1' | Dynamically allocate client addresses, if set to '0' only clients present in the 'ethers' files are served
+| 'force' | boolean | no | '0' | Forces DHCP serving on the specified interface even if another DHCP server is detected on the same network segment
+| 'ignore' | boolean | no | '0' | Specifies whether _dnsmasq_ should ignore this pool if set to '1'
+| 'dhcpv6' | string | no | 'none' | Specifies whether DHCPv6 server should be enabled ('server'), relayed ('relay') or disabled ('disabled')
+| 'ra' | string | no | 'none' | Specifies whether Router Advertisements should be enabled ('server'), relayed ('relay') or disabled ('disabled')
+| 'ndp' | string | no | 'none' | Specifies whether NDP should be relayed 'relay' or disabled 'none'
+| 'master' | boolean | no | 0 | Specifies whether DHCPv6, RA and NDP in relay mode is a master interface or not.
+| 'interface' | logical interface name | yes | _(none)_ | Specifies the interface associated with this DHCP address pool; must be one of the interfaces defined in '/etc/config/network'.
+| 'leasetime' | string | yes | '12h' | Specifies the lease time of addresses handed out to clients, for example '12h' or '30m'
+| 'limit' | integer | yes | '150' | Specifies the size of the address pool (e.g. with start=100, limit=150, maximum address will be .249)
+| 'networkid' | string | no | _(value of 'interface')_ | The dhcp functionality defined in the dhcp section is limited to the interface indicated here through its _network-id_. In case omitted the system tries to know the network-id via the 'interface' setting in this dhcp section, through consultation of /etc/config/network. Some IDs get assigned dynamically, are not provided by network, but still can be set here.
 | 'start' | integer | yes | '100' | Specifies the offset from the network address of the underlying interface to calculate the minimum address that may be leased to clients. It may be greater than 255 to span subnets.
 |====
 
@@ -165,16 +163,16 @@ This adds the fixed IP address 192.168.1.3 and the name "mylaptop" for a machine
 
 [cols="4*1,4",options="header"]
 |====
-| Name | Type | Required | Default | Description 
-| 'ip' | string | yes | _(none)_ | 'ignore' or the IP address to be used for this host. 
-| 'mac' | string | no | _(none)_ | The hardware address(es) of this host, separated by commas. 
-| 'hostid' | string | no | _(none)_ | The IPv6 interface identifier (address suffix) as hexadecimal number (max. 8 chars) 
-| 'duid' | string | no | _(none)_ | The DHCPv6-DUID of this host. 
-| 'name' | string | no | _(none)_ | Optional hostname to assign. 
-| 'tag' | string | no | _(none)_ | Set the given tag for matching hosts. 
-| 'dns' | boolean | no | '0' | Add static forward and reverse DNS entries for this host. 
-| 'broadcast' | boolean | no | '0' | Force broadcast DHCP response. 
-| 'leasetime' | string | no | _(none)_ | Host-specific lease time, e.g. 2m, 3h, 5d. Note: introduced by r48801 in trunk 
+| Name | Type | Required | Default | Description
+| 'ip' | string | yes | _(none)_ | 'ignore' or the IP address to be used for this host.
+| 'mac' | string | no | _(none)_ | The hardware address(es) of this host, separated by commas.
+| 'hostid' | string | no | _(none)_ | The IPv6 interface identifier (address suffix) as hexadecimal number (max. 8 chars)
+| 'duid' | string | no | _(none)_ | The DHCPv6-DUID of this host.
+| 'name' | string | no | _(none)_ | Optional hostname to assign.
+| 'tag' | string | no | _(none)_ | Set the given tag for matching hosts.
+| 'dns' | boolean | no | '0' | Add static forward and reverse DNS entries for this host.
+| 'broadcast' | boolean | no | '0' | Force broadcast DHCP response.
+| 'leasetime' | string | no | _(none)_ | Host-specific lease time, e.g. 2m, 3h, 5d. Note: introduced by r48801 in trunk
 |====
 
 As well as adding 'host' sections, you can also enable the 'dnsmasq' section option 'readethers', and add entries to the '/etc/ethers' file.
@@ -192,7 +190,7 @@ config 'dhcp' 'lan'
 	list 'dhcp_option' '3,192.168.1.2'
 ----
 
-use the list 'dhcp_option' '3,192.168.1.2' to set the default gateway. A list of options can be found here  [[http:_www.networksorcery.com/enp/protocol/bootp/options.htm | here]]
+use the list 'dhcp_option' '3,192.168.1.2' to set the default gateway. A list of options can be found here  link:http://www.networksorcery.com/enp/protocol/bootp/options.htm[here]
 
 === Booting Options
 
@@ -214,13 +212,13 @@ config boot linux
 This tells the client to load pxelinux.0 from the server at 192.168.1.2, and mount root from /data/netboot/root on the same server.
 [cols="4*1,4",options="header"]
 |====
-| Name | Type | Required | Default | Description 
-| 'dhcp_option' | list of strings | no | _(none)_ | Additional options to be added for this network-id. CAUTION: If you specify this, you also need to specify the network-id. 
-| 'filename' | string | yes | _(none)_ | The filename the host should request from the boot server. 
-| 'networkid' | string | no | _(none)_ | The network-id these boot options should apply to. Applies to all clients if left unspecified. 
-| 'serveraddress' | string | yes | _(none)_ | The IP address of the boot server. 
-| 'servername' | string | yes | _(none)_ | The hostname of the boot server. 
-| 'force' | bool | no | _(none)_ | dhcp-option will always be sent, even if the client does not ask for it in the parameter request list. This is sometimes needed, for example when sending options to PXELinux. 
+| Name | Type | Required | Default | Description
+| 'dhcp_option' | list of strings | no | _(none)_ | Additional options to be added for this network-id. *CAUTION*: If you specify this, you also need to specify the network-id.
+| 'filename' | string | yes | _(none)_ | The filename the host should request from the boot server.
+| 'networkid' | string | no | _(none)_ | The network-id these boot options should apply to. Applies to all clients if left unspecified.
+| 'serveraddress' | string | yes | _(none)_ | The IP address of the boot server.
+| 'servername' | string | yes | _(none)_ | The hostname of the boot server.
+| 'force' | bool | no | _(none)_ | dhcp-option will always be sent, even if the client does not ask for it in the parameter request list. This is sometimes needed, for example when sending options to PXELinux.
 |====
 
 === Classifying Clients And Assigning Individual Options
@@ -235,19 +233,19 @@ Each classifying section has two configuration options: the value of the DHCP op
 config _classifier_
 	option _classifier_  '_value_'
 	option networkid   '_network-id_'
-	list   dhcp_option '_DHCP-option_' 
+	list   dhcp_option '_DHCP-option_'
 ----
 
 The placeholder '_classifier_' can be one of these values:
 [cols="1,4",options="header"]
 |====
-| Classifier | Description 
-| 'mac'  | Hardware address of the client 
-| 'vendorclass'  | String sent by the client representing the vendor of the client. _dnsmasq_ performs a substring match on the vendor class string using this value. 
-| 'userclass'  | String sent by the client representing the user of the client. _dnsmasq_ performs a substring match on the user class string using this value. 
-| 'circuitid'  | Matches the circuit ID as sent by the relay agent, as defined in RFC3046. 
-| 'remoteid'  | Matches the remote ID as sent by the relay agent, as defined in RFC3046. 
-| 'subscrid'  | Matches the subscriber ID as sent by the relay agent, as defined in RFC3993. 
+| Classifier | Description
+| 'mac'  | Hardware address of the client
+| 'vendorclass'  | String sent by the client representing the vendor of the client. _dnsmasq_ performs a substring match on the vendor class string using this value.
+| 'userclass'  | String sent by the client representing the user of the client. _dnsmasq_ performs a substring match on the user class string using this value.
+| 'circuitid'  | Matches the circuit ID as sent by the relay agent, as defined in RFC3046.
+| 'remoteid'  | Matches the remote ID as sent by the relay agent, as defined in RFC3046.
+| 'subscrid'  | Matches the subscriber ID as sent by the relay agent, as defined in RFC3993.
 |====
 
 
@@ -269,7 +267,7 @@ dhcp.opnvpn.networkid=opnvpn
 dhcp.opnvpn.dhcp_option=3
 ----
 
-_DHCP-option_ adds a DHCP option for this _network-id_. See the _dnsmsq_ man page for a complete explanation of the syntax of the '-O' option.
+_DHCP-option_ adds a DHCP option for this _network-id_. See the _dnsmasq_ man page for a complete explanation of the syntax of the '-O' option.
 
 _force_ is a bool option.  It forces dhcp-option to always be sent, even if the client does not ask for it in the parameter request list. This is sometimes needed, for example when sending options to PXELinux.
 
@@ -278,7 +276,7 @@ _force_ is a bool option.  It forces dhcp-option to always be sent, even if the 
 
 It is possible to mix the traditional '/etc/dnsmasq.conf' configuration file with the options found in '/etc/config/dhcp'.
 
-The 'dnsmasq.conf' file does not exist by default but will be processed by _dnsmasq_ on startup if it is present. Note that options in '/etc/config/dhcp' take precendence over 'dnsmasq.conf' since they are translated to command line arguments.
+The 'dnsmasq.conf' file does not exist by default but will be processed by _dnsmasq_ on startup if it is present. Note that options in '/etc/config/dhcp' take precedence over 'dnsmasq.conf' since they are translated to command line arguments.
 
 You can have 'dnsmasq' execute a script on every action:
 
@@ -287,7 +285,8 @@ dhcp-script=/sbin/action.sh
 ----
 
 === DNS and DHCP Ports
-DNS needs TCP and UDP port 53 open on the firewall.  DHCP needs UDP ports 67 and 68 open from your zone to/from the firewall.  See http:_wiki.openwrt.org/doc/recipes/guest-wlan and http:_www.thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html (viz "--dhcp-alternate-port") for more information.
+
+DNS needs TCP and UDP port 53 open on the firewall.  DHCP needs UDP ports 67 and 68 open from your zone to/from the firewall.  See http://wiki.openwrt.org/doc/recipes/guest-wlan and http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html (viz "--dhcp-alternate-port") for more information.
 
 == Examples
 
@@ -304,14 +303,14 @@ config 'host'
 
 === Troubleshooting ===
 
-CAUTION: **Windows 7** has introduced a new _Microsoft-enhanced_ feature. It won't assign IP address obtained from a DHCP server to an interface, if the IP was used before for another interface, even if that other interface is **NOT** active currently (i.e. cable disconnected). This behaviour is unique and was not reported for older Windows versions, Mac OS nor Linux.
+*CAUTION*: **Windows 7** has introduced a new _Microsoft-enhanced_ feature. It won't assign IP address obtained from a DHCP server to an interface, if the IP was used before for another interface, even if that other interface is **NOT** active currently (i.e. cable disconnected). This behaviour is unique and was not reported for older Windows versions, Mac OS nor Linux.
 
-If you try configure MAC address hot swap on your router, Windows 7 clients will end up in an infinite [[http:_tools.ietf.org/html/rfc1531#section-3.1|DORA]] loop.
+If you try configure MAC address hot swap on your router, Windows 7 clients will end up in an infinite link:http://tools.ietf.org/html/rfc1531#section-3.1[DORA] loop.
 
 Solution:
 - Create a bridge from the wireless and ethernet interfaces on your client
 
-* it's trivial: [[googe>windows 7 create bridge|google it]]
+* it's trivial: google->windows 7 create bridge
 * you will have to add the MAC address of the bridge to '/etc/config/dhcp'
 *
 ----
@@ -327,7 +326,7 @@ config 'host'
 
 Notes:
 
-* http:_answers.microsoft.com/en-us/windows/forum/windows_7-networking/windows-7-refuses-dhcp-addresses-if-they-were/1b72b289-0f58-492f-afb8-e76c80a81f00
+* http://answers.microsoft.com/en-us/windows/forum/windows_7-networking/windows-7-refuses-dhcp-addresses-if-they-were/1b72b289-0f58-492f-afb8-e76c80a81f00
 * _force_ is a bool option that will force dhcp-option to always be sent, even if the client does not ask for it in the parameter request list. This is sometimes needed, for example when sending options to PXELinux.
 
 === Only allow static leases
@@ -349,9 +348,8 @@ Note that you shouldn't use this as a security feature to prevent unwanted clien
 Define a custom domain name and the corresponding PTR record - assigns the IP address '192.168.1.140' to the domain name 'typhoon' and construct an appropriate reverse record '140.1.168.192.in-addr.arpa'. It works like an entry in '/etc/hosts' but more flexible
 and integrated.
 
-CAUTION: Note that this currently only works for IPv4 addresses and that this functionality is not present in release prior to 8.09.2 .
-
-CAUTION: Note that reverse records are not properly generated at present. (Barrier Breaker 14.07-RC2)
+*CAUTION*: Note that this currently only works for IPv4 addresses and that this functionality is not present in release prior to 8.09.2 .
+*CAUTION*: Note that reverse records are not properly generated at present. (Barrier Breaker 14.07-RC2)
 
 ----
 config 'domain'
@@ -359,13 +357,11 @@ config 'domain'
 	option 'ip'   '192.168.1.140'
 ----
 
-
-another example: redirect www.facebook.com
+another example: redirect www.example.com to 1.2.3.4
 ----
 config 'domain'
-	option 'name' 'www.facebook.com'
+	option 'name' 'www.example.com'
 	option 'ip'   '1.2.3.4'
-#the request to www.facebook.com will end to 1.2.3.4
 ----
 
 === SRV RR for SIP
@@ -383,7 +379,7 @@ config 'srvhost'
 
 === CNAME RR
 
-A Canonical Name record specifes that a domain name is an alias for another domain, the "canonical" domain. To specify that the web server also doubles as the FTP server, one might use:
+A Canonical Name record specifies that a domain name is an alias for another domain, the "canonical" domain. To specify that the web server also doubles as the FTP server, one might use:
 
 ----
 config 'cname'
@@ -437,7 +433,7 @@ config 'dhcp' 'lan'
 === Multiple DHCP/DNS server/forwarder instances
 
 If you need multiple DNS forwarders with different configurations or DHCP server with different sets of lease files,
-have a look at this [[https:_dev.openwrt.org/ticket/8862|patch]].
+have a look at this link:https:_dev.openwrt.org/ticket/8862[patch].
 Multiple dnsmasq "named" instances can be configured:
 ----
 config 'dnsmasq' 'hotspot'
@@ -446,7 +442,7 @@ config 'dnsmasq' 'hotspot'
 ...
 ----
 
-Your configs are usally active for all instances, but you can limit them to single instances by:
+Your configs are usually active for all instances, but you can limit them to single instances by:
 ----
 config 'dhcp' 'lan'
 	option 'interface' 'lan'
@@ -525,17 +521,15 @@ config host
 	option tag 'vpn'  # assign tag "vpn" to this host
 
 config tag 'vpn'  # match tag "vpn"
-	list dhcp_option '6,8.8.8.8,8.8.4.4'  # assign arbritary extra dhcp options to this tag
+	list dhcp_option '6,8.8.8.8,8.8.4.4'  # assign arbitrary extra dhcp options to this tag
 	option force '1'              #dhcp-option will always be sent, even if the client does not ask for it in the parameter request list. This is sometimes needed, for example when sending options to PXELinux.
 ----
 
-CAUTION: Generally, specifying a dhcp option without any value, would disable that option. so for example you can use:
+*CAUTION*: Specifying a dhcp option without any value, would disable that option. so for example you can use:
 ----
 	list dhcp_option '3'
 ----
 to disable sending a default gateway to a specific client
-
-WARNING:  Convert to procd: etc/init.d/dnsmasq restart
 
 === Enabling DHCP without enabling DNS
 
@@ -545,7 +539,7 @@ This is useful when you just want to hand out addresses to clients, without doin
 config dnsmasq
 ...
 	option port 0
-	option domain '
+	option domain ''
 ----
 
 The second option prevents dnsmasq from giving out a domain name and DNS search list to clients: this is useless without DNS resolving.
@@ -563,27 +557,6 @@ config dhcp lan
 
 The `dhcp_option` entry is meant for dnsmasq, while the more elegant `dns` entries are understood by odhcpd.  By default, odhcpd is only used for IPv6, but if you also use odhcpd for IPv4, you can just use `dns` entries for everything.
 
-=== Enabling DNS without enabling DHCP
-
-dnsmasq can be used to provide clients with a DNS server but not with DHCP (for example, if DHCP is already supplied by a separate server).
-
-First, dnsmasq must be turned on for the internal interface:
-
-* Network > Interfaces
-* click the desired internal interface to select it
-* DHCP Server
-* click the "Setup DHCP Server" button to enable dnsmasq on this interface -- this will enable both DHCP and DNS
-
-Now that dnsmasq is enabled, the DHCP portion of dnsmasq needs to be turned off.
-
-* Network > Interfaces
-* click the desired internal interface to select it
-* DHCP Server
-* Ignore interface: Enable this option
-* Save & Apply
-
-This change will turn off just DHCP but leave DNS services available on the specified interface.
-
 === Several DNS servers
 
 ----
@@ -600,13 +573,11 @@ config dnsmasq
 	list server '/subdomain.example.com/192.0.2.1'
 #be careful that some options should be absent (or set to False)
 #to allow the forwarding towards the "so defined" private networks
-#http:_en.wikipedia.org/wiki/Private_network
+#http://en.wikipedia.org/wiki/Private_network
 # likely 'bogusprivat'
 	list server '/example.com/208.67.222.222'
 	option rebind_protection '0'
 ----
-
-
 
 === Conditional DNS Forwarding for Windows Active Directory Domains / DNS Dependent Directory Based Authentication Services
 
@@ -635,7 +606,7 @@ nameserver 10.20.1.1
 
 All dns requests will be forwarded to 10.20.1.1 except any matching *.remote.local. server.remote.local will be forwarded to 10.25.11.2
 
-Credit:  [[http:_pyther.net/2010/12/dns-conditional-forwarding-dnsmasq/]]
+Credit:  link:http://pyther.net/2010/12/dns-conditional-forwarding-dnsmasq/[here]
 
 ----
 
@@ -668,7 +639,7 @@ config dhcp 'lan'
 	option limit '150'
 	option leasetime '12h'
 ----
-Almost completed, Now on to the finalization of the /etc/resolv.conf  Traditionally /etc/resolv.conf is populated via symlink based on interface settings which get inserted via script into /tmp/resolv.conf. We're going to disable this symlink because without doing so it would override our static settings.
+Almost completed, Now on to the finalisation of the /etc/resolv.conf  Traditionally /etc/resolv.conf is populated via symlink based on interface settings which get inserted via script into /tmp/resolv.conf. We're going to disable this symlink because without doing so it would override our static settings.
 
 You'll want to remove /etc/resolv.conf
 That will remove the resolv.conf symlink. Then we will add the ip address of the secondary DNS and external resolving address inside the /etc/resolv.conf file finally establishing conditional forwarding, something that should be specified for easy configuration via the GUI.
@@ -691,9 +662,3 @@ nameserver 127.0.0.1
 nameserver 208.67.220.220
 
 ----
-
-== Troubleshooting
-
-=== Losing connection due to missing dhcp response when the network is overloaded
-
-Sometimes when an interface is on the edge of the capacity (especially wifi over longer distances) a dhcp request could be not replied in time and therefore the dhcp client will not be able to receive proper network settings. A possible workaround is using static IPs or very long dhcp leases (more than 12h). This is particularly important when one has several wifi repeaters that use dhcp and are distant from each other or not easily accessible.
