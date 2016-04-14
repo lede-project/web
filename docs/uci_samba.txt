@@ -21,7 +21,7 @@ config 'samba'
 	option 'interface' 'loopback lan'
 ----
 
-[cols="4*1,4",options="header"]
+[cols="5*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Option | Description
 | 'name' | string | no | hostname or OpenWrt |  | Name of the Server
