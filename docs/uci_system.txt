@@ -43,8 +43,8 @@ These options can be set in the system section:
 
 | {{:meta:icons:tango:48px-outdated.svg.png?nolink}}  | In '/etc/config/system' 'busybox-rdate' (was invoked by scripts) has been replaced with 'busybox-nptd' (can run as a daemon) to avoid race condition and also to use current NTP. The remote time is since configured in '/etc/config/system' and not in '/etc/config/timeserver' any longer.
 
-* WARNING:  Old scripts first checked if a lease time server is defined for the interface in the [[doc:uci:network|network config]].
-* WARNING:  If not available or syncing fails, then it searches for time servers in the [[doc:uci:timeserver|timeserver config]] that are either explicitly defined for that interface or via the global setting in the system config.
+* WARNING:  Old scripts first checked if a lease time server is defined for the interface in the network config.
+* WARNING:  If not available or syncing fails, then it searches for time servers in the timeserver config that are either explicitly defined for that interface or via the global setting in the system config.
 
 ----
 config 'timeserver' 'ntp'

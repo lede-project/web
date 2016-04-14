@@ -223,7 +223,7 @@ CAUTION: Since custom iptables rules are meant to be more specific than the gene
 
 === IP Sets
 
-The UCI firewall version 3 supports referencing or creating [[http:_ipset.netfilter.org/|ipsets]] to simplify matching of
+The UCI firewall version 3 supports referencing or creating http://ipset.netfilter.org/[ipsets] to simplify matching of
 huge address or port lists without the need for creating one rule per item to match,
 
 The following options are defined for _ipsets_:
@@ -727,7 +727,7 @@ If traffic is _rejected_, the router will respond with an ICMP error message ("d
 
 When connection attempts are _dropped_ the client is not aware of the blocking and will continue to re-transmit its packets until the connection eventually times out. Depending on the way the client software is implemented, this could result in frozen or hanging programs that need to wait until a timeout occurs before they're able to continue.
 
-Also there is an interesting article which that claims dropping connections doesnt make you any safer - link:http:_www.chiark.greenend.org.uk/~peterb/network/drop-vs-reject[Drop versus Reject]
+Also there is an interesting article which that claims dropping connections doesnt make you any safer - link:http://www.chiark.greenend.org.uk/~peterb/network/drop-vs-reject[Drop versus Reject]
 
 **DROP**
 
@@ -751,7 +751,7 @@ By default, the firewall will disable connection tracking for a zone if no masqu
 
 CAUTION: _NOTRACK_ will render certain ipables extensions unusable, for example the _MASQUERADE_ target or the _state_ match will not work!
 
-If connection tracking is required, for example by custom rules in '/etc/firewall.user', the 'conntrack' option must be enabled in the corresponding zone to disable _NOTRACK_. It should appear as 'option 'conntrack' '1' ' in the right zone in '/etc/config/firewall'. For further information see http:_security.maruhn.com/iptables-tutorial/x4772.html .
+If connection tracking is required, for example by custom rules in '/etc/firewall.user', the 'conntrack' option must be enabled in the corresponding zone to disable _NOTRACK_. It should appear as 'option 'conntrack' '1' ' in the right zone in '/etc/config/firewall'. For further information see http://security.maruhn.com/iptables-tutorial/x4772.html .
 
 == Debug generated rule set
 
