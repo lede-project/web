@@ -21,7 +21,7 @@ config 'samba'
 	option 'interface' 'loopback lan'
 ----
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Option | Description
 | 'name' | string | no | hostname or OpenWrt |  | Name of the Server
@@ -47,7 +47,7 @@ config 'sambashare'
 	option 'read_only' 'yes'
 ----
 
-[options="header"]
+[cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Option | Description
 | 'name' | string | yes | _(none)_ |  | Name of the entry. Will be shown in the filebrowser.

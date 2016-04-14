@@ -9,6 +9,7 @@ This is the documentation for the UCI configuration file '/etc/config/qos'.
 == Sections
 
 A minimal QoS configuration usually consists of:
+
 * one _interface_ section
 * some _rules_ allocating packets to at least two buckets
 * _configuration_ of the buckets.
@@ -26,17 +27,22 @@ config interface dsl
 	option download     4096
 ----
 
+[cols="4*1,4",options="header"]
+|====
 | Name | Type | Required | Default | Description
 | 'enabled' | boolean | yes | '1' | Enable/Disable QoS
 | 'classgroup' | string | yes | 'Default' | Specify 'classgroup' used for this interface (see description of 'classgroup' below)
 | 'overhead' | boolean | yes | '1' | decrease upload and download ratio to prevent link saturation
 | 'download' | integer | yes | '4096' | Download limit in 'kilobits/second'
 | 'upload' | integer | yes | '512' | Upload limit in 'kilobits/second'
+|====
 
 === Rules
 
 Each 'classify' section defines one group of packets and which target (i.e. bucket) this group belongs to. All the packets share the bucket specified.
 
+[cols="4*1,4",options="header"]
+|====
 | Name | Type | Required | Default | Description
 | 'target' | bucket | yes | _(none)_ | The four defaults are: 'Priority, Express, Normal' and 'Bulk'
 | 'proto' | string | no | '0' | Packets matching this protocol belong to the bucket defined in target
@@ -53,6 +59,7 @@ Each 'classify' section defines one group of packets and which target (i.e. buck
 | 'tos' | string | no | _(none)_ | Packets matching this, belong to the bucket defined in target
 | 'dscp' | string | no | _(none)_ | Packets matching this, belong to the bucket defined in target
 | 'direction' | string | no | _(none)_ | Packets matching this traffic direction ('in' or 'out') belong to the bucket defined in target
+|====
 
 === Classgroup
 
@@ -64,9 +71,12 @@ config classgroup "Default"
 	option default      "Normal"
 ----
 
+[cols="4*1,4",options="header"]
+|====
 | Name | Type | Required | Default | Description
 | 'classes' | bucket names | yes | _(none)_ | Specifies the list of  names of _classes_
 | 'default' | bucket name | yes | _(none)_ | Defines which _class_ is considered default
+|====
 
 
 === Classes
@@ -82,6 +92,8 @@ config class "Normal"
 	option priority    5
 ----
 
+[cols="4*1,4",options="header"]
+|====
 | Name | Type | Required | Default | Description
 | 'packetsize' | integer | yes | _(none)_ | in bytes
 | 'packetdelay' | integer | yes | _(none)_ | in ms
@@ -90,6 +102,7 @@ config class "Normal"
 | 'limitrate' | integer | no  | 100 | Defines to how much percent of the available bandwidth this class is capped to, value in %
 | 'maxsize' | integer | yes | _(none)_ | in bytes
 | 'priority' | integer | yes | _(none)_ | in %
+|====
 
 === Classes (For Advanced Users)
 
@@ -119,13 +132,13 @@ Below is unverified technical breakdown of each /etc/config/qos class parameters
 
 == Quick start guide
 
-* Install the qos-scripts package:
+Install the qos-scripts package:
 
 ----
 opkg install qos-scripts
 ----
 
-* Basic configuration using UCI command line:
+Basic configuration using UCI command line:
 
 ----
 uci set qos.wan.upload=1000            # Upload speed in kBits/s
@@ -134,7 +147,7 @@ uci set qos.wan.enabled=1
 uci commit qos
 ----
 
-* Start it and look for error output and test):
+Start it and look for error output and test):
 
 ----
 /etc/init.d/qos start
@@ -148,7 +161,7 @@ uci commit qos
 
 == Troubleshooting
 
-* Look at the generated traffic control qdisc settings by running:
+Look at the generated traffic control qdisc settings by running:
 
 ----
 tc qdisc
@@ -160,11 +173,11 @@ The default (ie no-QoS-applied) values for any interface look like this:
 qdisc fq_codel 0: dev eth0 root refcnt 2 limit 1024p flows 1024 quantum 300 target 5.0ms interval 100.0ms ecn
 ----
 
-... Any interface with only a single qdisc line printed, showing the same settings as this line (this one is for _dev eth0_), indicates no QoS on that interface.
+Any interface with only a single qdisc line printed, showing the same settings as this line (this one is for _dev eth0_), indicates no QoS on that interface.
 
 Network interfaces with QoS enabled will have multiple qdisc lines printed, each corresponding to a QoS class, etc.
 
-* If the printed qdisc settings don't seem to be correct, you can preview the _tc_ commands generated from the OpenWRT _/etc/config/qos_ by running:
+If the printed qdisc settings don't seem to be correct, you can preview the _tc_ commands generated from the OpenWRT _/etc/config/qos_ by running:
 
 ----
 /usr/lib/qos/generate.sh interface wan
