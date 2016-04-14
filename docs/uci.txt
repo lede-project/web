@@ -51,4 +51,5 @@ root@foo:/#
 * link:uci_dropbear.html[/etc/config/dropbear]
 * link:uci_firewall.html[/etc/config/firewall]
 * link:uci_net.html[/etc/config/network]
+* link:uci_qos.html[/etc/config/qos]
 * link:uci_system.html[/etc/config/system]

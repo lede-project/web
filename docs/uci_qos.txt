@@ -1,0 +1,181 @@
+Quality of Service (qos-scripts) configuration
+==============================================
+
+This is the documentation for the UCI configuration file '/etc/config/qos'.
+
+*WARNING*: 'luci-app-qos' won't start until you enable the 'qos' Initscript within the System-->Startup tab as well as enable qos under Network-->QoS
+
+
+== Sections
+
+A minimal QoS configuration usually consists of:
+* one _interface_ section
+* some _rules_ allocating packets to at least two buckets
+* _configuration_ of the buckets.
+
+=== Interface
+
+Each Interface can have its own buffer. The 'interface' section declares global characteristics of the connection on which the specified interface is communicating. The following options are defined within this section:
+
+----
+config interface dsl
+	option enabled      1
+	option classgroup  "Default"
+	option overhead     1
+	option upload       512
+	option download     4096
+----
+
+| Name | Type | Required | Default | Description
+| 'enabled' | boolean | yes | '1' | Enable/Disable QoS
+| 'classgroup' | string | yes | 'Default' | Specify 'classgroup' used for this interface (see description of 'classgroup' below)
+| 'overhead' | boolean | yes | '1' | decrease upload and download ratio to prevent link saturation
+| 'download' | integer | yes | '4096' | Download limit in 'kilobits/second'
+| 'upload' | integer | yes | '512' | Upload limit in 'kilobits/second'
+
+=== Rules
+
+Each 'classify' section defines one group of packets and which target (i.e. bucket) this group belongs to. All the packets share the bucket specified.
+
+| Name | Type | Required | Default | Description
+| 'target' | bucket | yes | _(none)_ | The four defaults are: 'Priority, Express, Normal' and 'Bulk'
+| 'proto' | string | no | '0' | Packets matching this protocol belong to the bucket defined in target
+| 'srchost' | string | no | _(none)_ | Packets matching this source host(s) (single IP or in CIDR notation) belong to the bucket defined in target
+| 'dsthost' | string | no | _(none)_ | Packets matching this destination host(s) (single IP or in CIDR notation) belong to the bucket defined in target
+| 'ports' | integer | no | _(none)_ | Packets matching this, belong to the bucket defined in target
+| 'srcports' | integer | no | _(none)_ | Packets matching this, belong to the bucket defined in target
+| 'dstports' | integer | no | _(none)_ | Packets matching this, belong to the bucket defined in target
+| 'portrange' | integer | no | _(none)_ | Packets matching this, belong to the bucket defined in target
+| 'pktsize' | integer | no | _(none)_ | Packets matching this, belong to the bucket defined in target
+| 'tcpflags' | string | no | _(none)_ | Packets matching this, belong to the bucket defined in target
+| 'mark' | string | no | _(none)_ | Packets matching this, belong to the bucket defined in target
+| 'connbytes' | int | no | _(none)_ | Packets matching this, belong to the bucket defined in target
+| 'tos' | string | no | _(none)_ | Packets matching this, belong to the bucket defined in target
+| 'dscp' | string | no | _(none)_ | Packets matching this, belong to the bucket defined in target
+| 'direction' | string | no | _(none)_ | Packets matching this traffic direction ('in' or 'out') belong to the bucket defined in target
+
+=== Classgroup
+
+As we can have more then one interface, we can have more then one classgroup.
+
+----
+config classgroup "Default"
+	option classes      "Priority Express Normal Bulk"
+	option default      "Normal"
+----
+
+| Name | Type | Required | Default | Description
+| 'classes' | bucket names | yes | _(none)_ | Specifies the list of  names of _classes_
+| 'default' | bucket name | yes | _(none)_ | Defines which _class_ is considered default
+
+
+=== Classes
+
+Each Bucket has its own configuration.
+
+Example:
+----
+config class "Normal"
+	option packetsize  1500
+	option packetdelay 100
+	option avgrate     10
+	option priority    5
+----
+
+| Name | Type | Required | Default | Description
+| 'packetsize' | integer | yes | _(none)_ | in bytes
+| 'packetdelay' | integer | yes | _(none)_ | in ms
+| 'maxsize' | integer | yes | _(none)_ | in bytes
+| 'avgrate' | integer | yes | _(none)_ | Average rate for this class, value in % of bandwidth (this value uses for calculate vaues 'Nx' of ''tc ... hfsc rt m1 N1 d N2 m2 N3'')
+| 'limitrate' | integer | no  | 100 | Defines to how much percent of the available bandwidth this class is capped to, value in %
+| 'maxsize' | integer | yes | _(none)_ | in bytes
+| 'priority' | integer | yes | _(none)_ | in %
+
+=== Classes (For Advanced Users)
+
+Below is unverified technical breakdown of each /etc/config/qos class parameters.
+
+----
+### Params:
+#
+# maxsize:
+#       limits packet size in iptables rule
+#
+# avgrate: (note: sum(avgrates) ~ 100)
+#       rt m1 = avgrate / sum (avgrate) * max_bandwidth
+#       rt m2 = avgrate * max_bandwidth / 100
+#       ls m1 = rt m1
+#
+# packetsize & packetdelay: (only works if avgrate is present)
+#       rt d = max( packetdelay, 'time required for packetsize to transfer' ) (smaller ps -> smaller d)
+#       ls d = rt d
+#
+# priority:
+#       ls m2 = priority / sum (priority) * max_bandwidth
+#
+# limitrate:
+#       ul rate = limitrate * max_bandwidth / 100
+----
+
+== Quick start guide
+
+1. Install the qos-scripts package:
+
+----
+opkg install qos-scripts
+----
+
+2. Basic configuration using UCI command line:
+
+----
+uci set qos.wan.upload=1000            # Upload speed in kBits/s
+uci set qos.wan.download=16000         # Download speed in kBits/s
+uci set qos.wan.enabled=1
+uci commit qos
+----
+
+3. Start it and look for error output and test):
+
+----
+/etc/init.d/qos start
+----
+
+4. Make script run at every boot up:
+
+----
+/etc/init.d/qos enable
+----
+
+== Troubleshooting
+
+* Look at the generated traffic control qdisc settings by running:
+
+----
+tc qdisc
+----
+
+The default (ie no-QoS-applied) values for any interface look like this:
+
+----
+qdisc fq_codel 0: dev eth0 root refcnt 2 limit 1024p flows 1024 quantum 300 target 5.0ms interval 100.0ms ecn
+----
+
+... Any interface with only a single qdisc line printed, showing the same settings as this line (this one is for _dev eth0_), indicates no QoS on that interface.
+
+Network interfaces with QoS enabled will have multiple qdisc lines printed, each corresponding to a QoS class, etc.
+
+* If the printed qdisc settings don't seem to be correct, you can preview the _tc_ commands generated from the OpenWRT _/etc/config/qos_ by running:
+
+----
+/usr/lib/qos/generate.sh interface wan
+----
+
+(Replace 'wan' with the UCI interface name you're debugging, as given in the _/etc/config/qos_ file.)
+
+This should print a series of _insmod_ and _tc_ commands used to set up the QoS subsystem. You can debug any errors caused by running these commands by running:
+
+----
+/usr/lib/qos/generate.sh interface wan | sh -x
+----
+
+The output of _/usr/lib/qos/generate.sh_ is normally executed automatically as part of _/etc/hotplug.d/iface/10-qos_.
