@@ -1,0 +1,341 @@
+Key Generation
+==============
+
+include::menu.inc[]
+
+== Generate GPG signing key pair
+
+The guide will explain how to generate a new key pair, how to create a
+signing sub key and how to strip the secret master key to avoid leaking
+your primary secret key identity in case your signing key (or the entire
++~/.gnupg/+) ever gets lost.
+
+
+=== 1) Generate new, fresh key pair on a secure machine
+
+----
+$ mkdir /tmp/signing
+$ chmod 0700 /tmp/signing
+$ gpg --homedir /tmp/signing --gen-key
+gpg (GnuPG) 1.4.18; Copyright (C) 2014 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+gpg: keyring `/tmp/signing/secring.gpg' created
+gpg: keyring `/tmp/signing/pubring.gpg' created
+----
+
+TIP: Pick 4 to generate an RSA-only key and choose a key size of 4096 bits.
+     For this how-to I choose to set no expiry at all.
+
+----
+Please select what kind of key you want:
+   (1) RSA and RSA (default)
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+Your selection? 4
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (2048) 4096
+Requested keysize is 4096 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0)
+Key does not expire at all
+Is this correct? (y/N) y
+----
+
+TIP: GPG will ask about your user identity now, provide your real name and
+     the mail address you intend to use for your project communication.
+     I also suggest to provide a meaningful comment, eg. "LEDE Signing Key"
+
+
+----
+You need a user ID to identify your key; the software constructs the user ID
+from the Real Name, Comment and Email Address in this form:
+    "Heinrich Heine (Der Dichter) <heinrichh@duesseldorf.de>"
+
+Real name: Jo-Philipp Wich
+Email address: jo@mein.io
+Comment: LEDE Signing Key
+You selected this USER-ID:
+    "Jo-Philipp Wich (LEDE Signing Key) <jo@mein.io>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
+You need a Passphrase to protect your secret key.
+----
+
+TIP: At this point enter a good pass phrase twice to protect your secret
+     key, the command will take a while to gather entropy and complete key
+     until it'll eventually print the key summary:
+
+----
+gpg: /tmp/signing/trustdb.gpg: trustdb created
+gpg: key 612A0E98 marked as ultimately trusted
+public and secret key created and signed.
+
+gpg: checking the trustdb
+gpg: 3 marginal(s) needed, 1 complete(s) needed, PGP trust model
+gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
+pub   4096R/612A0E98 2016-04-05
+      Key fingerprint = 69B2 6A27 62D0 65E6 6F59  6755 C76F DE50 612A 0E98
+uid                  Jo-Philipp Wich (LEDE Signing Key) <jo@mein.io>
+
+Note that this key cannot be used for encryption.  You may want to use
+the command "--edit-key" to generate a subkey for this purpose.
+----
+
+=== 2) Generate a sub key
+
+----
+$ gpg --homedir /tmp/signing --edit-key jo@mein.io
+gpg (GnuPG) 1.4.18; Copyright (C) 2014 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Secret key is available.
+
+pub  4096R/612A0E98  created: 2016-04-05  expires: never       usage: SC
+                     trust: ultimate      validity: ultimate
+[ultimate] (1). Jo-Philipp Wich (LEDE Signing Key) <jo@mein.io>
+----
+
+TIP: In the now appearing interactive gpg prompt enter "addkey" to create
+     a new signing subkey. GnuPG will ask your to unlock the master key using
+     the passphrase you've given in the previous step.
+
+----
+gpg> addkey
+Key is protected.
+
+You need a passphrase to unlock the secret key for
+user: "Jo-Philipp Wich (LEDE Signing Key) <jo@mein.io>"
+4096-bit RSA key, ID 612A0E98, created 2016-04-05
+
+Please select what kind of key you want:
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+   (5) Elgamal (encrypt only)
+   (6) RSA (encrypt only)
+----
+
+TIP: We'll use a signing-only 4096bit RSA key with an validity of two years
+
+----
+Your selection? 4
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (2048) 4096
+Requested keysize is 4096 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0) 730
+Key expires at Thu Apr  5 18:19:42 2018 CEST
+Is this correct? (y/N) y
+Really create? (y/N) y
+----
+
+TIP: At this point, GnuPG will start gathering entropy again, running an
+     "find /" in the background is a good way to speed it up. When done it
+     will print the sub key summary and return to the prompt. Note the ID
+     "1584F206" of the subkey, we'll need that in step 4.
+
+----
+pub  4096R/612A0E98  created: 2016-04-05  expires: never       usage: SC
+                     trust: ultimate      validity: ultimate
+sub  4096R/1584F206  created: 2016-04-05  expires: 2018-04-05  usage: S
+[ultimate] (1). Jo-Philipp Wich (LEDE Signing Key) <jo@mein.io>
+----
+
+TIP: Enter "save" to commit the new key pair and its sub key to disk, the
+     GnuPG will automatically exit to the shell.
+
+----
+gpg> save
+----
+
+=== 3) Put the key into a vault
+
+At this point it is a good idea to make a *reliable and secure* backup
+of the +/tmp/signing/+ directory, I suggest burning it onto a CDROM or
+copying it onto a thumb drive which you can safely lock away or hide in
+your apartment :)
+
+=== 4) Export the private sub key only
+
+We'll now export just the secret sub key since that is all we'll ever
+need to sign files. Use the sub key ID from step 2 followed by an
+exclamation mark to select the sub key to export:
+
+----
+$ gpg --homedir /tmp/signing --export-secret-subkeys 1584F206! \
+   > /tmp/secret-signing-key.pgp
+$ file /tmp/secret-signing-key.pgp
+secret-signing-key.pgp: PGP\011Secret Key - 1024b created on Tue Apr  5
+16:08:15 2016 - RSA (Encrypt or Sign)
+----
+
+=== 5) Import the secret signing sub key into your actual key store
+
+You can now import the secret signing sub key on any machine you'll use
+for signing files in the future. To import the sub key file, pass it to
++gpg --import+ and leave out the alternative homedir argument:
+
+----
+$ gpg --import /tmp/secret-signing-key.pgp
+gpg: key 612A0E98: secret key imported
+gpg: key 612A0E98: public key "Jo-Philipp Wich (LEDE Signing Key)
+<jo@mein.io>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1  (RSA: 1)
+gpg:       secret keys read: 1
+gpg:   secret keys imported: 1
+----
+
+TIP: You can now issue a "gpg -K" to list all secret keys in your key store,
+     you should see the key you've imported with a leading "sec#". The hash
+     mark here indicates that the secret master key is missing, which is what
+     we want.
+
+----
+$ gpg -K
+/home/jow/.gnupg/secring.gpg
+ ---------------------------
+[...]
+sec#  4096R/612A0E98 2016-04-05
+uid                  Jo-Philipp Wich (LEDE Signing Key) <jo@mein.io>
+ssb   4096R/1584F206 2016-04-05
+----
+
+TIP: It is time to upload your public key part to a key server now so that
+     others can easily fetch it by its fingerprint or your chosen mail
+     address later on. For uploading use the primary key ID printed after
+     the "sec#" word in the previous command.
+
+----
+$ gpg --keyserver hkp://pool.sks-keyservers.net --send-keys 612A0E98
+gpg: sending key 612A0E98 to hkp server pool.sks-keyservers.net
+----
+
+=== 6) Delete original
+
+Make sure once again that your backup of the +/tmp/signing+ directory is
+complete and readable, then remove the secret sub key file and the
+entire temporary signing directory:
+
+----
+$ rm -r /tmp/signing/
+$ rm /tmp/secret-signing-key.pgp
+----
+
+TIP: You're now done setting up a suitable signing key pair.
+
+=== 7) Finish
+
+To export your public key in ASCII format use the following command,
+again with the primary ID you've already used for uploading the pubkey.
+
+Make sure to provide a meaningful comment so that people looking at the
+key file know who it belongs to without having to inspect it using GPG
+utilities:
+
+----
+$ gpg --armor --export --no-version \
+	--comment="Public key of Jo-Philipp Wich" 612A0E98
+----
+
+In order to sign a file with your signing sub key, use the command below:
+
+----
+$ gpg --no-version -a -b -u 612A0E98 \
+	--comment="My signature for something" -o output.sig input.file
+----
+
+TIP: Use your key ID as filename when adding your public signing key to the
+     repository:
+
+----
+$ cd keyring/gpg/
+$ gpg --armor --export --no-version \
+  --comment="Public key of Me Myself" 612A0E98 > 612A0E98.asc
+$ git add 612A0E98.asc
+$ git commit -sm "Add my public key"
+$ git push origin master
+----
+
+== Generate _usign_ key pair
+
+In order to generate an _usign_ key pair for use in LEDE release and package
+repositories, follow the steps below.
+
+=== 1) Obtain _usign_
+
+Clone the _usign_ repository and compile it. Note that the compilation requires
+an installed +cmake+ to succeed.
+
+----
+$ git clone https://git.openwrt.org/project/usign.git
+$ cd usign/
+$ cmake .
+$ make
+----
+
+TIP: Run +./usign+ to check that the binary works.
+
+----
+$ ./usign
+Usage: ./usign <command> <options>
+Commands:
+  -V:			verify (needs at least -m and -p|-P)
+  -S:			sign (needs at least -m and -s)
+  -F:			print key fingerprint of public/secret key or signature
+  -G:			generate a new keypair
+Options:
+  -c <comment>: 	add comment to keys
+  -m <file>:		message file
+  -p <file>:		public key file (verify/fingerprint only)
+  -P <path>:		public key directory (verify only)
+  -q:			quiet (do not print verification result, use return code only)
+  -s <file>:		secret key file (sign/fingerprint only)
+  -x <file>:		signature file (defaults to <message file>.sig)
+----
+
+=== 2) Generate key pair
+
+Instruct the +usign+ executable to generate a new key pair and provide a
+suitable comment to be able to identify the key file later on.
+
+----
+./usign -G -c "LEDE usign key of Jo-Philipp Wich" \
+  -s secret.key -p public.key
+----
+
+TIP: Store the +secret.key+ file in a *secure and reliable* location, you'll
+     need it to sign package repositories in the future.
+
+=== 3) Add public key to the repository
+
+Obtain the fingerprint of your public key with the +usign -F+ command and use
+it as filename for storing the pubkey in the +keyring.git+ repository:
+
+----
+$ ./usign -F -p public.key
+72a57f2191b211e0
+----
+
+TIP: Add the key to Git, using the fingerprint as filename:
+
+----
+$ cd keyring/usign/
+$ cp /some/where/public.key 72a57f2191b211e0
+$ git add 72a57f2191b211e0
+$ git commit -sm "Add my public usign key"
+$ git push origin master
+----

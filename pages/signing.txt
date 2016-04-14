@@ -1,0 +1,128 @@
+Release Signing
+===============
+
+include::menu.inc[]
+
+== Signing Approach
+
+LEDE uses both https://www.gnupg.org/[GnuPG] and _usign_, a derivate of the
+OpenBSD http://www.openbsd.org/papers/bsdcan-signify.html[_signify_] utilitiy.
+
+The _OPKG_ package manager uses _usign_ Ed25519 signatures to verify repository
+metadata when installing packages while release image files are usually signed
+by one or more developers with detached GPG signatures to allow users to verify
+the integrity of installation files.
+
+Our _usign_ signature files carry the extension +.sig+ while the detached
+GPG signatures end with +.gpg+.
+
+Note that not every file is signed individually but that we're signing the
++md5sums+ and +sha256sums+ or - for repositories - the +Packages+ files to
+establish a chain of trust: The SHA256 checksum will verify the integrity of the
+actual file while the signature will verify the integrity of the file containing
+the checksums.
+
+=== Verify download integrity
+
+In order to verify the integrity of a firmware download you need to do the
+following steps:
+
+. Download the +sha256sum+ and +sha256sum.gpg+ files
+. Check the signature with +gpg --with-fingerprint --verify sha256sum.gpg
+  sha256sum+, ensure that the GnuPG command reports a good signature and that
+  the fingerprint matches the ones listed on our fingerprints (TODO:link) page.
+. Download the firmware image and calculate its hash using one of the
+  +sha256sum+ or +openssl sha256+ commands.
+. Verify that the calculated checksum matches the one listed in the +sha256sums+
+  file.
+
+You can use the example script below to verify the integrity of image downloads,
+call it as +./script.sh https://downloads.lede-project.org/path/to/image.bin+
+
+----
+#!/bin/bash
+
+[ -n "$1" ] || {
+	echo "Usage: $0 <url>" >&2
+	exit 1
+}
+
+finish() {
+	echo "Cleaning up."
+	rm -r "/tmp/verify.$$"
+	exit $1
+}
+
+trap "finish 7" INT TERM
+
+destdir="$(pwd)"
+image_url="$1"
+image_file="${image_url##*/}"
+sha256_url="${image_url%/*}/sha256sums"
+gpgsig_url="${image_url%/*}/sha256sums.gpg"
+
+mkdir -p "/tmp/verify.$$"
+cd "/tmp/verify.$$"
+
+echo "1) Downloading image file"
+echo "========================="
+wget -O "$image_file" "$image_url" || {
+	echo "Failed to download image file!" >&2
+	finish 1
+}
+
+echo "2) Downloading checksum file"
+echo "============================"
+wget -O "sha256sums" "$sha256_url" || {
+	echo "Failed to download checksum file!" >&2
+	finish 2
+}
+
+echo "3) Downloading the GPG signature"
+echo "================================"
+wget -O "sha256sums.gpg" "$gpgsig_url" || {
+	echo "Failed to download GPG signature!" >&2
+	finish 3
+}
+
+echo "4) Verifying GPG signature"
+echo "=========================="
+gpg --with-fingerprint --verify "sha256sums.gpg" "sha256sums" || {
+	echo "Failed to verify checksum file with GPG signature!" >&2
+	finish 4
+}
+
+echo ""
+echo "5) Verifying SHA256 checksum"
+echo "============================"
+remote_csum="$(grep -F "SHA256($image_file)=" "sha256sums")"
+local_csum="$(openssl sha256 "$image_file")"
+[ "$remote_csum" = "$local_csum" ] || {
+	echo "Checksums do not match!" >&2
+	echo "REMOTE: $remote_csum" >&2
+	echo "LOCAL:  $local_csum" >&2
+	finish 5
+}
+
+cp "$image_file" "$destdir/$image_file" || {
+	echo "Failed to write '$destdir/$image_file'" >&2
+	finish 6
+}
+
+echo ""
+echo "Verficiation done!"
+echo "=================="
+echo "Firmware image placed in '$dest_dir/$image_file'."
+
+finish 0
+----
+
+
+=== Developer information
+
+Developers participating in the LEDE project need to provide both _GnuPG_ and
+_usign_ public keys which are stored in the central
+https://git.lede-project.org/?p=keyring.git[keyring.git] repository.
+
+Refer to the link:/keygen.html[key generation howto] page for instruction on how to
+generate suitable signing keys.
