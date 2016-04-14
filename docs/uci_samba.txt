@@ -1,0 +1,138 @@
+Samba (smb)
+===========
+
+=====UCI configuration options=====
+
+The UCI configuration file is located at /etc/config/samba.
+
+=== Common Options
+
+The config section type 'samba' determines values and options relevant to the overall operation of samba. The following table lists all available options, their default value and respectively a short characterization. See link:http://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html#idp58030944[smb.conf man page] for further details.
+
+These are the default settings for the common options:
+
+----
+config 'samba'
+	option 'name' 'OpenWrt'
+	option 'workgroup' 'OpenWrt'
+	option 'description' 'Samba on OpenWrt'
+	option 'charset' 'UTF-8'
+	option 'homes' '0'
+	option 'interface' 'loopback lan'
+----
+
+[options="header"]
+|====
+| Name | Type | Required | Default | Option | Description
+| 'name' | string | no | hostname or OpenWrt |  | Name of the Server
+| 'workgroup' | string | no | hostname or OpenWrt |  | Name of the Workgroup
+| 'description' | string | no | Samba on hostname or OpenWrt |  | Description of the Server
+| 'charset' | string | no | UTF-8 |  | Display charset & unix charset
+| 'homes' | boolean | no | 0 | 0, 1 | Share the user directory
+| 'interface' | string | no | loopback lan |  | Interfaces samba should listen on.
+|====
+
+=== Sambashare
+
+The daemons are up and running and recheable via NetBIOS. Now you only need to configure the directories you intend to make accesible to users in your LAN. This example assumes you attached a USB harddisk to the USB-Port and _correctly_ mounted a partition. You can now choose to share the partition as a whole, or just individual directories on it. For each entry you need to create an individual config 'sambashare' section.
+
+----
+config 'sambashare'
+	option 'name' 'Shares'
+	option 'path' '/mnt/sda3'
+#       option 'users' 'sandra'
+	option 'guest_ok' 'yes'
+	option 'create_mask' '0700'
+	option 'dir_mask' '0700'
+	option 'read_only' 'yes'
+----
+
+[options="header"]
+|====
+| Name | Type | Required | Default | Option | Description
+| 'name' | string | yes | _(none)_ |  | Name of the entry. Will be shown in the filebrowser.
+| 'path' | file path | yes | _(none)_ | | The complete path of the directory. link:http//www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html#PATH[path]
+| 'users' | string | no | guest account or from global template | | the samba-users allowed access to this entry; use 'smbpasswd' to create a user-pwd combination! Several users can be specified, separated by a coma (ex : option 'users' 'root,nobody' ). Translated to link:http://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html#VALIDUSERS[valid users]
+| 'read_only' | string | no | yes or from global template | no, yes | no allows for read/write, else only read access is granted; (for rw, you also need to mount fs rw!). link:http://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html#READONLY[read only]
+| 'guest_ok' | string | no | no or from global template | no, yes | Specifies if you need to login via samba-username and password to access this share. link:http://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html#GUESTOK[guest ok].
+| 'create_mask' | integer | no | 0744 or from global template | | chmod mask for files created (needs write access). http://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html#CREATEMASK[create mask]
+| 'dir_mask' | integer | no | 0755 or from global template | | chmod mask for directories created (need write access). link:http://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html#DIRECTORYMASK[directory mask].
+|====
+
+== Additional Configuration Options
+
+In addition to the UCI file ('/etc/config/samba'), modifications can be made to the '/etc/samba/smb.conf.template' file.
+
+== Configuration examples
+
+Samba can be configured at either share level access or user level access.  At share level access all users on the network can access the share, and all files are shared with all users.  At user level access a username and password are needed to access the share. By default Samba is configured for user level access.
+
+These configurations have proven to work for some:
+
+=== Share level access
+
+To set share level access change 'security = user' to 'security = share' in '/etc/samba/smb.conf.template':
+
+Then add a share to '/etc/config/samba'. Make sure that 'guest ok' is set to 'yes'
+----
+config 'samba'
+	option 'name' 'lede'
+	option 'workgroup' 'WORKGROUP'
+	option 'description' 'lede'
+	option 'homes' '1'
+
+config 'sambashare'
+	option 'read_only' 'no'
+	option 'create_mask' '0700'
+	option 'dir_mask' '0700'
+	option 'name' 'name-of-share'
+	option 'path' '/path/of/share'
+	option 'guest_ok' 'yes'
+----
+
+=== User level access
+
+At user level access a username and password are needed to access the share.
+
+Steps:
+
+=== 1. Add user to system ===
+
+To access a samba share with user level access there must be a user added to the system. Edit '/etc/passwd' and add a line for the new user. Choose a user id (the first number in the line) of 1000 or higher that does not exist yet. Set the group identification number (the second number) to the same number as the user nobody. Copy the rest.
+
+----
+root:0:0:root:/root:/bin/ash
+nobody:*:65534:65534:nobody:/var:/bin/false
+daemon:*:65534:65534:daemon:/var:/bin/false
+newuser:*:1000:65534:newuser:/var:/bin/false
+----
+
+**Note:** keep in mind that the user(s) and group(s) utilized by Samba need to have the proper permissions for their shares, i.e. they need write access in order to write via smb.
+
+=== 2. Add samba password to user ===
+
+'smbpasswd -a newuser'
+
+=== 3. Change samba config to accept users with null passwords ===
+
+Edit '/etc/samba/smb.conf.template' and add 'null passwords = yes':
+
+=== 4. Add a share ===
+
+Then add a share to '/etc/config/samba'. Make shure that 'guest ok' is set to 'no'
+
+----
+config 'samba'
+	option 'name' 'lede'
+	option 'workgroup' 'WORKGROUP'
+	option 'description' 'lede'
+	option 'homes' '1'
+
+config 'sambashare'
+	option 'read_only' 'no'
+	option 'create_mask' '0700'
+	option 'dir_mask' '0700'
+	option 'name' 'name-of-share'
+	option 'path' '/path/of/share'
+	option 'guest_ok' 'no'
+----
