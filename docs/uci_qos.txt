@@ -119,13 +119,13 @@ Below is unverified technical breakdown of each /etc/config/qos class parameters
 
 == Quick start guide
 
-1. Install the qos-scripts package:
+* Install the qos-scripts package:
 
 ----
 opkg install qos-scripts
 ----
 
-2. Basic configuration using UCI command line:
+* Basic configuration using UCI command line:
 
 ----
 uci set qos.wan.upload=1000            # Upload speed in kBits/s
@@ -134,13 +134,13 @@ uci set qos.wan.enabled=1
 uci commit qos
 ----
 
-3. Start it and look for error output and test):
+* Start it and look for error output and test):
 
 ----
 /etc/init.d/qos start
 ----
 
-4. Make script run at every boot up:
+* Make script run at every boot up:
 
 ----
 /etc/init.d/qos enable
