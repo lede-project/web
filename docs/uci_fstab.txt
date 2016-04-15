@@ -1,0 +1,94 @@
+Fstab Configuration
+===================
+
+The Fstab, or **f**ile **s**ystems **tab**le, is a central configuration that defines how file systems (usually on block devices) should be mounted if requested (such as on booting the device or connecting it physically). This way, you don't have to manually mount your devices when you want to access them. The mounting configuration can consist of static file systems but also swap partitions. The fstab UCI configuration file is where all the options for all devices and file systems to be mounted are defined and is located at...
+
+----
+/etc/config/fstab
+----
+
+== Initial Configuration
+
+=== Package Installation
+
+----
+opkg update
+opkg install block-mount
+----
+
+=== Creating Initial fstab Automatically
+
+You can use the new 'block' utility. Call 'block detect' to get a sample [[doc/UCI]] configuration file. You can change this to your liking. 
+
+You can quickly install this standard configuration using:
+
+----
+block detect > /etc/config/fstab
+----
+
+Next, edit your fstab, as per the configuration below:
+
+----
+vi /etc/config/fstab
+----
+
+If the mount target is '/' then it will be used as external root upon boot. See [[doc/howto/extroot|Extroot]] for more information. Running 'block info' is also valid to get the uuid of different file systems. Also see this guide: [[doc:techref:block_mount]] for technical details of the mounting process and scripts involved.
+
+=== Enable fstab at Boot
+
+To enable use the following command
+----
+/etc/init.d/fstab enable
+----
+
+Whenever you change your configuration, restart this to make it take effect:
+
+----
+block umount
+block mount
+----
+
+
+== Configuration
+
+The configuration file consists of a 'global' section defining defaults, 'mount' sections defining file systems to be mounted and 'swap' sections defining partitions to be activated.
+
+
+=== The Global section
+
+[cols="4*1,4",options="header"]
+|====
+| Name | Type | Required | Default | Description
+| 'anon_swap' | boolean | no | 0 | mount swap devices that don't have their own config section
+| 'anon_mount' | boolean | no | 0 | mount block devices that don't have their own config section
+| 'auto_swap' | boolean | no | 1 | automatically mount swap devices when they appear
+| 'auto_mount' | boolean | no | 1 | automatically mount block devices when they appear
+| 'delay_root' | integer | no | 0 | wait X seconds before trying to mount root devices on boot
+| 'check_fs' | boolean | no | 0 | un e2fsck on device prior to a mount
+|====
+
+=== The Swap sections
+
+[cols="4*1,4",options="header"]
+|====
+| Name | Type | Required | Default | Description
+| 'device' | string | no | - | The swap partitions device node (e.g. sda1)
+| 'uuid' | string | no | - | The swap partitions UUID
+| 'label' | string | no | - | The swap partitions label (e.g. mkswap -L label /dev/sdb2)
+|====
+
+=== The Mount sections
+
+[cols="4*1,4",options="header"]
+|====
+| Name | Type | Required | Default | Description
+| 'device' | string | no | - | The data partitions device node (e.g. sda1)
+| 'uuid' | string | no | - | The data partitions UUID
+| 'target' | string | no | - | The data partitions mount point. Some values have special meanings, see the Extroot section below.
+|====
+
+
+== The right amount of SWAP
+
+If you ask people or search the net, you will find as a general rule of thumb _double RAM_ for machines with 512MiB of RAM or less than, and _same amount as RAM_ for machines with more. But this very rough estimate does apply for your embedded device! Be aware that there are exactly two differences between RAM and SWAP, that matter: the **access time** and the **price**. A CUPS spooling server will run just fine, when only SWAP is available, whereas some applications may perform very poorly when their data it stored on the SWAP rather then being kept in the "real" RAM. The decision which data is kept in the RAM and which is stored on the SWAP is made by the system. In contrast to other operating systems, Linux makes ample use of memory, so that your system runs smoother and more efficiently. If memory is then needed by an application, the system will unload stuff again, and make memory available.
+
