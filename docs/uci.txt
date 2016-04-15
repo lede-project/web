@@ -54,3 +54,4 @@ root@foo:/#
 * link:uci_qos.html[/etc/config/qos]
 * link:uci_samba.html[/etc/config/samba]
 * link:uci_system.html[/etc/config/system]
+* link:uci_wireless.html[/etc/config/wireless]

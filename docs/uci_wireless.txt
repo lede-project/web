@@ -1,0 +1,418 @@
+Wireless configuration
+======================
+
+The wireless UCI configuration is located in '/etc/config/wireless'. Learn about the entire [[doc:howto:wireless.overview|IEEE 802.11 "wireless" subsystem]].
+
+By default the wireless is **OFF**. You can turn it on in the '/etc/config/wireless' by changing 'disabled 1' to 'disabled 0'
+
+== Sections
+
+A typical wireless config file contains at least one _wifi device_ specifying general radio properties like channel, driver type and txpower and one _wifi interface_ defining a wireless network on top of the radio device.
+
+=== Wifi Devices
+
+The 'wifi-device' refer to physical radio devices present on the system. The options present in this section describe properties common across all wireless networks on this radio interface, such as channel or antenna selection.
+
+A minimal 'wifi-device' declaration may look like the example below. Note that identifiers and options may vary for different chipset types or drivers.
+
+----
+config 'wifi-device' 'wl0'
+	option 'type'    'broadcom'
+	option 'channel' '6'
+----
+
+* 'wl0' is the _internal identifier_ for the wireless adapter
+* 'broadcom' specifies the _chipset/driver type_
+* '6' is the _wireless channel_ the device operates on
+
+The possible options for device sections are listed in the table below.
+Note that not all options are used for all chipset/driver types, refer to the comments for further details.
+
+=== Common Options
+
+[cols="4*1,4",options="header"]
+|====
+| Name | Type | Required | Default | Description
+| 'type' | string | yes | _(autodetected)_ | The 'type' is determined on firstboot during the initial radio device detection - it is usually not required to change it. Used values are 'broadcom' on brcm47xx, or 'mac80211' for all other platforms
+| 'phy' | string | no/yes | _(autodetected)_ | Specifies the radio phy associated to this section. If present, it is usually autodetected and should not be changed.
+| 'macaddr' | MAC address | yes/no | _(autodetected)_ | Specifies the radio adapter associated to this section, it is _not_ used to change the device mac but to identify the underlying interface.
+| 'ifname' | string | no | _(driver default)_ | Specifies a custom name for the wifi interface, which is otherwise automatically named.
+| 'disabled' | boolean | no | '0' | Disables the radio adapter if set to '1'. Removing this option or setting it to '0' will enable the adapter
+| 'channel' | integer or "auto" | yes | 'auto' | Specifies the wireless channel to use. "auto" defaults to the lowest available channel.
+| 'hwmode' | string | no | _(driver default)_ | Selects the wireless protocol to use, possible values are '11b', '11g', and '11a'
+| 'htmode' | string | no | _(driver default)_ | Specifies the channel width in 802.11n and 802.11ac mode, possible values are: 'HT20', 'HT40-', 'HT40+', 'HT40', 'NONE' or 'VHT20', 'VHT40',  'VHT80', 'VHT160'
+| 'chanbw' | integer | no | 20 | Specifies a narrow channel width in MHz, possible values are: '5', '10', '20'
+| 'ht_capab' | string | no | _(driver default)_ | Specifies the available capabilities of the radio. The values are autodetected. See link:http://hostap.epitest.fi/cgit/hostap/tree/hostapd/hostapd.conf[here] for options
+| 'txpower' | integer | no | _(driver default)_ | Specifies the _transmission power in dBm_
+| 'diversity' | boolean | no | '1' | Enables or disables the automatic antenna selection by the driver
+| 'rxantenna' | integer | no | _(driver default)_ | Specifies the _antenna for receiving_, the value may be driver specific, usually it is '1' for the first and '2' for the second antenna. Specifying '0' enables automatic selection by the driver if supported. This option has no effect if diversity is enabled
+| 'txantenna' | integer | no | _(driver default)_ | Specifies the _antenna for transmitting_, values are identical to 'rxantenna'
+| 'country' | varies | no | _(driver default)_ | Specifies the country code, affects the available channels and transmission powers. For type 'broadcom' a two letter country code is used ('EN' or 'DE'). The 'madwifi' driver expects a numeric code.
+| 'country_ie' | boolean | no | 1 if 'country' is set, otherwise 0 | Enables IEEE 802.11d country IE (information element) advertisement in beacon and probe response frames. This IE contains the country code and channel/power map. Requires 'country'.
+| 'distance' | integer | no | _(driver default)_ | Distance between the ap and the furthest client in meters.
+| 'beacon_int' | integer | no | _100 (hostapd default)_ | Set the beacon interval. This is the time interval between beacon frames, measured in units of 1.024 ms. hostapd permits this to be set between 15 and 65535. This option only has an effect on 'ap' and 'adhoc' wifi-ifaces
+| 'basic_rate' | list | no | _(hostapd/driver default)_ | Set the supported basic rates. Each basic_rate is measured in kb/s. This option only has an effect on 'ap' and 'adhoc' wifi-ifaces.
+| 'supported_rates' | list | no | _(hostapd/driver default)_ | Set the supported data rates. Each supported rate is measured in kb/s. This option only has an effect on 'ap' and 'adhoc' wifi-ifaces. Must be a superset of basic_rate. Basic_rate should be the lowest data rates.
+| 'require_mode' | string | no | _none_ | (AP mode) Set the minimum mode that connecting clients need to support to be allowed to connect. Supported values: g = 802.11g, n = 802.11n, ac = 802.11ac
+| 'log_level' | integer | no | 2 | Set the log_level. Supported levels are: 0 = verbose debugging, 1 = debugging, 2 = informational messages, 3 = notification, 4 = warning
+|====
+
+=== Broadcom Options ===
+
+CAUTION: The options below are only used by the proprietary Broadcom driver (type 'broadcom').
+
+[cols="4*1,4",options="header"]
+|====
+| Name | Type | Required | Default | Description
+| 'frameburst' | boolean | no | '0' | Enables Broadcom frame bursting if supported
+| 'maxassoc' | integer | no | _(driver default)_ | Limits the maximum allowed number of associated clients
+| 'slottime' | integer | no | _(driver default)_ | Slot time in milliseconds
+|====
+
+=== Ubiquity Nanostation Options ===
+
+CAUTION: The options below are only used by the Ubiquity Nanostation family of devices
+
+[cols="4*1,4",options="header"]
+|====
+| Name | Type | Required | Default | Description
+| 'antenna' | string | no | _(driver default)_| Selects the antenna, possible values are 'vertical' for internal vertical polarization, 'horizontal' for internal horizontal polarization or 'external' to use the external antenna connector
+|====
+
+=== Wifi Networks
+
+A complete wireless configuration contains at least one 'wifi-iface' section per adapter to define a wireless network on top of the hardware. Some drivers support multiple wireless networks per device:
+
+* 'broadcom' if the core revision is greater or equal '9' (see 'dmesg | grep corerev')
+* 'mac80211'
+
+A minimal example for a 'wifi-iface' declaration is given below.
+
+----
+config 'wifi-iface'
+	option 'device'     'wl0'
+	option 'network'    'lan'
+	option 'mode'       'ap'
+	option 'ssid'       'MyWifiAP'
+	option 'encryption' 'psk2'
+	option 'key'        'secret passphrase'
+----
+
+* 'wl0' is the identifier for the underlying radio hardware
+* 'lan' specifies the network interface that the wifi is attached to.
+* 'ap' is the opetion mode, _Access Point_ in this example
+* 'MyWifiAP' is the broadcasted SSID
+* 'psk2' specifies the wireless encryption method, WPA2 PSK here
+* 'secret passphrase' is the secret WPA passphrase
+
+=== Common Options ===
+
+The common configuration option for 'wifi-iface' sections are listed below.
+
+[cols="4*1,4",options="header"]
+|====
+| Name | Type | Required | Default | Description
+| 'device' | string | yes | _(first device id)_ | Specifies the used wireless adapter, must refer to one of the defined 'wifi-device' sections
+| 'mode' | string | yes | 'ap' | Selects the operation mode of the wireless network interface controller. Possible values are 'ap', 'sta', 'adhoc', 'wds', 'monitor', 'mesh'
+| 'disabled' | boolean | no | '0' | When set to 1, wireless network is disabled.
+| 'ssid' | string | yes | lede' | The broadcasted SSID of the wireless network and for for managed mode the SSID of the network you're connecting to
+| 'bssid' | BSSID address | no | _(driver default)_ | Override the BSSID of the network, only applicable in 'adhoc' or 'sta' mode. In 'wds' mode specifies the BSSID of another AP to create WDS with.
+| 'mesh_id' | Mesh ID | no | none | The Mesh ID as defined in IEEE 802.11s. If set, the wireless interface will join this mesh network when brought up.  If not, it is necessary to invoke 'iw <iface> mesh join <mesh_id>' to join a mesh after the interface is brought up.
+| 'hidden' | boolean | no | '0' | Turns off SSID broadcasting if set to '1'
+| 'isolate' | boolean | no | '0' | Isolate wireless clients from each other, only applicable in 'ap' mode.
+| 'doth' | boolean | no | '0' | Enables 802.11h support.
+| 'wmm' | boolean | no | '1' | Enables WMM (802.11e) support. Required for 802.11n support
+| 'network' | string | yes | 'lan' | Specifies the network interface to attach the wireless to.
+| 'encryption' | string | no | 'none' | Wireless encryption method. Possible values are: 'none', 'wep', 'psk', 'psk2'. For WEP station mode the default is "open system" authentication. Use 'wep+shared', 'wep+open', 'wep+mixed' to focre a specific mode.
+| 'key' | integer or string | no | _(none)_ | In any **WPA-PSK** mode, this is a string that specifies the pre-shared passphrase from which the pre-shared key will be derived. If a 64-character hexadecimal string is supplied, it will be used directly as the pre-shared key instead. In **WEP** mode, this can be an integer specifying which key index to use ('key1', 'key2', 'key3', or 'key4'.) Alternatively, it can be a string specifying a passphrase or key directly, as in 'key1'. In any **WPA-Enterprise AP** mode, this option has a different interpretation.
+| 'key1' | string | no | _(none)_ | WEP passphrase or key #1 (selected by the index in 'key'). This string is treated as a passphrase from which the WEP key will be derived. If a 10- or 26-character hexadecimal string is supplied, it will be used directly as the WEP key instead.
+| 'key2' | string | no | _(none)_ | WEP passphrase or key #2 (selected by the index in 'key'), as in 'key1'.
+| 'key3' | string | no | _(none)_ | WEP passphrase or key #3 (selected by the index in 'key'), as in 'key1'.
+| 'key4' | string | no | _(none)_ | WEP passphrase or key #4 (selected by the index in 'key'), as in 'key1'.
+| 'macfilter' | string | no | 'disable' | Specifies the _mac filter policy_, 'disable' to disable the filter, 'allow' to treat it as whitelist or 'deny' to treat it as blacklist.
+| 'maclist' | list of MAC addresses | no | _(none)_ | List of MAC addresses (divided by spaces) to put into the mac filter.
+| 'iapp_interface' | string | no | _(none)_ | Specifies a network interface to be used for 802.11f (IAPP) - only enabled when defined.
+| 'rsn_preauth' | boolean | no | '0' | Allow preauthentication for WPA2-EAP networks (and advertise it in WLAN beacons). Only works if the specified network interface is a bridge.
+| 'ieee80211w' | integer | no | '0' | Enables MFP (802.11w) support (0 = disabled, 1 = optional, 2 = required). **Not supported by all drivers**
+| 'ieee80211w_max_timeout' | integer | no | _(hostapd default)_ | Specifies the 802.11w Association SA Query maximum timeout.
+| 'ieee80211w_retry_timeout' | integer | no | _(hostapd default)_ | Specifies the 802.11w Association SA Query retry timeout.
+| 'maxassoc' | integer | no | _(hostapd/driver default)_ | Specifies the maximum number of clients to connect.
+| 'macaddr' | mac address | no | _(hostapd/driver default)_ | Overrides the MAC address used for the wifi interface.
+| 'dtim_period' | integer | no | _2 (hostapd default)_ | Set the DTIM (delivery traffic information message) period. There will be one DTIM per this many beacon frames. This may be set between 1 and 255. This option only has an effect on 'ap' wifi-ifaces.
+| 'short_preamble' | boolean | no | _1_ | Set optional use of short preamble
+| 'max_listen_int' | integer | no | _65535 (hostapd default)_ | Set the maximum allowed STA (client) listen interval. Association will be refused if a STA attempts to associate with a listen interval greater than this value. This option only has an effect on 'ap' wifi-ifaces.
+| 'mcast_rate' | integer | no | _(driver default)_ | Sets the fixed multicast rate, measured in kb/s. **Only supported in adhoc mode**
+| 'wds' | boolean | no | '0' | This sets link::http://wireless.kernel.org/en/users/Documentation/iw#using_4-address_for_ap_and_client_mode[4-address mode]
+|====
+
+=== WPA Modes ===
+
+Besides the WPA mode, the 'encryption' option also specifies the group and peer ciphers to use. To override the cipher, the value of 'encryption' must be given in the form 'mode+cipher'. See the listing below for possible combinations. If the 'hwmode' of the interface is set to 'ng' or 'na', then the 'CCMP' cipher is always added to the list.
+
+[cols="2*1,4",options="header"]
+|====
+| Value | WPA Version | Ciphers
+| 'psk2+tkip+ccmp' | WPA2 Personal (PSK) | TKIP, CCMP
+| 'psk2+tkip+aes' | WPA2 Personal (PSK) | TKIP, AES
+| 'psk2+tkip' | WPA2 Personal (PSK) | TKIP
+| 'psk2+ccmp' | WPA2 Personal (PSK) | CCMP
+| 'psk2+aes' | WPA2 Personal (PSK) | AES
+| 'psk2' | WPA2 Personal (PSK) |
+| 'psk+tkip+ccmp' | WPA Personal (PSK) | TKIP, CCMP
+| 'psk+tkip+aes' | WPA Personal (PSK) | TKIP, AES
+| 'psk+tkip' | WPA Personal (PSK) | TKIP
+| 'psk+ccmp' | WPA Personal (PSK) | CCMP
+| 'psk+aes' | WPA Personal (PSK) | AES
+| 'psk' | WPA Personal (PSK) |
+| 'psk-mixed+tkip+ccmp' | WPA/WPA2 Personal (PSK) mixed mode | TKIP, CCMP
+| 'psk-mixed+tkip+aes'| WPA/WPA2 Personal (PSK) mixed mode | TKIP, AES
+| 'psk-mixed+tkip' | WPA/WPA2 Personal (PSK) mixed mode | TKIP
+| 'psk-mixed+ccmp' | WPA/WPA2 Personal (PSK) mixed mode | CCMP
+| 'psk-mixed+aes' | WPA/WPA2 Personal (PSK) mixed mode | AES
+| 'psk-mixed' | WPA/WPA2 Personal (PSK) mixed mode |
+| 'wpa2+tkip+ccmp' | WPA2 Enterprise | TKIP, CCMP
+| 'wpa2+tkip+aes' | WPA2 Enterprise | TKIP, AES
+| 'wpa2+ccmp' | WPA2 Enterprise | CCMP
+| 'wpa2+aes'' | WPA2 Enterprise | AES
+| 'wpa2' | WPA2 Enterprise |
+| 'wpa2+tkip' | WPA2 Enterprise | TKIP
+| 'wpa+tkip+ccmp' | WPA Enterprise | TKIP, CCMP
+| 'wpa+tkip+aes' | WPA Enterprise | TKIP, AES
+| 'wpa+ccmp' | WPA Enterprise | CCMP
+| 'wpa+aes' | WPA Enterprise | ES
+| 'wpa+tkip' | WPA Enterprise | TKIP
+| 'wpa' | WPA Enterprise |
+| 'wpa-mixed+tkip+ccmp' | WPA/WPA2 Enterprise mixed mode | TKIP, CCMP
+| 'wpa-mixed+tkip+aes' | WPA/WPA2 Enterprise mixed mode | TKIP, AES
+| 'wpa-mixed+tkip' | WPA/WPA2 Enterprise mixed mode | TKIP
+| 'wpa-mixed+ccmp' | WPA/WPA2 Enterprise mixed mode | CCMP
+| 'wpa-mixed+aes' | WPA/WPA2 Enterprise mixed mode | AES
+| 'wpa-mixed' | WPA/WPA2 Enterprise mixed mode |
+|====
+
+=== WPA Enterprise (Access Point) ===
+
+Listing of Access Point related options for WPA Enterprise.
+
+[cols="2*1,4",options="header"]
+|====
+| Name | Default | Description
+| 'server' | _(none)_ | RADIUS server to handle client authentication
+| 'port' | '1812' | RADIUS port
+| 'key' | _(none)_ | Shared RADIUS secret
+| 'wpa_group_rekey' | '600' | WPA Group Cipher rekeying interval in seconds
+| 'auth_server' | _(none)_ | RADIUS authentication server to handle client authentication
+| 'auth_port' | '1812' | RADIUS authentication port
+| 'auth_secret' | _(none)_ | Shared authentication RADIUS secret
+| 'auth_cache' | '0' | Disable or enable PMKSA and Opportunistic Key Caching
+| 'acct_server' | _(none)_ | RADIUS accounting server to handle client authentication
+| 'acct_port' | '1813' | RADIUS accounting port
+| 'acct_secret' | _(none)_ | Shared accounting RADIUS secret
+| 'nasid' | _(none)_ | NAS ID to use for RADIUS authentication requests
+| 'ownip' | _(none)_ | NAS IP Address to use for RADIUS authentication requests
+| 'dae_client' | _(none)_ | Dynamic Authorization Extension client. This client can send "Disconnect-Request" or "CoA-Request" packets to forcibly disconnect a client or change connection parameters.
+| 'dae_port' | '3799' | Port the Dynamic Authorization Extension server listens on.
+| 'dae_secret' | _(none)_ | Shared DAE secret.
+| 'dynamic_vlan' | '0' | Dynamic VLAN assignment
+| 'vlan_naming' | '1' | VLAN Naming
+| 'vlan_tagged_interface' | _(none)_ | VLAN Tagged Interface
+| 'vlan_bridge' | _(none)_ | VLAN Bridge Naming Scheme - added in [[https:_dev.openwrt.org/changeset/43473/|r43473]]
+|====
+
+=== WPA Enterprise (Client) ===
+
+Listing of Client related options for WPA Enterprise.
+
+[cols="2*1,4",options="header"]
+|====
+| Name | Default | Description
+| 'eap_type' | _(none)_ | Defines the EAP protocol to use, possible values are 'tls' for EAP-TLS and 'peap' or 'ttls' for EAP-PEAP
+| 'auth' | 'MSCHAPV2' | "auth=PAP"/PAP/MSCHAPV2 - Defines the phase 2 (inner) authentication method to use, only applicable if 'eap_type' is 'peap' or 'ttls'
+| 'identity' | _(none)_ | EAP identity to send during authentication
+| 'password' | _(none)_ | Password to send during EAP authentication
+| 'ca_cert' | _(none)_ | Specifies the path the CA certificate used for authentication
+| 'client_cert' | _(none)_ | Specifies the client certificate used for the authentication
+| 'priv_key' | _(none)_ | Specifies the path to the private key file used for authentication, only applicable if 'eap_type' is set to 'tls'
+| 'priv_key_pwd' | _(none)_ | Password to unlock the private key file, only works in conjunction with 'priv_key'
+|====
+
+CAUTION: When using WPA Enterprise type PEAP with Active Directory Servers, the "auth" option must be set to "auth=MSCHAPV2" or "auth=PAP"
+
+----
+	option auth 'auth=MSCHAPV2'
+----
+
+or
+
+----
+	option auth 'auth=PAP'
+----
+
+=== WPS Options
+
+Listing of link:http://en.wikipedia.org/wiki/Wi-Fi_Protected_Setup[Wi-Fi Protected Setup] related options.
+
+CAUTION: Support for WPS is provided by packages 'wpad' and 'hostapd-utils'. Default package 'wpad-mini' is not enough.
+
+CAUTION: WPS is possible only when encryption PSK/PSK2 is selected.
+
+[cols="4*1,4",options="header"]
+|====
+| Name | Type | Required | Default | Description
+| 'wps_config' | list | no | _(none)_ | List of configuration methods. Currentlly supported methods are: 'push_button'.
+| 'wps_device_name' | string | no | 'LEDE AP' | User-friendly description of device; up to 32 octets encoded in UTF-8.
+| 'wps_device_type' | string | no | '6-0050F204-1' | Primary device type.  Examples: '1-0050F204-1' (Computer / PC), '1-0050F204-2' (Computer / Server), '5-0050F204-1' (Storage / NAS), '6-0050F204-1' (Network Infrastructure / AP)
+| 'wps_label' | boolean | no | '0' | Enable _label_ configuration method.
+| 'wps_manufacturer' | string | no | 'lede-project.org' | The manufacturer of the device (up to 64 ASCII characters).
+| 'wps_pushbutton' | boolean | no | '0' | Enable _push-button_ configuration method.
+| 'wps_pin' | string | no | none | The PIN to use with WPS-PIN (only in external registrar mode?)
+|====
+
+Minimal steps needed to get WPS running:
+
+* Add 'option wps_pushbutton '1' ' to a 'config wifi-iface' section that is configured for WPA2-PSK in /etc/config/wireless
+* opkg update
+* opkg remove wpad-mini
+* opkg install wpad hostapd-utils
+* reboot
+
+After rebooting, instead of pushing the WPS button, you can manually initiate the WPS process (which is safer than using the button if it doubles as a reset button, like on the [[toh:tp-link/tl-wr1043nd|TL-WR1043ND v2]] e.g.):
+
+----
+hostapd_cli wps_pbc
+----
+
+When using WPS-PIN:
+
+* Add 'option wps_label '1' ' to a 'config wifi-iface' section that is configured for WPA2-PSK in /etc/config/wireless
+* opkg update
+* opkg remove wpad-mini
+* opkg install wpad hostapd-utils
+* reboot
+
+After rebooting, the WPS PIN needs to be given to hostapd each time a station tries to connect. The PIN may **NOT** be used multiple times, as an active attacker can recover half of it during each try. The "any" keyword can be replaced by the specific stations EUUID, as printed in hostapd log.
+
+----
+hostapd_cli wps_pin any $PIN
+----
+
+=== Fast BSS transition Options ===
+
+[cols="4*1,4",options="header"]
+|====
+| Name | Type | Required | Default | Description
+| 'ieee80211r' | boolean | no | '0' | Enables fast BSS transition (802.11r) support.
+| 'nasid' | string | yes | (none) | PMK-R0 Key Holder identifier (dot11FTR0KeyHolderID). A 1 to 48 octet identifier.
+| 'mobility_domain' | string | no | '4f57' | Mobility Domain identifier (dot11FTMobilityDomainID, MDID). MDID is used to indicate a group of APs (within an ESS, i.e., sharing the same SSID) between which a STA can use Fast BSS Transition. 2-octet identifier as a hex string.
+| 'r0_key_lifetime' | integer | no | '10000' | Default lifetime of the PMK-RO in minutes [1-65535].
+| 'r1_key_holder' | string | no | '00004f577274' | PMK-R1 Key Holder identifier (dot11FTR1KeyHolderID). A 6-octet identifier as a hex string.
+| 'reassociation_deadline' | integer | no | '1000' | Reassociation deadline in time units (TUs / 1.024 ms, 1000-65535)
+| 'r0kh' | string | no | (none) | List of R0KHs in the same Mobility Domain. Valid format: <MAC address>,<NAS Identifier>,<128-bit key as hex string> This list is used to map R0KH-ID (NAS Identifier) to a destination MAC address when requesting PMK-R1 key from the R0KH that the STA used during the Initial Mobility Domain Association.
+| 'r1kh' | string | no | (none) | List of R1KHs in the same Mobility Domain. Valid format: <MAC address>,<R1KH-ID>,<128-bit key as hex string>  This list is used to map R1KH-ID to a destination MAC address when sending PMK-R1 key from the R0KH. This is also the list of authorized R1KHs in the MD that can request PMK-R1 keys.
+| 'pmk_r1_push' | boolean | no | '0' | Whether PMK-R1 push is enabled at R0KH.
+|====
+
+=== Inactivity Timeout Options ===
+
+[cols="4*1,4",options="header"]
+|====
+| Name | Type | Required | Default | Description
+| 'disassoc_low_ack' | boolean | no | '1' | Disassociate stations based on excessive transmission failures or other indications of connection loss. This depends on the driver capabilities and may not be available with all drivers.
+| 'max_inactivity' | integer | no | '300' | Station inactivity limit in seconds: If a station does not send anything in ap_max_inactivity seconds, an empty data frame is sent to it in order to verify whether it is still in range. If this frame is not ACKed, the station will be disassociated and then deauthenticated.
+| 'skip_inactivity_poll' | boolean | no | '0' | The inactivity polling can be disabled to disconnect stations based on inactivity timeout so that idle stations are more likely to be disconnected even if they are still in range of the AP.
+| 'max_listen_interval' | integer | no | '65535' | Maximum allowed Listen Interval (how many Beacon periods STAs are allowed to remain asleep).
+|====
+
+== Start/Stop Wireless
+
+Wireless interfaces are brought up and down with the 'wifi' command. To (re)start the wireless after a configuration change, use 'wifi', to disable the wireless, run 'wifi down'. In case your platform carries multiple wireless devices it is possible to start or run down each of them individually by making the 'wifi' command be followed by the device name as a second parameter. Note: The 'wifi' command has an optional first parameter that defaults to 'up' , i.e. start the device. To make the second parameter indeed a second parameter it is mandatory to give a first parameter which can be anything except 'down'. E.g. to start the interface 'wlan2' issue:  'wifi up wlan2'; to stop that interface: 'wifi down wlan2'. If the platform has also e.g. wlan0 and wlan1 these will not be touched by stopping or starting wlan2 selectively.
+
+== Regenerate Configuration
+
+To rebuild the configuration file, e.g. after installing a new wireless driver, remove the existing wireless configuration (if any) and use the 'wifi detect' command with stdout redirected to the '/etc/config/wireless' file:
+
+----
+rm -f /etc/config/wireless
+wifi detect > /etc/config/wireless
+----
+
+== 40 MHz channel width (up to 300 Mbps) for 802.11n devices ONLY
+
+The default max channel with of 20MHz supports a max speed of 150Mbps. Increasing this to 40MHz will increase the maximum theoretical speed to 300Mbps. The catch is that in areas with a lot of wifi traffic (and Bluetooth etc. which share the same radio frequencies), 40MHz may decrease your overall speed.  Devices **should** detect interference when using 40MHz, and drop back to 20MHz. Edit htmode options in the file /etc/config/wireless and restart the wifi AP to test various channel widths. Note that option 'htmode' should be set to either HT40+ (for channels 1-7) or HT40- (for channels 5-11) or simply HT40.
+
+== DFS / Radar Detection
+
+In many countries, operating WiFi devices on some or all channels in the 5GHz band requires radar detection and DFS link:http://wifi-insider.com/wlan/dfs.htm[(explanation)]. If you define a channel in your wireless config that requires DFS according to your country regulations, the 5GHz radio device won't start up unless the firmware image is able to provide DFS support (i.e. it is both included and enabled). More technical details of the Linux implementation can be found link:http://wireless.kernel.org/en/developers/DFS[here]. DFS works as follows in Linux: The driver detects radar pulses and reports this to nl80211 where the information is processed.  If a series of pulses matches one of the defined radar patterns, this will be reported to the user space application (e.g. hostapd) which in turn reacts by switching to another channel.
+
+The following configuration selects channel 104 which needs DFS support as implicitly stated with country code DE:
+
+----
+config wifi-device  radio0
+	option type     mac80211
+	option channel  104
+	option hwmode	11a
+	option path	'pci0000:00/0000:00:00.0'
+	option htmode	HT20
+	option country 'DE'
+
+config wifi-iface
+	option device   radio0
+	option network  lan
+	option mode     ap
+	option ssid     OpenWrt
+	option encryption none
+----
+
+You can check the country (regulatory domain) your WiFi card thinks it must conform to with
+
+----
+iw reg get
+----
+
+If in doubt, double check your hostapd-phy.conf to make sure it contains the following values, and that your country code is set:
+
+----
+country_code=DE
+ieee80211n=1
+ieee80211d=1
+ieee80211h=1
+hw_mode=a
+----
+
+
+If radar detection is working, DFS channels will show up like this (here for Belgium, _iw phy1 info_ output trimmed):
+
+----
+Frequencies:
+* 5220 MHz [44] (17.0 dBm)
+* 5240 MHz [48] (17.0 dBm)
+* 5260 MHz [52] (20.0 dBm) (radar detection)
+DFS state: usable (for 2155257 sec)
+DFS CAC time: 60000 ms
+* 5280 MHz [56] (20.0 dBm) (radar detection)
+DFS state: usable (for 2155257 sec)
+DFS CAC time: 60000 ms
+----
+
+CAUTION: When DFS is on, there will be a delay before the interface is enabled (e.g. after reboot). During this time period (often 60 seconds, and determined by local reglations) luci will report the interface is disabled. This time period is used to detect the presence of other signals on the channel (Channel Availability Check Time).  This process can be monitored with:
+
+----
+logread -f
+----
+
+If you select a channel that requires DFS in your country and enable HT40, this may result in the **DFS start_dfs_cac() failed** error (visible with logread):
+
+----
+Configuration file: /var/run/hostapd-phy1.conf
+wlan1: interface state UNINITIALIZED->COUNTRY_UPDATE
+wlan1: interface state COUNTRY_UPDATE->HT_SCAN
+wlan1: interface state HT_SCAN->DFS
+wlan1: DFS-CAC-START freq=5680 chan=136 sec_chan=-1, width=0, seg0=0, seg1=0, cac_time=60s
+DFS start_dfs_cac() failed, -1
+Interface initialization failed
+wlan1: interface state DFS->DISABLED
+wlan1: AP-DISABLED
+hostapd_free_hapd_data: Interface wlan1 wasn't started
+----
+
+Changing your configuration to HT20 should resolve this.
