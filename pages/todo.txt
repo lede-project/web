@@ -22,9 +22,6 @@ This page lists the current project wide todos. Items listed in random order wit
 . Find mirroring capacity - we liberally distribute rsync keys if you have bandwidth and storage available on trusted infrastructure contact us
 . Setup an issue tracker
 . What shall we do about wiki and forum ?
-. Setup IRC channels
-. Register mailing lists
-. Setup Patchwork
 . Find a Web Designer to do some CSS magic
 
 === Code base
@@ -37,6 +34,7 @@ This page lists the current project wide todos. Items listed in random order wit
 . Document core services (procd, netifd, ...)
 . Build new UCI docs
 . Define rules for board support status Green, Orange, Red and start testing all supported boards
+. integrate keyring support
 
 === Releases
 
