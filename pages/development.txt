@@ -5,7 +5,7 @@ include::menu.inc[]
 
 == The Source Code
 
-The LEDE project source code start off with OpenWrt revision r49083. The code
+The LEDE project source code start off with OpenWrt revision r49258. The code
 is stored inside a git tree which contains all branches and releases ever made
 by OpenWrt. While importing the sources the tree was normalised and some
 minor tweaks were made to comitter names and mail addresses.
@@ -24,8 +24,9 @@ git clone http://git.lede-project.org/source.git
 
 === Getting the OpenWrt Code
 
-We keep the original OpenWrt source code up to r49083 available, mostly as
-reference and for historic interest.
+We keep the original OpenWrt source code up to
+https://git.lede-project.org/?p=openwrt/source.git;a=commit;h=ee53a240ac902dc83209008a2671e7fdcf55957a[r49258]
+available, mostly as reference and for historic interest.
 
 The original OpenWrt Subversion repository has been split up into several Git
 repositories mapping the various SVN directories and tags to proper Git
@@ -52,8 +53,9 @@ git clone http://git.lede-project.org/web.git
 
 The biggest difference is that we now accept pull requests. The tree that shall
 be pulled from needs to be hosted publicly. Small fixes and minor patches can
-also be submitted via the mailing list (__LINK__). Submissions should follow
-these rules
+also be submitted via the
+http://lists.infradead.org/mailman/listinfo/lede-dev[development mailing list].
+Submissions should follow these rules
 
 . rule N+1
 
@@ -63,7 +65,8 @@ If the patch does not get listed in patchwork then it wont get processed.
 
 === Reporting Bugs
 
-. *All* bug reports need to be submitted via the mailing list (__LINK__)
+. *All* bug reports need to be submitted via the
+  http://lists.infradead.org/mailman/listinfo/lede-dev[development mailing list]
 . When reporting bugs please make sure to
   .. Name the tree/revision
   .. Name the effected device
