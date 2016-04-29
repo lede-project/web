@@ -91,14 +91,11 @@ We encourage committers to host their own staging trees where they aggregate pat
 that they feel responsible for and/or ones that they created themselves. Once the tree
 has been reviewed and tested it can be proposed for inclusion in the master branch.
 
-. Trees will be merged into master during a merge window
-. The date when the next merge window opens will be announced in advance
-. The window should be less than a week
-. Only bug fixes can be merged outside the merge window via the fixes branch (__LINK__)
-. No new features/update/... may be merged outside the window
+. Trees will be merged into master at any time
+. Bug fixes can be merged into master directly
 . PRs can be sent to the patches mailing list from any source and will always be considered
   for inclusion if the quality of the tree is good and format of submission is correct
-
+. Staging trees can be hosted as part of the projects git infrastucture, private servers, ...
 
 === Kernel updates
 
