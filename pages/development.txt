@@ -59,7 +59,7 @@ Submissions should follow these rules
 
 . TBD
 
-All patches need to be sent in a format that they are listed in patchwork (__LINK__).
+All patches need to be sent in a format that they are listed in http://patchwork.ozlabs.org/project/lede/list/[patchwork].
 If the patch does not get listed in patchwork then it wont get processed.
 
 
