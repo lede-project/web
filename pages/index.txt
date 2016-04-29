@@ -13,23 +13,26 @@ Members of the project already include a significant share of the most active me
 We intend to bring new life to Embedded Linux development by creating a community with a strong focus on transparency, collaboration and decentralisation.
 
 LEDE’s stated goals are:
-- Building a great embedded Linux distribution with focus on stability and functionality.
-- Having regular, predictable release cycles coupled with community provided device testing feedback.
-- Establishing transparent decision processes with broad community participation and public meetings.
+
+* Building a great embedded Linux distribution with focus on stability and functionality.
+* Having regular, predictable release cycles coupled with community provided device testing feedback.
+* Establishing transparent decision processes with broad community participation and public meetings.
 
 We decided to create this new project because of long standing issues that we were unable to fix from within the OpenWrt project/community:
-1. Number of active core developers at an all time low, no process for getting more new people involved.
-2. Unreliable infrastructure, fixes prevented by internal disagreements and single points of failure.
-3. Lack of communication, transparency and coordination in the OpenWrt project, both inside the core team and between the core team and the rest of the community.
-4. Not enough people with commit access to handle the incoming flow of patches, too little attention to testing and regular builds.
-5. Lack of focus on stability and documentation.
+
+. Number of active core developers at an all time low, no process for getting more new people involved.
+. Unreliable infrastructure, fixes prevented by internal disagreements and single points of failure.
+. Lack of communication, transparency and coordination in the OpenWrt project, both inside the core team and between the core team and the rest of the community.
+. Not enough people with commit access to handle the incoming flow of patches, too little attention to testing and regular builds.
+. Lack of focus on stability and documentation.
 
 To address these issues we set up the LEDE project in a different way compared to OpenWrt:
-1. All our communication channels are public, some read-only to non-members to maintain a good signal-to-noise ratio.
-2. Our decision making process is more open, with an approximate 50/50 mix of developers and power users with voting rights.
-3. Our infrastructure is simplified a lot, to ensure that it creates less maintenance work for us.
-4. We have made our merge policy more liberal, based on our experience with the OpenWrt package github feed.
-5. We have a strong focus on automated testing combined with a simplified release process.
+
+. All our communication channels are public, some read-only to non-members to maintain a good signal-to-noise ratio.
+. Our decision making process is more open, with an approximate 50/50 mix of developers and power users with voting rights.
+. Our infrastructure is simplified a lot, to ensure that it creates less maintenance work for us.
+. We have made our merge policy more liberal, based on our experience with the OpenWrt package github feed.
+. We have a strong focus on automated testing combined with a simplified release process.
 
 === Goals
 
