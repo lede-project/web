@@ -57,7 +57,7 @@ also be submitted via the
 http://lists.infradead.org/mailman/listinfo/lede-dev[development mailing list].
 Submissions should follow these rules
 
-. rule N+1
+. TBD
 
 All patches need to be sent in a format that they are listed in patchwork (__LINK__).
 If the patch does not get listed in patchwork then it wont get processed.

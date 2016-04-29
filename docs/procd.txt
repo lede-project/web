@@ -1,0 +1,19 @@
+The Procd System Manager
+========================
+
+include::menu.inc[]
+
+== Procd
+
+_LEDE_ uses 'procd' for booting the system, managing processes and handling parts of the kernel/userland interaction. It can be considered similar to 'systemd' on full blown distributions. Here is a list of tasks that procd will do for us
+
+* provide the pid 1 init service / preinit
+* wathchdog
+* inittab
+* init.d
+* hotplug
+* service startup / monitoring
+* (configuration-)triggers
+
+*WIP*
+
