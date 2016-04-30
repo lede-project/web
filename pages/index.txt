@@ -34,17 +34,6 @@ To address these issues we set up the LEDE project in a different way compared t
 . We have made our merge policy more liberal, based on our experience with the OpenWrt package github feed.
 . We have a strong focus on automated testing combined with a simplified release process.
 
-=== Goals
-
-LEDE's stated goals are:
-
-. Building a great embedded distribution with focus on stability and
-  functionality.
-. Having regular, predictable release cycles coupled with community provided
-  device testing feedback.
-. Establishing transparent decision processes with broad community
-  participation and public meetings.
-
 === Endorsement
 
 The *Wrt community is made up of many great communities all tinkering on their
