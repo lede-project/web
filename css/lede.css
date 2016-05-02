@@ -120,13 +120,13 @@ h1 {
 	font-size: 1.1em;
 	text-decoration: none;
 	display: block;
-    padding: 2px 4px;
-    border-radius: 3px 3px 3px 3px;
+	padding: 2px 4px;
+	border-radius: 3px 3px 3px 3px;
 }
 
 .docs_menu ol li p a:hover,
 .docs_menu ol li p a:active,
 .docs_menu ol li p a.active {
-    background-color: #527bbd;
+	background-color: #527bbd;
 	color: #fff;
 }
