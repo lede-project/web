@@ -29,6 +29,7 @@ Here you can find an alphabetically ordered list of the current people involved 
 | jow | Jo-Philipp Wich
 | blogic | John Crispin
 | neoraider | Matthias Schiffer
+| rmilecki | Rafał Miłecki
 | cyrus | Steven Barth
 | stintel | Stijn Tintel
 | thess | Ted Hess
