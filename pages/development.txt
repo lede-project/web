@@ -60,7 +60,7 @@ Submissions should follow these rules
 . TBD
 
 All patches need to be sent in a format that they are listed in http://patchwork.ozlabs.org/project/lede/list/[patchwork].
-If the patch does not get listed in patchwork then it wont get processed.
+If the patch does not get listed in patchwork then it won't get processed.
 
 
 === Reporting Bugs
@@ -82,7 +82,7 @@ If the patch does not get listed in patchwork then it wont get processed.
 
 All bug reports need to be sent in a format so that they are listed in the issue
 tracker (__LINK__). If the bug report does not get listed in the issue tracker then
-it wont get processed.
+it won't get processed.
 
 
 === Patch Merging And Tree Life Cycle
