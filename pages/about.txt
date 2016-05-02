@@ -15,4 +15,21 @@ _LEDE_ is also an alternation of the phrase _to lead_, describing
 an introductory section of a news story that is intended to entice the reader
 to read the full story.
 
+== People
 
+Here you can find a list of the current people involved in _LEDE_ development:
+
+[cols="1,2",options="header"]
+|====
+| Nickname | Real Name
+| blogic | John Crispin
+| cyrus | Steven Barth
+| hauke | Hauke Mehrtens
+| jow | Jo-Philipp Wich
+| lynxis | Alexander Couzens
+| nbd | Felix Fietkau
+| neoraider | Matthias Schiffer
+| noltari | Álvaro Fernández Rojas
+| stintel | Stijn Tintel
+| thess | Ted Hess
+|====
