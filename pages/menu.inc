@@ -6,4 +6,4 @@
 . pass:attributes[<a href="todo.html" class="{docname@todo:active}">Todo</a>]
 . pass:attributes[<a href="meetings.html" class="{docname@meetings:active}">Meetings</a>]
 . pass:attributes[<a href="docs/index.html">Documentation</a>]
-. pass:attributes[<a href="about.html" class="{docname@index:active}">About</a>]
+. pass:attributes[<a href="about.html" class="{docname@about:active}">About</a>]
