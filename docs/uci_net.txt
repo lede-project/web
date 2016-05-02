@@ -1,11 +1,15 @@
 Network configuration
 =====================
 
-The central network configuration is located in the file '/etc/config/network'. This configuration file is responsible for defining _switch VLANs_, _interface configurations_ and _network routes_.
+include::uci_menu.inc[]
+
+== Network configuration
+
+The central network configuration is located in the file **'/etc/config/network'**. This configuration file is responsible for defining _switch VLANs_, _interface configurations_ and _network routes_.
 
 After editing and saving '/etc/config/network' you need to execute '/etc/init.d/network reload' to stop and restart the network before any changes take effect. Rebooting the router is not necessary.
 
-Feel free to inform yourself about link:https://www.lede-project.org/docs/procd.html[netifd] (Network Interface Daemon).
+Feel free to inform yourself about link:procd.html[netifd] (Network Interface Daemon).
 
 == Sections
 

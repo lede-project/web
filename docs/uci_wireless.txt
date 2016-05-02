@@ -1,7 +1,11 @@
 Wireless configuration
 ======================
 
-The wireless UCI configuration is located in '/etc/config/wireless'. Learn about the entire [[doc:howto:wireless.overview|IEEE 802.11 "wireless" subsystem]].
+include::uci_menu.inc[]
+
+== Wireless configuration
+
+The wireless UCI configuration is located in **'/etc/config/wireless'**. Learn about the entire [[doc:howto:wireless.overview|IEEE 802.11 "wireless" subsystem]].
 
 By default the wireless is **OFF**. You can turn it on in the '/etc/config/wireless' by changing 'disabled 1' to 'disabled 0'
 

@@ -1,10 +1,13 @@
 Quality of Service (qos-scripts) configuration
 ==============================================
 
-This is the documentation for the UCI configuration file '/etc/config/qos'.
+include::uci_menu.inc[]
+
+== Quality of Service configuration
+
+This is the documentation for the UCI configuration file **'/etc/config/qos'**.
 
 *WARNING*: 'luci-app-qos' won't start until you enable the 'qos' Initscript within the System-->Startup tab as well as enable qos under Network-->QoS
-
 
 == Sections
 

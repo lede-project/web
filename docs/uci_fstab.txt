@@ -1,11 +1,11 @@
 Fstab Configuration
 ===================
 
-The Fstab, or **f**ile **s**ystems **tab**le, is a central configuration that defines how file systems (usually on block devices) should be mounted if requested (such as on booting the device or connecting it physically). This way, you don't have to manually mount your devices when you want to access them. The mounting configuration can consist of static file systems but also swap partitions. The fstab UCI configuration file is where all the options for all devices and file systems to be mounted are defined and is located at...
+include::uci_menu.inc[]
 
-----
-/etc/config/fstab
-----
+== Fstab Configuration
+
+The Fstab, or **f**ile **s**ystems **tab**le, is a central configuration that defines how file systems (usually on block devices) should be mounted if requested (such as on booting the device or connecting it physically). This way, you don't have to manually mount your devices when you want to access them. The mounting configuration can consist of static file systems but also swap partitions. The fstab UCI configuration file is where all the options for all devices and file systems to be mounted are defined and is located at **'/etc/config/fstab'**.
 
 == Initial Configuration
 

@@ -1,6 +1,12 @@
 System configuration
 ====================
 
+include::uci_menu.inc[]
+
+== System configuration
+
+The system UCI configuration is located in **'/etc/config/system'**.
+
 == Sections
 
 The 'system' configuration contains basic settings for the whole router. Larger subsystems such as the network configuration, the DHCP and DNS server, and similar, have their own configuration file.
