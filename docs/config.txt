@@ -1,6 +1,12 @@
 UCI files
 =========
 
+include::menu.inc[]
+
+== UCI - Configuration files
+
+Below you can find the editable UCI configuration files:
+
 * link:uci_dnsmasq.html[/etc/config/dhcp]
 * link:uci_dropbear.html[/etc/config/dropbear]
 * link:uci_firewall.html[/etc/config/firewall]
