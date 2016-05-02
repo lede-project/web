@@ -1,4 +1,4 @@
-[role="docs_menu"]
+[role="menu"]
 . link:config.html[← Configuration]
 . pass:attributes[<a href="uci_dnsmasq.html" class="{docname@uci_dnsmasq:active}">DHCP</a>]
 . pass:attributes[<a href="uci_dropbear.html" class="{docname@uci_dropbear:active}">Dropbear</a>]
