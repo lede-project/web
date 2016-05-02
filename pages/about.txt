@@ -17,19 +17,19 @@ to read the full story.
 
 == People
 
-Here you can find a list of the current people involved in _LEDE_ development:
+Here you can find an alphabetically ordered list of the current people involved in _LEDE_ development:
 
 [cols="1,2",options="header"]
 |====
 | Nickname | Real Name
-| blogic | John Crispin
-| cyrus | Steven Barth
+| lynxis | Alexander Couzens
+| noltari | Álvaro Fernández Rojas
+| nbd | Felix Fietkau
 | hauke | Hauke Mehrtens
 | jow | Jo-Philipp Wich
-| lynxis | Alexander Couzens
-| nbd | Felix Fietkau
+| blogic | John Crispin
 | neoraider | Matthias Schiffer
-| noltari | Álvaro Fernández Rojas
+| cyrus | Steven Barth
 | stintel | Stijn Tintel
 | thess | Ted Hess
 |====
