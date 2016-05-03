@@ -19,18 +19,18 @@ to read the full story.
 
 Here you can find an alphabetically ordered list of the current people involved in _LEDE_ development:
 
-[cols="1,2",options="header"]
+[cols="2*1",options="header"]
 |====
 | Nickname | Real Name
-| lynxis | Alexander Couzens
-| noltari | Álvaro Fernández Rojas
-| nbd | Felix Fietkau
-| hauke | Hauke Mehrtens
-| jow | Jo-Philipp Wich
-| blogic | John Crispin
-| neoraider | Matthias Schiffer
-| rmilecki | Rafał Miłecki
-| cyrus | Steven Barth
-| stintel | Stijn Tintel
-| thess | Ted Hess
+| Alexander Couzens | lynxis
+| Álvaro Fernández Rojas | noltari
+| Felix Fietkau | nbd
+| Hauke Mehrtens | hauke
+| Jo-Philipp Wich | jow
+| John Crispin | blogic
+| Matthias Schiffer | neoraider
+| Rafał Miłecki | rmilecki
+| Steven Barth | cyrus
+| Stijn Tintel | stintel
+| Ted Hess | thess
 |====
