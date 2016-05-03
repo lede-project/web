@@ -52,7 +52,7 @@ h1 {
 }
 
 .tableblock tr:nth-child(even) {
-	background-color: #b7c8e3;
+	background-color: #CFE2FF;
 }
 
 .tableblock tr:nth-child(odd) {
