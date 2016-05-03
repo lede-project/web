@@ -46,6 +46,19 @@ h1 {
 	margin: 0;
 }
 
+.tableblock tr th {
+	background-color: #527bbd;
+	color: #fff;
+}
+
+.tableblock tr:nth-child(even) {
+	background-color: #b7c8e3;
+}
+
+.tableblock tr:nth-child(odd) {
+	background-color: #fff;
+}
+
 .menu ol {
 	padding: 0;
 	margin: 0 -10px;
