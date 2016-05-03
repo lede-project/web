@@ -21,7 +21,7 @@ Here you can find an alphabetically ordered list of the current people involved 
 
 [cols="2*1",options="header"]
 |====
-| Nickname | Real Name
+| Real Name | Nickname
 | Alexander Couzens | lynxis
 | Álvaro Fernández Rojas | noltari
 | Felix Fietkau | nbd
