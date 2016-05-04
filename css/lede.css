@@ -2,6 +2,10 @@ html {
 	background: #aaa;
 }
 
+body {
+	font-family: sans-serif;
+}
+
 body.article {
 	max-width: 800px;
 	border: 1px solid #999;
