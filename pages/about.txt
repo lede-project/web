@@ -24,6 +24,7 @@ Here you can find an alphabetically ordered list of the current people involved 
 | Real Name | Nickname
 | Alexander Couzens | lynxis
 | Álvaro Fernández Rojas | noltari
+| Daniel Golle | dangole
 | Felix Fietkau | nbd
 | Hauke Mehrtens | hauke
 | Jo-Philipp Wich | jow
