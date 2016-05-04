@@ -40,4 +40,4 @@ The *Wrt community is made up of many great communities all tinkering on their
 own mission in improving something on this planet. The Following communities have
 kindly decided to endorse this project. Thanks !
 
-. none so far :-)
+- image:logo/endorsements/qmp.png[qMp logo] http://qmp.cat/News/31_qMp_endorses_the_LEDE_project["qMp endoreses the LEDE project"]
