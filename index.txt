@@ -43,7 +43,7 @@ source code access and building instructions.
 
 If you do not consider yourself a developer but want to participate in
 maintaining documentation or in helping community members then don't hesitate
-to join our http://lists.infradead.org/mailman/listinfo/lede-dev[mailing list]
+to join our https://lists.infradead.org/mailman/listinfo/lede-dev[mailing list]
 or IRC channels to get in touch.
 
 === Endorsement

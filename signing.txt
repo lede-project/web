@@ -6,7 +6,7 @@ Release Signing
 == Signing Approach
 
 LEDE uses both https://www.gnupg.org/[GnuPG] and _usign_, a derivate of the
-OpenBSD http://www.openbsd.org/papers/bsdcan-signify.html[_signify_] utilitiy.
+OpenBSD https://www.openbsd.org/papers/bsdcan-signify.html[_signify_] utilitiy.
 
 The _OPKG_ package manager uses _usign_ Ed25519 signatures to verify repository
 metadata when installing packages while release image files are usually signed
