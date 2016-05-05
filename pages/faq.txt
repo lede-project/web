@@ -1,0 +1,64 @@
+---
+---
+Frequently asked questions
+==========================
+
+== What devices does LEDE target?
+
+LEDE mainly targets embedded devices capable of running Linux. In most cases wireless routers. This has not changed compared to OpenWrt.
+
+== How do I upgrade from OpenWrt to LEDE?
+
+Use the same mechanisms as used to upgrade from one OpenWrt version to a more recent versions, sysupgrade for example. With sysupgrade even your configuration should be migrated.
+
+== Where is the LEDE Wiki?
+
+This is work in progress.
+
+== Where is the Forum?
+
+Currently we have mailing lists, see /communication.html
+
+== What happens to the OpenWrt package feed?
+
+LEDE plans to use the normal OpenWrt package feed, till it deviates too much from OpenWrt and it would be easier to have an own branch or feed.
+
+== Will OpenWrt Chaos Calmer still be supported?
+
+OpenWrt Chaos Calmer will be supported with security and bug fixes by the OpenWrt project.
+
+== Is LEDE represented by any Company or Industry organization?
+
+No, LEDE is not affiliated with any specific company or any industry organization.
+
+== The company I work for uses LEDE and wants to support the project. What should we do?
+
+The best support is that you allow and encourage your employees to contribute the changes you did internally back to the LEDE project.
+If you are a chip vendor for example adding support for your chips to LEDE would be a nice.
+This way others can also benefit from your changes and you reduce your maintenance cost, because you need less patches when using more recent versions of LEDE.
+
+== Are there plans to license LEDE under a different License?
+
+There are no plans to change the license of the LEDE code. It should be easy to copy code from and to OpenWrt.
+
+== Were there any technical reasons to split from OpenWrt?
+
+Nothing special, expect that LEDE wants to focus more on stability and not so much on bleeding edge any any more.
+The release process should be better automatized and the release should be better tested.
+
+== What license does LEDE use?
+
+The build system and many LEDE components are licensed under the GNU General Public License Version 2. Some parts are licensed under different licenses, this is mostly the case for packages not created in LEDE or OpenWrt.
+
+== Who hold the copyright of LEDE code?
+
+The original authors of the code holds the copyright.
+
+== Is the LEDE project a registered legal entity?
+
+No, the LEDE project is not a registered legal entity. The OpenWrt project is also no registered legal entity, but OpenWrt is represented by the Software in the Public Interest (SPI).
+
+== Is LEDE a registered trademark?
+
+No, LEDE is not a registered trademark, but OpenWrt is a registered trademark which is holden by the Software in the Public Interest (SPI) in the name of the OpenWrt project.
+
