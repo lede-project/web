@@ -11,10 +11,6 @@ a reference to its flexibility and embedded buildroot origins, making it a
 solid choice for embedded Linux applications far beyond the wireless router
 and network appliance realm.
 
-_LEDE_ is also an alternation of the phrase _to lead_, describing
-an introductory section of a news story that is intended to entice the reader
-to read the full story.
-
 == People
 
 Here you can find an alphabetically ordered list of the current people involved in _LEDE_ development:
