@@ -48,3 +48,18 @@ public. Ideally companies simply allow part of their R&D team to participate
 in the normal development process as normal community members. There will be
 no special treatment beyond the "first contact". Please see the project
 link:rules.html[rules] for further information.
+
+== Project Meetings
+
+We attempt to have regular IRC meetings to discuss and decide project matters.
+
+=== Next Meeting
+
+The next meeting date is yet to be decided.
+
+For the agenda of the upcoming meeting refer to the
+http://piratepad.net/ep/pad/view/ro.UdKV08dIlKx/latest[agenda pad].
+
+== Meeting Logs
+
+All meeting logs can be viewed under http://meetings.lede-project.org/lede-adm/[here]

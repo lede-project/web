@@ -1,0 +1,25 @@
+Downloads
+=========
+
+include::menu.inc[]
+
+== Snapshot builds
+
+The current master branch is regularly processed by a buildbot setup and the
+resulting images can be found on https://downloads.lede-project.org/snapshots/targets/
+
+=== Mirrors
+
+The contents of the download server are available on several mirrors as well.
+Please refer to the list below for alternative locations.
+
+. http://mirrors.linux.ro/lede/
+. http://lede-project.tetaneutral.net/
+
+We'd like to thank http://www.rcs-rds.ro[RCS&RDS] and http://tetaneutral.net/[tetaneutral.net]
+for providing mirror space.
+
+=== Sources
+
+Any source code archives fetched by the buildbots during the build process are
+available at http://sources.lede-project.org/
