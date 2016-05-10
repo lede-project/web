@@ -34,8 +34,13 @@ include::menu.inc[]
   privacy and equality reasons.
 . Changes to these rules require a two third majority among the committers
   holding voting rights and shall be documented.
+. Be nice to eachother.
 
 === Changes to these rules ===
+
+==== Mon, 10 May 2016
+Add the rule "Be nice to eachother"
+Agreed in the meeting 9 May 2016
 
 ==== Tue, 5 Apr 2016
 Changed wording of the rules and removed typos. Extended infrastructure
