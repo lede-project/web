@@ -13,11 +13,25 @@ resulting images can be found on https://downloads.lede-project.org/snapshots/ta
 The contents of the download server are available on several mirrors as well.
 Please refer to the list below for alternative locations.
 
-. http://mirrors.linux.ro/lede/
-. http://lede-project.tetaneutral.net/
+. Germany: [http://ftp.halifax.rwth-aachen.de/lede/[HTTP]] [ftp://ftp.halifax.rwth-aachen.de/lede/[FTP]] [link:rsync://ftp.halifax.rwth-aachen.de/lede/[RSYNC]]
+. Romania: [http://mirrors.linux.ro/lede/[HTTP]] [ftp://mirrors.linux.ro/lede/[FTP]]
+. France: [http://lede-project.tetaneutral.net/[HTTP]]
 
-We'd like to thank http://www.rcs-rds.ro[RCS&RDS] and http://tetaneutral.net/[tetaneutral.net]
-for providing mirror space.
+We'd like to thank the following sponsors for providing mirroring:
+http://www.rcs-rds.ro[RCS&RDS], http://tetaneutral.net/[tetaneutral.net],
+http://www.rwth-aachen.de/[RWTH Aachen].
+
+=== How to mirror
+
+Please use `rsync://downloads.lede-project.org/downloads` to obtain a copy of
+the download repository.
+
+Syncing the downloads share every two to six hours is ideal. Once a mirror has
+been set up, feel free to announce it at `lede-adm@lists.lede-project.org` so
+that it can be published on this page.
+
+The data volume of the snapshots is roughly 35GB, we expect it to grow by
+30-40GB with each release.
 
 === Sources
 
