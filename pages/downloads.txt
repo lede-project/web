@@ -26,12 +26,14 @@ http://www.rwth-aachen.de/[RWTH Aachen].
 Please use `rsync://downloads.lede-project.org/downloads` to obtain a copy of
 the download repository.
 
-Syncing the downloads share every two to six hours is ideal. Once a mirror has
-been set up, feel free to announce it at `lede-adm@lists.lede-project.org` so
-that it can be published on this page.
+Syncing the downloads share every 12 to 24 hours hours is ideal. Once a mirror
+has been set up, feel free to announce it at `lede-adm@lists.lede-project.org`
+so that it can be published on this page.
 
 The data volume of the snapshots is roughly 35GB, we expect it to grow by
-30-40GB with each release.
+30-40GB with each release. Due to current bandwidth constraints we kindly ask
+you to use something like `rsync --bwlimit 8000` when initially pulling the
+data.
 
 === Sources
 
