@@ -8,4 +8,6 @@ asciidoctor:
     - source-highlighter=coderay
     - icons=font
 
+asciidoc_ext: txt
+
 # end of configuration
