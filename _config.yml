@@ -1,6 +1,6 @@
 # jekyll configuration
 
-title: "Jekyll-asciidoc-quickstart"
+title: 'Welcome to the LEDE project'
 
 exclude: [ 'Gemfile', 'Gemfile.lock', 'Rakefile', 'README' ]
 
