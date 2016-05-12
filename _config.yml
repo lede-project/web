@@ -2,6 +2,8 @@
 
 title: "Jekyll-asciidoc-quickstart"
 
+exclude: [ 'Gemfile', 'Gemfile.lock', 'Rakefile', 'README' ]
+
 asciidoctor:
   attributes:
     - idseparator=_
