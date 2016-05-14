@@ -8,6 +8,11 @@ include::menu.inc[]
 The current master branch is regularly processed by a buildbot setup and the
 resulting images can be found on https://downloads.lede-project.org/snapshots/targets/
 
+You can find the BuildBots activity in the following links:
+
+* Phase 1: http://phase1.builds.lede-project.org/builders[target/subtargets]
+* Phase 2: http://phase2.builds.lede-project.org/builders[packages]
+
 === Mirrors
 
 The contents of the download server are available on several mirrors as well.
