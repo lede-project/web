@@ -3,8 +3,6 @@
 About the LEDE project
 ======================
 
-include::menu.inc[]
-
 == Name
 
 image:logo/logo.png["The LEDE logo",role="left"]

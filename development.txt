@@ -3,8 +3,6 @@
 Development
 ===========
 
-include::menu.inc[]
-
 == The Source Code
 
 The LEDE project source code starts off with OpenWrt revision r49258. The code

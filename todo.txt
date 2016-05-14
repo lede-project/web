@@ -3,8 +3,6 @@
 Project ToDos
 =============
 
-include::menu.inc[]
-
 == TODO List
 
 This page lists the current project wide todos. Items listed in random order without any prioritisation.

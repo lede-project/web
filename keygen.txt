@@ -3,8 +3,6 @@
 Key Generation
 ==============
 
-include::menu.inc[]
-
 == Generate GPG signing key pair
 
 The guide will explain how to generate a new key pair, how to create a

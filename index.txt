@@ -3,8 +3,6 @@
 Welcome to the LEDE project
 ===========================
 
-include::menu.inc[]
-
 == Introducing the LEDE project - A reboot of the OpenWrt community
 
 The LEDE project is founded as a spin-off of the OpenWrt project and shares many of the same goals.

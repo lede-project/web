@@ -3,8 +3,6 @@
 Project Communication
 =====================
 
-include::menu.inc[]
-
 == Communication
 
 It is possible to communicate with other community members using mail and IRC.

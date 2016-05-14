@@ -3,8 +3,6 @@
 Release Signing
 ===============
 
-include::menu.inc[]
-
 == Signing Approach
 
 LEDE uses both https://www.gnupg.org/[GnuPG] and _usign_, a derivate of the

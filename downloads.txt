@@ -3,8 +3,6 @@
 Downloads
 =========
 
-include::menu.inc[]
-
 == Snapshot builds
 
 The current master branch is regularly processed by a buildbot setup and the
