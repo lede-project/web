@@ -19,7 +19,7 @@ The contents of the download server are available on several mirrors as well.
 Please refer to the list below for alternative locations.
 
 . Germany: [http://ftp.halifax.rwth-aachen.de/lede/[HTTP]] [ftp://ftp.halifax.rwth-aachen.de/lede/[FTP]] [link:rsync://ftp.halifax.rwth-aachen.de/lede/[RSYNC]]
-. Romania: [http://mirrors.linux.ro/lede/[HTTP]] [ftp://mirrors.linux.ro/lede/[FTP]]
+. Romania: [http://mirrors.linux.ro/lede/downloads/[HTTP]] [ftp://mirrors.linux.ro/lede/downloads/[FTP]] [link:rsync://mirrors.linux.ro/lede/downloads/[RSYNC]]
 . France: [http://lede-project.tetaneutral.net/[HTTP]] [link:rsync://lede-project.tetaneutral.net/downloads/[RSYNC]]
 
 We'd like to thank the following sponsors for providing mirroring:
