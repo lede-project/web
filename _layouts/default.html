@@ -32,13 +32,19 @@
         <!-- Title Area -->
         <li class="name">
             <h1>
-                <a href="{{site.prefix}}">
+                <a href="#">
                     {{page.title}}
                 </a>
             </h1>
         </li>
         <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
     </ul>
+    <section class="top-bar-section">
+        <!-- Right Nav Section -->
+        <ul class="right">
+            {% include top_nav.html %}
+        </ul>
+    </section>
 </nav>
 <!-- End Nav -->
 
