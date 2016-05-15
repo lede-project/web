@@ -3,8 +3,6 @@
 uBus IPC/RPC System
 ===================
 
-include::menu.inc[]
-
 == uBus - IPC/RPC
 
 uBus is the interconnect system used by most services running on a _LEDE_ setup.

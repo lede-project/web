@@ -3,8 +3,6 @@
 The UCI Configuration System
 ============================
 
-include::menu.inc[]
-
 == UCI - Unified Configuration Interface
 
 _LEDE_ uses UCI to store its configuration. This is a human readable file format using typed and named sections. Each section contains a number of options. Options can be single values or lists of values. All configuration files are stored in the /etc/config/ folder. You can manually edit these files.

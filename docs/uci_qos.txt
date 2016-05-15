@@ -3,8 +3,6 @@
 Quality of Service (qos-scripts) configuration
 ==============================================
 
-include::uci_menu.inc[]
-
 == Quality of Service configuration
 
 This is the documentation for the UCI configuration file **'/etc/config/qos'**.

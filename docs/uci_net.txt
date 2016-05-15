@@ -3,8 +3,6 @@
 Network configuration
 =====================
 
-include::uci_menu.inc[]
-
 == Network configuration
 
 The central network configuration is located in the file **'/etc/config/network'**. This configuration file is responsible for defining _switch VLANs_, _interface configurations_ and _network routes_.

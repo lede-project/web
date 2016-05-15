@@ -3,8 +3,6 @@
 Dropbear Configuration
 ======================
 
-include::uci_menu.inc[]
-
 == Dropbear Configuration
 
 The firewall configuration located in **'/etc/config/dropbear'**.

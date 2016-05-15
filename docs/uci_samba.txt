@@ -3,8 +3,6 @@
 Samba (smb)
 ===========
 
-include::uci_menu.inc[]
-
 == Samba configuration
 
 The Samba UCI configuration file is located at **'/etc/config/samba'**.

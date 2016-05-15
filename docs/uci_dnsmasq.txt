@@ -3,8 +3,6 @@
 DNS and DHCP configuration
 ==========================
 
-include::uci_menu.inc[]
-
 == DNS and DHCP configuration
 
 The _dnsmasq_ and dhcpd configuration is located in **'/etc/config/dhcp'** and controls both DNS and DHCP server options on the device.

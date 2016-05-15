@@ -3,8 +3,6 @@
 Firewall configuration
 ======================
 
-include::uci_menu.inc[]
-
 == Firewall Configuration
 
 The firewall configuration located in **'/etc/config/firewall'**.

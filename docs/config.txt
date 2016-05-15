@@ -3,8 +3,6 @@
 UCI files
 =========
 
-include::menu.inc[]
-
 == UCI - Configuration files
 
 Below you can find the editable UCI configuration files:

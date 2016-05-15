@@ -3,8 +3,6 @@
 Documentation Index
 ===================
 
-include::menu.inc[]
-
 == The Web Presence
 
 The documentation  you're reading is generated from text files using the

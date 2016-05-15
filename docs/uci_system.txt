@@ -3,8 +3,6 @@
 System configuration
 ====================
 
-include::uci_menu.inc[]
-
 == System configuration
 
 The system UCI configuration is located in **'/etc/config/system'**.
