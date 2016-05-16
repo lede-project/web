@@ -22,6 +22,12 @@ accessible via both HTTP and HTTPS:
 git clone http://git.lede-project.org/source.git
 ----
 
+You can find a mirror of the repository on Github:
+
+----
+git clone https://github.com/lede-project/source.git
+----
+
 === Getting the OpenWrt Code
 
 We keep the original OpenWrt source code up to
