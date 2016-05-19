@@ -35,7 +35,7 @@ system.ntp.enabled='1'
 system.ntp.enable_server='0'
 ----
 
-When using the CLI to modify values, you will find that all changes first get staged and not commited to the file directly. If you want to permanently store changes you need to commit them. After calling the commit command, you can also make the system reload and apply the changes that you made
+When using the CLI to modify values, you will find that all changes first get staged and not commited to the file directly. If you want to permanently store changes you need to commit them. After calling the commit command, you can also make the system reload and apply the changes that you made.  (This will only affect services that correctly use link:procd.html[procd] init scripts)
 
 ----
 root@lede:/# uci set system.@system[0].hostname=foo
