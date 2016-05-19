@@ -352,9 +352,6 @@ Note that you shouldn't use this as a security feature to prevent unwanted clien
 Define a custom domain name and the corresponding PTR record - assigns the IP address '192.168.1.140' to the domain name 'typhoon' and construct an appropriate reverse record '140.1.168.192.in-addr.arpa'. It works like an entry in '/etc/hosts' but more flexible
 and integrated.
 
-*CAUTION*: Note that this currently only works for IPv4 addresses and that this functionality is not present in release prior to 8.09.2 .
-*CAUTION*: Note that reverse records are not properly generated at present. (Barrier Breaker 14.07-RC2)
-
 ----
 config 'domain'
 	option 'name' 'typhoon'
