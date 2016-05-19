@@ -6,7 +6,7 @@
 }
 
 D="$(pwd)"
-O="-b html5 -a linkcss -a stylesdir=/css -a stylesheet=lede.css -a disable-javascript -a icons -a iconsdir=/icon"
+O="-b html5 -a linkcss -a stylesdir=../css -a stylesheet=lede.css -a disable-javascript -a icons -a iconsdir=../icon"
 
 copy() {(
 	cd "$1"
