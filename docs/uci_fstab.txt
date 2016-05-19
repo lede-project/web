@@ -64,7 +64,7 @@ The configuration file consists of a 'global' section defining defaults, 'mount'
 | 'auto_swap' | boolean | no | 1 | automatically mount swap devices when they appear
 | 'auto_mount' | boolean | no | 1 | automatically mount block devices when they appear
 | 'delay_root' | integer | no | 0 | wait X seconds before trying to mount root devices on boot
-| 'check_fs' | boolean | no | 0 | un e2fsck on device prior to a mount
+| 'check_fs' | boolean | no | 0 | run e2fsck on device prior to a mount
 |====
 
 === The Swap sections
@@ -72,9 +72,9 @@ The configuration file consists of a 'global' section defining defaults, 'mount'
 [cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description
-| 'device' | string | no | - | The swap partitions device node (e.g. sda1)
-| 'uuid' | string | no | - | The swap partitions UUID
-| 'label' | string | no | - | The swap partitions label (e.g. mkswap -L label /dev/sdb2)
+| 'device' | string | no | - | The swap partition's device node (e.g. sda1)
+| 'uuid' | string | no | - | The swap partition's UUID
+| 'label' | string | no | - | The swap partition's label (e.g. mkswap -L label /dev/sdb2)
 |====
 
 === The Mount sections
@@ -82,13 +82,13 @@ The configuration file consists of a 'global' section defining defaults, 'mount'
 [cols="4*1,4",options="header"]
 |====
 | Name | Type | Required | Default | Description
-| 'device' | string | no | - | The data partitions device node (e.g. sda1)
-| 'uuid' | string | no | - | The data partitions UUID
-| 'target' | string | no | - | The data partitions mount point. Some values have special meanings, see the Extroot section below.
+| 'device' | string | no | - | The data partition's device node (e.g. sda1)
+| 'uuid' | string | no | - | The data partition's UUID
+| 'target' | string | no | - | The data partition's mount point. Some values have special meanings, see the Extroot section below.
 |====
 
 
 == The right amount of SWAP
 
-If you ask people or search the net, you will find as a general rule of thumb _double RAM_ for machines with 512MiB of RAM or less than, and _same amount as RAM_ for machines with more. But this very rough estimate does apply for your embedded device! Be aware that there are exactly two differences between RAM and SWAP, that matter: the **access time** and the **price**. A CUPS spooling server will run just fine, when only SWAP is available, whereas some applications may perform very poorly when their data it stored on the SWAP rather then being kept in the "real" RAM. The decision which data is kept in the RAM and which is stored on the SWAP is made by the system. In contrast to other operating systems, Linux makes ample use of memory, so that your system runs smoother and more efficiently. If memory is then needed by an application, the system will unload stuff again, and make memory available.
+If you ask people or search the net, you will find as a general rule of thumb _double RAM_ for machines with 512MiB of RAM or less than, and _same amount as RAM_ for machines with more. But this very rough estimate does apply for your embedded device! Be aware that there are exactly two differences between RAM and SWAP that matter: the **access time** and the **price**. A CUPS spooling server will run just fine when only SWAP is available, whereas some applications may perform very poorly when their data it stored on the SWAP rather then being kept in the "real" RAM. The decision which data is kept in the RAM and which is stored on the SWAP is made by the system. In contrast to other operating systems, Linux makes ample use of memory, so that your system runs smoother and more efficiently. If memory is then needed by an application, the system will unload stuff again, and make memory available.
 
