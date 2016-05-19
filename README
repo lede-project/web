@@ -1,10 +1,13 @@
 This is the repository of the LEDE web pages.
 
-All pages are located in the pages/ sub-folder and should follow these rules
+All pages should follow these rules
 
 * written using asciidoc
 * changes are verified using aspell
 * changes to the rules.txt files are not allowed without a prior vote
+
+Top level pages are in in pages/ sub-folder.
+The "Documentation" subsection is in the docs/ sub-folder.
 
 The website is generated from asciidoc using a cron script. If you update the script tell someone with access to the web server so that the script run is synced with the one in the tree.
 
