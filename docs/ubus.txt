@@ -5,8 +5,8 @@ include::menu.inc[]
 
 == uBus - IPC/RPC
 
-uBus is the interconnect system used by most service running on a _LEDE_ setup.
-Service can connect to the bus and provide methods that can be called by other services or clients.
+uBus is the interconnect system used by most services running on a _LEDE_ setup.
+Services can connect to the bus and provide methods that can be called by other services or clients.
 
 There is a CLI that can be used to communicate with services on the bus.
 

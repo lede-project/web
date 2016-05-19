@@ -5,7 +5,7 @@ include::menu.inc[]
 
 == UCI - Unified Configuration Interface
 
-_LEDE_ uses UCI to store its configuration. This is a human readable file format using typed and named section. Each section contains a number of options. Options can be single values or list of values. All configuration files are stored in the /etc/config/ folder. You can manually edit these files.
+_LEDE_ uses UCI to store its configuration. This is a human readable file format using typed and named sections. Each section contains a number of options. Options can be single values or lists of values. All configuration files are stored in the /etc/config/ folder. You can manually edit these files.
 
 ----
 root@lede:/# cat etc/config/system
@@ -22,7 +22,7 @@ config timeserver ntp
 	option enable_server 0
 ----
 
-Alternatively you may use the uci CLI to read/modify their content. Using the CLI has the advantage that you do not need to worry about the validity of the syntax. Some user do however prefer to make changes manually, they should however be aware that even minor syntax errors will make the whole file unparsable and not just the specific section and/or option that was modified.
+Alternatively you may use the uci CLI to read/modify their content. Using the CLI has the advantage that you do not need to worry about the validity of the syntax. Some users do however prefer to make changes manually, they should be aware that even minor syntax errors will make the whole file unparsable and not just the specific section and/or option that was modified.
 
 ----
 root@lede:/# uci show system
