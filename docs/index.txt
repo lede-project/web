@@ -14,3 +14,5 @@ git clone http://git.lede-project.org/web.git
 ----
 
 If you would like to contribute to the documentation then please send patches to our lede-dev mailing list and use the prefix "doc:" in the patches subject.
+
+Alternatively, pull requests can be opened against https://github.com/lede-project/web
