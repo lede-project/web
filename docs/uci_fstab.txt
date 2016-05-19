@@ -18,7 +18,7 @@ opkg install block-mount
 
 === Creating Initial fstab Automatically
 
-You can use the new 'block' utility. Call 'block detect' to get a sample [[doc/UCI]] configuration file. You can change this to your liking. 
+You can use the 'block' utility. Call 'block detect' to get a sample [[doc/UCI]] configuration file. You can change this to your liking.
 
 You can quickly install this standard configuration using:
 
