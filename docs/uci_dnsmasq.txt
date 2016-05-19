@@ -111,7 +111,7 @@ config 'dhcp' 'lan'
 	option dhcpv6 server
 ----
 
-* 'lan' specifies the OpenWrt interface that is served by this DHCP pool
+* 'lan' specifies the LEDE interface that is served by this DHCP pool
 * '100' is the offset from the network address, in the default configuration this would mean start leasing addresses from '192.168.1.100'
 * '150' is the maximum number of addresses that may be leased, in the default configuration this would mean leasing addresses up to '192.168.1.250'
 * '12h' specifies the time to live for handed out leases, twelve hours in this example
@@ -229,7 +229,7 @@ This tells the client to load pxelinux.0 from the server at 192.168.1.2, and mou
 
 DHCP can provide the client with numerous options, such as the domain name, NTP servers, network booting options, etc. While some settings are applicable to all hosts in a network segment, other are more specific and apply only to a group of hosts, or even only a single one. _dnsmasq_ offers to group DHCP options and their values by a _network-id_, an alphanumeric identifier, and sending options only to hosts which have been tagged with that _network-id_.
 
-In OpenWrt, you can tag hosts by the DHCP range they're in (section 'dhcp'), or a number of options the client might send with their DHCP request. In each of these sections, you can use the 'dhcp_option' list to add DHCP options to be sent to hosts with this _network-id_.
+In LEDE, you can tag hosts by the DHCP range they're in (section 'dhcp'), or a number of options the client might send with their DHCP request. In each of these sections, you can use the 'dhcp_option' list to add DHCP options to be sent to hosts with this _network-id_.
 
 Each classifying section has two configuration options: the value of the DHCP option used to distinguish clients, and the _network-id_ that these clients should be tagged with. Here's a template:
 
@@ -479,7 +479,7 @@ config dhcp lan
 Test:
 
 ----
-root@OpenWrt:~# ipcalc.sh 10.0.0.1 255.0.0.0 1441793 253
+root@lede:~# ipcalc.sh 10.0.0.1 255.0.0.0 1441793 253
 IP=10.0.0.1
 NETMASK=255.0.0.0
 BROADCAST=10.255.255.255
@@ -487,7 +487,7 @@ NETWORK=10.0.0.0
 PREFIX=8
 START=10.22.0.1
 END=10.22.0.254
-root@OpenWrt:~#
+root@lede:~#
 ----
 
 === Classifying Clients And Assigning Individual Options
