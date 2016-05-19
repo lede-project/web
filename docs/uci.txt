@@ -42,7 +42,6 @@ root@lede:/# uci set system.@system[0].hostname=foo
 root@lede:/# uci commit
 root@lede:/# reload_config
 root@lede:/#
-root@foo:/#
 ----
 
 
