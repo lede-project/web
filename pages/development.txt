@@ -75,7 +75,7 @@ If the patch does not get listed in patchwork then it won't get processed.
   http://lists.infradead.org/mailman/listinfo/lede-dev[development mailing list]
 . When reporting bugs please make sure to
   .. Name the tree/revision
-  .. Name the effected device
+  .. Name the affected device
   .. What does it do that it should not do / what does it not do that it should do
   .. Steps to reproduce
   .. What you have already done to fix the problem
