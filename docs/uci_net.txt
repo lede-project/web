@@ -374,7 +374,7 @@ opkg install ppp kmod-pppoe ppp-mod-pppoe
 
 === Protocol "pptp" (Point-to-Point Tunneling Protocol) ===
 
-*CAUTION*: The package 'pptp' must be installed to use PPtP. You need to have another section to configure the "parent" device, and you might need to add "<vpn>" to your "wan" zone in the firewall (<vpn> being the "logical interface name" of this section).
+*CAUTION*: The package 'ppp-mod-pptp' must be installed to use PPtP. You need to have another section to configure the "parent" device, and you might need to add "<vpn>" to your "wan" zone in the firewall (<vpn> being the "logical interface name" of this section).
 
 [cols="4*1,4",options="header"]
 |====
@@ -382,11 +382,13 @@ opkg install ppp kmod-pppoe ppp-mod-pppoe
 | 'server' | ip address | yes | _(none)_ | Remote PPtP server
 | 'username' | string | no(?) | _(none)_ | Username for PAP/CHAP authentication
 | 'password' | string | no(?) | _(none)_ | Password for PAP/CHAP authentication
-| 'keepalive' | integer | no | ? | Number of attempts to reconnect
-| 'defaultroute' | boolean | no | '1' | Whether to create a default route over the tunnel
-| 'peerdns' | boolean | no | '1' |Use PPTP-provided DNS server(s)
-| 'delegate' | boolean | no | ?  |Use builtin IPv6-management
-| 'iface' | string | no(?) | 'pptp-<vpn>' | Name of the physical interface. Defaults to 'pptp-<vpn>' no matter what you use
+| 'keepalive' | number | no | _(none)_ | Number of unanswered echo requests before considering the peer dead. The interval between echo requests is 5 seconds.
+| 'demand' | number | no | _(none)_ | Number of seconds to wait before closing the connection due to inactivity
+| 'defaultroute' | boolean | no | '1' | Replace existing default route on PPtP connect
+| 'peerdns' | boolean | no | '1' | Use peer-assigned DNS server(s)
+| 'dns' | list of ip addresses | no | _(none)_ | Override peer-assigned DNS server(s)
+| 'ipv6' | boolean | no | '0' | Enable IPv6 on the PPtP link
+| 'pppd_options' | string | no | _(none)_ | Additional command line arguments to pass to the pppd daemon
 |====
 
 === Protocol "6in4" (IPv6-in-IPv4 Tunnel) ===
