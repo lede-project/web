@@ -5,10 +5,10 @@ include::menu.inc[]
 
 == The Source Code
 
-The LEDE project source code start off with OpenWrt revision r49258. The code
+The LEDE project source code starts off with OpenWrt revision r49258. The code
 is stored inside a git tree which contains all branches and releases ever made
 by OpenWrt. While importing the sources the tree was normalised and some
-minor tweaks were made to comitter names and mail addresses.
+minor tweaks were made to committer names and mail addresses.
 
 All repositories can be browsed online through
 http://git.lede-project.org/[Gitweb] as well.
