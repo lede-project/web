@@ -1,3 +1,7 @@
 a {
-    text-decoration:none;
+    text-decoration: none;
+}
+
+p {
+    line-height: 1.8;
 }
