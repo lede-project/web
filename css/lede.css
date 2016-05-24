@@ -16,3 +16,7 @@ p {
         min-height: 2.8125rem;
     }
 }
+
+.top-bar .top-bar-title {
+    padding-left: 10px;
+}
