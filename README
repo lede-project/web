@@ -6,10 +6,15 @@ All pages should follow these rules
 * changes are verified using aspell
 * changes to the rules.txt files are not allowed without a prior vote
 
-Top level pages are in in pages/ sub-folder.
-The "Documentation" subsection is in the docs/ sub-folder.
+Top level pages are located in this directory while the "Documentation"
+can be found in the docs/ sub-folder.
 
-The website is generated from asciidoc using a cron script. If you update the script tell someone with access to the web server so that the script run is synced with the one in the tree.
+The website is generated from asciidoc using jekyll invoked by a cron script
+every 15 minutes.
+
+If sources are updated to require new jekyll plugins or a changed configuration
+then tell someone with access to the web server so that the settings can be
+synchronized with those in the tree.
 
 LICENSE is TBD and should be placed in the LICENSE file once decided.
 
