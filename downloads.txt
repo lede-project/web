@@ -20,16 +20,16 @@ Please refer to the list below for alternative locations.
 
 . *Germany* +
   [http://ftp.halifax.rwth-aachen.de/lede/[HTTP]] [ftp://ftp.halifax.rwth-aachen.de/lede/[FTP]] [link:rsync://ftp.halifax.rwth-aachen.de/lede/[RSYNC]] +
-  ~Sponsored by http://www.rwth-aachen.de/[RWTH Aachen]~
+  [small]#Sponsored by http://www.rwth-aachen.de/[RWTH Aachen]#
 . *Romania* +
   [http://mirrors.linux.ro/lede/downloads/[HTTP]] [ftp://mirrors.linux.ro/lede/downloads/[FTP]] [link:rsync://mirrors.linux.ro/lede/downloads/[RSYNC]] +
-  ~Sponsored by http://www.rcs-rds.ro[RCS&RDS]~
+  [small]#Sponsored by http://www.rcs-rds.ro[RCS&RDS]#
 . *France* +
   [http://lede-project.tetaneutral.net/[HTTP]] [link:rsync://lede-project.tetaneutral.net/downloads/[RSYNC]] +
-  ~Sponsored by http://tetaneutral.net/[tetaneutral.net]~
+  [small]#Sponsored by http://tetaneutral.net/[tetaneutral.net]#
 . *Netherlands* +
   [http://ftp.snt.utwente.nl/pub/software/lede/[HTTP]] [ftp://ftp.snt.utwente.nl/pub/software/lede/[FTP]] +
-  ~Sponsored by the https://www.utwente.nl/[SNT, University of Twente]~
+  [small]#Sponsored by the http://www.snt.utwente.nl/[SNT, University of Twente]#
 
 === How to mirror
 
