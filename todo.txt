@@ -9,10 +9,6 @@ This page lists the current project wide todos. Items listed in random order wit
 
 === Project Reboot
 
-. Announce publicly
-. Invite new developers
-. Write letter of invite to (mesh) communities using the code base
-. Ask communities to endorse _LEDE_
 . Announce feature freeze and start stabilising trunk
 . Prepare _LEDE_ #1 release
 
@@ -20,9 +16,8 @@ This page lists the current project wide todos. Items listed in random order wit
 
 . Provide a master for the download mirroring infrastructure
 . Find mirroring capacity - we liberally distribute rsync keys if you have bandwidth and storage available on trusted infrastructure contact us
-. Setup an issue tracker
+. Setup an issue tracker - FlySpray looks awesome - propse it to a wider audience
 . What shall we do about wiki and forum ?
-. Find a Web Person to do some CSS magic
 
 === Code base
 
@@ -32,9 +27,7 @@ This page lists the current project wide todos. Items listed in random order wit
 . Review PPPoE support
 . Convert ar71xx to devicetree
 . Document core services (procd, netifd, ...)
-. Build new UCI docs
 . Define rules for board support status Green, Orange, Red and start testing all supported boards
-. integrate keyring support
 
 === Releases
 
