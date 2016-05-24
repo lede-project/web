@@ -4,5 +4,5 @@
 <li{% if page.url == '/development.html' %} class="active"{% endif %}><a href="{{ site.prefix }}development.html">Development</a></li>
 <li{% if page.url == '/todo.html' %} class="active"{% endif %}><a href="{{ site.prefix }}todo.html">Todo</a></li>
 <li{% if page.url == '/downloads.html' %} class="active"{% endif %}><a href="{{ site.prefix }}downloads.html">Downloads</a></li>
-<li{% if page.url == '/docs/' %} class="active"{% endif %}><a href="{{ site.prefix }}docs/index.html">Documentation</a></li>
+<li{% if page.url contains '/docs/' %} class="active"{% endif %}><a href="{{ site.prefix }}docs/index.html">Documentation</a></li>
 <li{% if page.url == '/about.html' %} class="active"{% endif %}><a href="{{ site.prefix }}about.html">About</a></li>
