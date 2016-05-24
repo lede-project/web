@@ -16,5 +16,9 @@ If sources are updated to require new jekyll plugins or a changed configuration
 then tell someone with access to the web server so that the settings can be
 synchronized with those in the tree.
 
+In order to generate the pages locally for testing your changes,
+install https://jekyllrb.com/, issue "jekyll serve" and navigate to
+http://127.0.0.1:4000/ with your browser.
+
 LICENSE is TBD and should be placed in the LICENSE file once decided.
 
