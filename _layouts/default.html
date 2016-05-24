@@ -50,6 +50,15 @@
 <!-- Main Page Content and Sidebar -->
 
 <div class="row">
+    <!-- Docs Sidebar -->
+
+    {% if page.url contains '/docs/' %}
+    <aside class="large-3 columns">
+        {% include docs_nav.html %}
+    </aside>
+    {% endif %}
+
+    <!-- End Docs Sidebar -->
 
     <!-- Main Blog Content -->
     <div class="large-9 columns" role="content">
@@ -62,13 +71,11 @@
 
     <!-- Sidebar -->
 
+    {% unless page.url contains '/docs/' %}
     <aside class="large-3 columns">
-        {% if page.url contains '/docs/' %}
-            {% include docs_nav.html %}
-        {% else %}
-            {% include side_nav.html %}
-        {% endif %}
+        {% include side_nav.html %}
     </aside>
+    {% endunless %}
 
     <!-- End Sidebar -->
 </div>
