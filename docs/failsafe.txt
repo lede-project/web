@@ -1,0 +1,72 @@
+---
+---
+Failsafe mode
+=============
+
+== Failsafe mode
+
+**Caveat:** This functionality only applies to SquashFS images, since they come 
+with a read-only root partition. To verify whether your device uses SquashFS,
+check for "SquashFS" either in the _LEDE_ image name or perform the following
+check on your device:
+
+ # grep squash /proc/mount
+
+_LEDE_ allows you to boot into failsafe mode and override the configuration saved
+on the JFFS2 overlay. It will revert to a few hard coded defaults stored in the 
+SquashFS image. If your device becomes inaccessible, e.g. after a configuration 
+error, then failsafe mode is there to help you out; it *cannot*, however, fix 
+more deeply rooted problems like faulty hardware or a broken kernel. It is 
+comparable to a reset, but not entirely the same - you will still be able to 
+access your settings and restore them if desired, whereas a reset would just
+wipe everything.
+
+=== Entering failsafe mode
+
+Make sure you use a wired connection, since the failsafe will disable your 
+wireless connectivity.
+
+To enter failsafe mode, follow one of the procedures listed below:
+
+* Wait for a flashing LED and press a button;
+* Wait (with a packet sniffer) for a special broadcast packet and press a button;
+* Watch for a boot message (on the serial port) and press a key ("f") on the serial keyboard.
+
+Usually, the first procedure is the easiest one. However, do consult the available
+documentation for your device, as there is no default button assigned as a reset 
+button and not all procedures work on every device. Whichever trigger you use, 
+the device will enter failsafe mode and you can access the command line with SSH 
+(always possible) or a serial keyboard. OpenWrt releases (15.05 and before) offer 
+a telnet connection in this state but no SSH.
+
+=== Fixing or wiping your settings
+
+Once failsafe mode is triggered, the router will boot with a network address 
+of 192.168.1.1/24, usually on the 'eth0' network interface, with only essential 
+services running. Using SSH or a serial connection, you can then mount the 
+JFFS2 partition with the following command:
+
+ # mount_root
+
+After that, you can start looking around and fix what's broken. The JFFS2 
+partition will be mounted to '/overlay', as under normal operation.
+
+If you want a clean slate, there's no need to flash again; just enter the 
+following command and your device will be reset.
+
+ # firstboot
+
+=== Settings not being saved
+
+When your device seems to save settings but loses them upon every reboot,
+this could mean that overlayfs is corrupted. You can fix this by SSH-ing into the
+device and issuing the following command to reset your JFSS2 partition:
+
+ # jffs2reset
+
+While essentially doing the same thing as 'firstboot', this rewrites the flash 
+area of the JFFS2 file system instead of formatting it.
+
+More specific instructions will be provided in the wiki.
+
+**WIP**
