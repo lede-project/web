@@ -6,6 +6,11 @@ p {
     line-height: 1.8;
 }
 
+.top-bar .toggle-topbar span,
+.fa-ul a {
+    font-family:"Open Sans","DejaVu Sans",sans-serif;
+}
+
 .top-bar-section {
     max-width: 100rem !important;
 }
