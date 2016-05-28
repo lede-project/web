@@ -22,7 +22,7 @@ config timeserver ntp
 	option enable_server 0
 ----
 
-Alternatively you may use the uci CLI to read/modify their content. Using the CLI has the advantage that you do not need to worry about the validity of the syntax. Some users do however prefer to make changes manually, they should be aware that even minor syntax errors will make the whole file unparsable and not just the specific section and/or option that was modified.
+Alternatively you may use the uci CLI to read/modify their content. Using the CLI has the advantage that you do not need to worry about the validity of the syntax. Some users do however prefer to make changes manually, they should be aware that even minor syntax errors will make the whole file unparsable and not just the specific section and/or option that was modified. UCI by default will print all the known settings (`uci show`), but also allows you to print just the settings for a subsystem, like you can see below:
 
 ----
 root@lede:/# uci show system
@@ -35,11 +35,11 @@ system.ntp.enabled='1'
 system.ntp.enable_server='0'
 ----
 
-When using the CLI to modify values, you will find that all changes first get staged and not commited to the file directly. If you want to permanently store changes you need to commit them. After calling the commit command, you can also make the system reload and apply the changes that you made.  (This will only affect services that correctly use link:procd.html[procd] init scripts)
+When using the CLI to modify values, you will find that all changes first get staged and not commited to the file directly. You can see the affected keys with `uci changes`. Single value options get set with `uci set key='value'`, list options (like 'system.ntp.server' above) with `uci add_list key='value'`. If you want to permanently store changes you need to commit them (see example below). Just like printing settings, you can commit all changes or just do so for a subset. After calling the commit command, you can also make the system reload and apply the changes that you made. (This will only affect services that correctly use link:procd.html[procd] init scripts.)
 
 ----
 root@lede:/# uci set system.@system[0].hostname=foo
-root@lede:/# uci commit
+root@lede:/# uci commit system
 root@lede:/# reload_config
 root@lede:/#
 ----
