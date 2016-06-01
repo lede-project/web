@@ -30,7 +30,7 @@ Please refer to the list below for alternative locations.
 . *Netherlands* +
   [http://ftp.snt.utwente.nl/pub/software/lede/[HTTP]] [ftp://ftp.snt.utwente.nl/pub/software/lede/[FTP]] +
   [small]#Sponsored by the http://www.snt.utwente.nl/[SNT, University of Twente]#
-. *Washington, US* +
+. *Washington State, US* +
   [http://mirror.mediaarchitectu.re/lede/[HTTP]] +
   [small]#Sponsored by http://mediaarchitectu.re/[mediaarchitectu.re]#
 
