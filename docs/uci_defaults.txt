@@ -23,7 +23,7 @@ $ cat zzzz_customisations
 
 uci -q batch <<-EOT
   add dhcp host
-  set dchp.@host[0].name='bellerophon'
+  set dhcp.@host[0].name='bellerophon'
   set network.@host[0].ip='192.168.2.100'
   set network.@host[0].mac='a1:b2:c3:d4:e5:f6'
     EOT
