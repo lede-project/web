@@ -28,7 +28,7 @@ Please refer to the list below for alternative locations.
   [http://lede-project.tetaneutral.net/[HTTP]] [link:rsync://lede-project.tetaneutral.net/downloads/[RSYNC]] +
   [small]#Sponsored by http://tetaneutral.net/[tetaneutral.net]#
 . *Netherlands* +
-  [http://ftp.snt.utwente.nl/pub/software/lede/[HTTP]] [ftp://ftp.snt.utwente.nl/pub/software/lede/[FTP]] +
+  [http://ftp.snt.utwente.nl/pub/software/lede/[HTTP]] [ftp://ftp.snt.utwente.nl/pub/software/lede/[FTP]] [link:rsync://ftp.snt.utwente.nl/lede/[RSYNC]] +
   [small]#Sponsored by the http://www.snt.utwente.nl/[SNT, University of Twente]#
 . *Washington State, US* +
   [http://mirror.mediaarchitectu.re/lede/[HTTP]] +
