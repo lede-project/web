@@ -41,3 +41,4 @@ own mission in improving something on this planet. The Following communities hav
 kindly decided to endorse this project. Thanks !
 
 - image:logo/endorsements/qmp.png[qMp logo] http://qmp.cat/News/31_qMp_endorses_the_LEDE_project["qMp endorses the LEDE project"]
+- image:logo/endorsements/wirelesspt.png[WirelessPT logo] https://wirelesspt.net/wiki/LEDE["\"We wish huge success to the LEDE project\""]
