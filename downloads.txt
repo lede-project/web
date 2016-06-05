@@ -31,7 +31,7 @@ Please refer to the list below for alternative locations.
   [http://ftp.snt.utwente.nl/pub/software/lede/[HTTP]] [ftp://ftp.snt.utwente.nl/pub/software/lede/[FTP]] [link:rsync://ftp.snt.utwente.nl/lede/[RSYNC]] +
   [small]#Sponsored by the http://www.snt.utwente.nl/[SNT, University of Twente]#
 . *Washington State, US* +
-  [http://mirror.mediaarchitectu.re/lede/[HTTP]] +
+  [http://mirror.mediaarchitectu.re/lede/[HTTP]] [https://mirror.mediaarchitectu.re/lede/[HTTPS]] +
   [small]#Sponsored by http://mediaarchitectu.re/[mediaarchitectu.re]#
 
 === How to mirror
