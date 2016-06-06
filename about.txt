@@ -25,6 +25,7 @@ Here you can find an alphabetically ordered list of the current people involved 
 | Hauke Mehrtens | hauke
 | Jo-Philipp Wich | jow
 | John Crispin | blogic
+| Jonas Gorski | jogo
 | Matthias Schiffer | neoraider
 | Rafał Miłecki | rmilecki
 | Steven Barth | cyrus
