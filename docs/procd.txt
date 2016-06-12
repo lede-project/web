@@ -15,13 +15,13 @@ Before the real procd runs, a small init process is started. This process has th
 * create some required folder, /tmp/{run,lock,state}
 * bring up /dev/console and map the processes stdin/out/err to the console (this is the "Console is alive" message)
 * setup the PATH environment variable
-* check if "init_debug=" is set int he kernel commandline and apply the debug level if set
+* check if "init_debug=" is set in the kernel command line and apply the debug level if set
 * initialise the watchdog
 * start kmodloader and load the modules listed in /etc/modules-boot.d/
 * start hotplug with the preinit rules (/etc/hotplug-preinit.json)
 * start preinit scripts found inside /lib/preinit/
 
-Once preinit is complete the init process is done and will do an exec on the real procd. This will replace init as pid1 with an instance of procd running as the new pid 1. The watchdog file descriptor is not closed. Instead it is handed over to the new procd process. The debug_level will also be handed over to the new procd instance if it was set via commandline or during preinit.
+Once preinit is complete the init process is done and will do an exec on the real procd. This will replace init as pid1 with an instance of procd running as the new pid 1. The watchdog file descriptor is not closed. Instead it is handed over to the new procd process. The debug_level will also be handed over to the new procd instance if it was set via command line or during preinit.
 
 === procd start up
 
@@ -29,7 +29,7 @@ Procd will first do some basic process init such as setting itself to be owner o
 
 * find out if a watchdog file descriptor was passed by the init process and start up the watchdog
 * setup /dev/console to be our stdin/out/err
-* start the coldplug process using the full rule set (/etc/hotplug.json) this is done by manually triggering all events that have already happened again using udevtrigger
+* start the coldplug process using the full rule set (/etc/hotplug.json). This is done by manually triggering all events that have already happened using udevtrigger
 * start ubus, register it as a service and connect to it.
 
 The basic system bringup is now complete, procd is up and running and can start handling daemons and services
@@ -40,8 +40,8 @@ Procd supports four commands inside inittab
 
 * respawn - this works just like you expect it. It starts a process and will respawn it once it has completed.
 * askfirst - this works just like respawn but will print the line "Please press Enter to activate this console." before starting the process
-* askconsole - this works like askfirst but instead of running on the tty passed as a paramter will look for the tty defined in the kernel commandline using "console="
-* sysinit - this will trigger procd to run the command given as a parameter only once. This is usually used to trigger execution of /etc/rc.d/
+* askconsole - this works like askfirst but, instead of running on the tty passed as a parameter, it will look for the tty defined in the kernel command line using "console="
+* sysinit - this will trigger procd to run the command, given as a parameter, only once. This is usually used to trigger execution of /etc/rc.d/
 
 Once all items inside /etc/inittab are processed, procd enter its normal run mode and will handle messages coming in via ubus. It will stay in this state until a reboot/shutdown is triggered.
 
@@ -49,7 +49,7 @@ Once all items inside /etc/inittab are processed, procd enter its normal run mod
 
 === hotplug
 
-Hotplug scripts are located inside /etc/hotplug.d and are based on json_script. This is a json based if then else syntax. Procds hotplug service offers the following actions:
+Hotplug scripts are located inside /etc/hotplug.d and are based on json_script. This is a json based if then else syntax. Procd hotplug service offers the following actions:
 
 * makedev
 * rm
