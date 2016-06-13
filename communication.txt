@@ -39,15 +39,19 @@ its best to post updates link:https://twitter.com/lede_project[here]
 
 === Corporate Contact
 
-There is a special email address that companies wanting to collaborate with the
-project can use to contact committers confidentially. These types of "first contact"
-only have the purpose of helping companies understand the mode of operations. Once the
-intent is communicated, companies are invited to participate in the project just
-like any other community member. This means that engagement should be done in
-public. Ideally companies simply allow part of their R&D team to participate
-in the normal development process as normal community members. There will be
-no special treatment beyond the "first contact". Please see the project
-link:rules.html[rules] for further information.
+Please direct general inquiries to
+link:mailto:lede-contact@lede-project.org[lede-contact@lede-project.org] in order
+to confidentially get in touch with the link:about.html#people[project developers].
+
+Note that this contact is primarily intented to find a suitable mode of
+cooperation and to inquire about project matters without having to disclose
+your corporate identity upfront. There will be no special treatment beyond the
+"first contact". Please see the project link:rules.html[rules] for further
+information.
+
+Actual development should happen in public and corporations are strongly
+encouraged to send their contributions through the public mailing lists or in
+the form of Github pull requests.
 
 == Project Meetings
 
