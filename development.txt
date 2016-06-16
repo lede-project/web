@@ -72,7 +72,6 @@ If the patch does not get listed in patchwork then it won't get processed.
 === Reporting Bugs
 
 . Please report your bugs using our http://bugs.lede-project.org/[issue tracker]
-  http://lists.infradead.org/mailman/listinfo/lede-dev[development mailing list]
 . When reporting bugs please make sure to
   .. Name the tree/revision
   .. Name the affected device
