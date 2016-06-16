@@ -71,7 +71,7 @@ If the patch does not get listed in patchwork then it won't get processed.
 
 === Reporting Bugs
 
-. *All* bug reports need to be submitted via the
+. Please report your bugs using our http://bugs.lede-project.org/[issue tracker]
   http://lists.infradead.org/mailman/listinfo/lede-dev[development mailing list]
 . When reporting bugs please make sure to
   .. Name the tree/revision
@@ -83,12 +83,7 @@ If the patch does not get listed in patchwork then it won't get processed.
 . Reporting a bug means that you reported a bug. It does not constitute a claim that
   anyone has to work on fixing it.
 . Pointless/vague/silly/... bugs reports will be ignored
-. Feature requests are not Bugs. They will also be ignored.
 . The better your bug report, the more likely it is that it will be worked on.
-
-All bug reports need to be sent in a format so that they are listed in the issue
-tracker (__LINK__). If the bug report does not get listed in the issue tracker then
-it won't get processed.
 
 
 === Patch Merging And Tree Life Cycle
