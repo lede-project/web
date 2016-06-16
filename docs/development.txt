@@ -1,0 +1,17 @@
+---
+---
+Development information
+========================
+
+== General source structure
+
+These are the folders you can find in the project's git:
+
+* **/config** : configuration files for menuconfig 
+* **/docs** : source files for (mostly outdated and OpenWrt-branded) latex documentation
+* **/include** : makefile configuration files
+* **/package** : packages makefile and configuration
+* **/scripts** : miscellaneous scripts used throughout the build process
+* **/target** : makefile and configuration for building imagebuilder, kernel, sdk and the toolchain built by buildroot.
+* **/toolchain** : makefile and configuration for building the toolchain
+* **/tools** : miscellaneous tools used throughout the build process
