@@ -1,0 +1,42 @@
+=== Adding a new device
+
+A good all-round advice would be to start by looking at recent commits about adding a new device, to see what files where changed and how.
+Many files try to be as self-explanatory as possible, most of the times just opening them will be enough to understand their function.
+
+
+This is a general map of where most important files are located:
+
+==== /target/linux/<arch_name>/base-files/etc/...
+This folder contains files and folders that will be integrated in the firmware's /etc folder.
+
+These are its subfolders and files:
+
+* **...board.d/** scripts for defining device-specific default hardware, like leds and network interfaces. 
+* **...hotplug.d/** scripts for defining device-specific actions to be done automatically on hotplugging of devices
+* **...init.d/** scripts for defining device-specific actions to be done automatically on boot
+* **...uci-defaults/** files for defining device-specific uci configuration defualts
+* **...diag.sh** defines what is the led to use for error codes for each board
+
+=== /target/linux/<arch_name>/base-files/lib/...
+This folder contains files and folders that will be integrated in the firmware's /lib folder.
+
+These are its subfolders and files:
+
+* **...<arch_name>.sh** human-readable full board name associated to script-safe board name
+* **...preinit/** common <arch_name> preinit startup scripts
+* **...upgrade/** common <arch_name> upgrade scripts
+
+=== /target/linux/<arch_name>/base-files/sbin 
+This folder contains files and folders that will be integrated in the firmware's /sbin folder, usually common <arch_name> sbin scripts and tools.
+
+==== /target/linux/<arch_name>/dts/ 
+Device tree source files, or dts for short.
+
+=== /target/linux/<arch_name>/image/
+Configuration needed to build device-specific flashable images.
+
+=== /target/linux/<arch_name>/<board_name>/ 
+Board-specific configuration.
+
+=== /target/linux/<arch_name>/modules.mk 
+Arch-specific kernel module config file for menuconfig 
