@@ -14,7 +14,8 @@ This page lists the current project wide todos. Items listed in random order wit
 
 === Infrastructure
 
-. What shall we do about wiki and forum ?
+. Setup a new Wiki
+. What shall we do about the forum ?
 
 === Code base
 
