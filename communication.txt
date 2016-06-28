@@ -21,6 +21,13 @@ The project offers the following mailing lists
   This list is used for project organisational purposes. Anyone can
   subscribe and read this list, only committers may write to this list.
 
+In addition there are two read only announcement lists:
+
+. http://lists.infradead.org/mailman/listinfo/lede-bugs[lede-bugs@lists.infradead.org] -
+  This list receives bug tracking notifications from Flyspray
+. http://lists.infradead.org/mailman/listinfo/lede-commits[lede-commits@lists.infradead.org] -
+  This list tracks the commits to our core Git repositories
+
 
 === IRC Channels
 
