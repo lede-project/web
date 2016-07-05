@@ -43,7 +43,7 @@ There are no plans to change the license of the LEDE code. It should be easy to 
 
 == Were there any technical reasons to split from OpenWrt?
 
-Nothing special, expect that LEDE wants to focus more on stability and not so much on bleeding edge any any more.
+Nothing special, expect that LEDE wants to focus more on stability and not so much on bleeding edge any more.
 The release process should be better automatized and the release should be better tested.
 
 == What license does LEDE use?
