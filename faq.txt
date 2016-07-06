@@ -60,5 +60,5 @@ No, the LEDE project is not a registered legal entity. The OpenWrt project is al
 
 == Is LEDE a registered trademark?
 
-No, LEDE is not a registered trademark, but OpenWrt is a registered trademark which is holden by the Software in the Public Interest (SPI) in the name of the OpenWrt project.
+No, LEDE is not a registered trademark, but OpenWrt is a registered trademark which is held by the Software in the Public Interest (SPI) in the name of the OpenWrt project.
 
