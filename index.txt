@@ -27,7 +27,7 @@ to not keep settings in such a case to benefit from the updated defaults.
 === What is LEDE’s target audience?
 
 As a source based Linux distribution for wireless routers, LEDE is primarily
-intented for networking enthusiasts, wireless communities, embedded Linux
+intended for networking enthusiasts, wireless communities, embedded Linux
 developers and advanced users.
 
 LEDE aims for versatility and ease of customization but does not attempt to
