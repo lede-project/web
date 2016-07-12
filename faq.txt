@@ -50,7 +50,7 @@ The release process should be better automatized and the release should be bette
 
 The build system and many LEDE components are licensed under the GNU General Public License Version 2. Some parts are licensed under different licenses, this is mostly the case for packages not created in LEDE or OpenWrt.
 
-== Who hold the copyright of LEDE code?
+== Who holds the copyright of LEDE code?
 
 The original authors of the code holds the copyright.
 
