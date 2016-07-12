@@ -56,7 +56,7 @@ The original authors of the code holds the copyright.
 
 == Is the LEDE project a registered legal entity?
 
-No, the LEDE project is not a registered legal entity. The OpenWrt project is also no registered legal entity, but OpenWrt is represented by the Software in the Public Interest (SPI).
+No, the LEDE project is not a registered legal entity. The OpenWrt project is also not a registered legal entity, but OpenWrt is represented by 'Software in the Public Interest' (SPI).
 
 == Is LEDE a registered trademark?
 
