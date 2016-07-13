@@ -34,7 +34,7 @@ Please refer to the list below for alternative locations.
   [http://mirror.mediaarchitectu.re/lede/[HTTP]] [https://mirror.mediaarchitectu.re/lede/[HTTPS]] +
   [small]#Sponsored by http://mediaarchitectu.re/[mediaarchitectu.re]#
 . *Singapore* +
-  [http://mirror.0x.sg/lede/[HTTP]] [link:rsync://mirror.0x.sg/lede/[RSYNC]] +
+  [http://mirror.0x.sg/lede/[HTTP]] [ftp://mirror.0x.sg/lede/[FTP]] [link:rsync://mirror.0x.sg/lede/[RSYNC]] +
   [small]#Sponsored by Andrew Yong#
 
 === How to mirror
