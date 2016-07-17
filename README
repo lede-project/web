@@ -9,6 +9,10 @@ All pages should follow these rules
 Top level pages are located in this directory while the "Documentation"
 can be found in the docs/ sub-folder.
 
+The _includes/ folder contains the html structure of the site navbars, 
+if you add a page please add it in the respective nav bar so that it 
+becomes reachable.
+
 The website is generated from asciidoc using jekyll invoked by a cron script
 every 15 minutes.
 
