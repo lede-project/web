@@ -1,3 +1,5 @@
+---
+---
 === Adding a new device
 
 A good all-round advice would be to start by looking at recent commits about adding a new device, to see what files where changed and how.
