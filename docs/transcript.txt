@@ -1,0 +1,149 @@
+---
+layout: default
+title: LEDE SSH Transcript
+---
+
+== LEDE Installation Transcript
+
+The steps below are a transcript of the SSH session starting with step #2. 
+
+.bash-3.2$ ssh root@192.168.1.1
+----
+The authenticity of host '192.168.1.1 (192.168.1.1)' can't be established.
+RSA key fingerprint is 33:df:77:e6:b4:a2:bd:33:a2:4c:53:3b:e8:0f:b8:9c.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.1.1' (RSA) to the list of known hosts.
+
+BusyBox v1.24.2 () built-in shell (ash)
+     _________
+    /        /\      _    ___ ___  ___
+   /  LE    /  \    | |  | __|   \| __|
+  /    DE  /    \   | |__| _|| |) | _|
+ /________/  LE  \  |____|___|___/|___|                      lede-project.org
+ \        \   DE /
+  \    LE  \    /  -----------------------------------------------------------
+   \  DE    \  /    Reboot (HEAD, r1006)
+    \________\/    -----------------------------------------------------------
+
+----
+
+.root@lede:~# passwd
+----
+Changing password for root
+New password:
+Retype password:
+Password for root changed by root
+----
+.root@lede:~# ping 8.8.8.8
+----
+PING 8.8.8.8 (8.8.8.8): 56 data bytes
+64 bytes from 8.8.8.8: seq=0 ttl=53 time=20.888 ms
+64 bytes from 8.8.8.8: seq=1 ttl=53 time=21.107 ms
+^C
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 20.888/20.997/21.107 ms
+----
+.root@lede:~# opkg update
+----
+Downloading http://downloads.lede-project.org/snapshots/targets/ramips/mt7621/packages/Packages.gz.
+Updated list of available packages in /var/opkg-lists/reboot_core.
+Downloading http://downloads.lede-project.org/snapshots/targets/ramips/mt7621/packages/Packages.sig.
+Signature check passed.
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/base/Packages.gz.
+Updated list of available packages in /var/opkg-lists/reboot_base.
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/base/Packages.sig.
+Signature check passed.
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/luci/Packages.gz.
+Updated list of available packages in /var/opkg-lists/reboot_luci.
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/luci/Packages.sig.
+Signature check passed.
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/packages/Packages.gz.
+Updated list of available packages in /var/opkg-lists/reboot_packages.
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/packages/Packages.sig.
+Signature check passed.
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/routing/Packages.gz.
+Updated list of available packages in /var/opkg-lists/reboot_routing.
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/routing/Packages.sig.
+Signature check passed.
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/telephony/Packages.gz.
+Updated list of available packages in /var/opkg-lists/reboot_telephony.
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/telephony/Packages.sig.
+Signature check passed.
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/targets/Packages.gz.
+Updated list of available packages in /var/opkg-lists/reboot_targets.
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/targets/Packages.sig.
+Signature check passed.
+----
+.root@lede:~# opkg install luci-ssl
+----
+Installing luci-ssl (git-16.190.47901-6be6904-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/luci/luci-ssl_git-16.190.47901-6be6904-1_all.ipk.
+Installing luci (git-16.190.47901-6be6904-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/luci/luci_git-16.190.47901-6be6904-1_all.ipk.
+Installing uhttpd (2016-06-16-9d9f07142bbef1c63a79620967a847a9493105e5) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/base/uhttpd_2016-06-16-9d9f07142bbef1c63a79620967a847a9493105e5_mipsel_1004kc_dsp.ipk.
+Installing uhttpd-mod-ubus (2016-06-16-9d9f07142bbef1c63a79620967a847a9493105e5) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/base/uhttpd-mod-ubus_2016-06-16-9d9f07142bbef1c63a79620967a847a9493105e5_mipsel_1004kc_dsp.ipk.
+Installing luci-mod-admin-full (git-16.190.47901-6be6904-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/luci/luci-mod-admin-full_git-16.190.47901-6be6904-1_mipsel_1004kc_dsp.ipk.
+Installing luci-base (git-16.190.47901-6be6904-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/luci/luci-base_git-16.190.47901-6be6904-1_mipsel_1004kc_dsp.ipk.
+Installing lua (5.1.5-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/base/lua_5.1.5-1_mipsel_1004kc_dsp.ipk.
+Installing liblua (5.1.5-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/base/liblua_5.1.5-1_mipsel_1004kc_dsp.ipk.
+Installing libuci-lua (2016-07-04.1-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/base/libuci-lua_2016-07-04.1-1_mipsel_1004kc_dsp.ipk.
+Installing luci-lib-nixio (git-16.190.47901-6be6904-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/luci/luci-lib-nixio_git-16.190.47901-6be6904-1_mipsel_1004kc_dsp.ipk.
+Installing luci-lib-ip (git-16.190.47901-6be6904-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/luci/luci-lib-ip_git-16.190.47901-6be6904-1_mipsel_1004kc_dsp.ipk.
+Installing rpcd (2016-06-30-23417e94d25570e6d62542bac46edd51e8e0243a) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/base/rpcd_2016-06-30-23417e94d25570e6d62542bac46edd51e8e0243a_mipsel_1004kc_dsp.ipk.
+Installing libubus-lua (2016-07-02-053be7df871e05478284235732f8b0608089512f) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/base/libubus-lua_2016-07-02-053be7df871e05478284235732f8b0608089512f_mipsel_1004kc_dsp.ipk.
+Installing luci-lib-jsonc (git-16.190.47901-6be6904-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/luci/luci-lib-jsonc_git-16.190.47901-6be6904-1_mipsel_1004kc_dsp.ipk.
+Installing luci-theme-bootstrap (git-16.190.47901-6be6904-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/luci/luci-theme-bootstrap_git-16.190.47901-6be6904-1_all.ipk.
+Installing luci-app-firewall (git-16.190.47901-6be6904-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/luci/luci-app-firewall_git-16.190.47901-6be6904-1_all.ipk.
+Installing luci-proto-ppp (git-16.190.47901-6be6904-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/luci/luci-proto-ppp_git-16.190.47901-6be6904-1_all.ipk.
+Installing libiwinfo-lua (2016-07-04-96d322d5941c57be58f8e8d5c6e2b28e90ed3598) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/base/libiwinfo-lua_2016-07-04-96d322d5941c57be58f8e8d5c6e2b28e90ed3598_mipsel_1004kc_dsp.ipk.
+Installing luci-proto-ipv6 (git-16.190.47901-6be6904-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/luci/luci-proto-ipv6_git-16.190.47901-6be6904-1_all.ipk.
+Installing libustream-polarssl (2016-07-02-ec80adaa1b47f28d426fa19c692011ce60b992d6) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/base/libustream-polarssl_2016-07-02-ec80adaa1b47f28d426fa19c692011ce60b992d6_mipsel_1004kc_dsp.ipk.
+Installing libpolarssl (1.3.17-1) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/base/libpolarssl_1.3.17-1_mipsel_1004kc_dsp.ipk.
+Installing px5g-polarssl (4) to root...
+Downloading http://downloads.lede-project.org/snapshots/packages/mipsel_1004kc_dsp/base/px5g-polarssl_4_mipsel_1004kc_dsp.ipk.
+Configuring liblua.
+Configuring libuci-lua.
+Configuring rpcd.
+Configuring luci-lib-ip.
+Configuring libubus-lua.
+Configuring libiwinfo-lua.
+Configuring luci-theme-bootstrap.
+Configuring luci-app-firewall.
+Configuring libpolarssl.
+Configuring px5g-polarssl.
+Configuring lua.
+Configuring uhttpd.
+Generating RSA private key, 2048 bit long modulus
+Generating selfsigned certificate with subject 'C=ZZ,ST=Somewhere,L=Unknown,CN=LEDE,' and validity 20160717161519-20180717161519
+Configuring uhttpd-mod-ubus.
+Configuring luci-lib-nixio.
+Configuring luci-lib-jsonc.
+Configuring luci-base.
+Configuring luci-mod-admin-full.
+Configuring luci-proto-ppp.
+Configuring luci-proto-ipv6.
+Configuring luci.
+Configuring libustream-polarssl.
+Configuring luci-ssl.
+----
+Success! Now the Web GUI is available at https://192.168.1.1

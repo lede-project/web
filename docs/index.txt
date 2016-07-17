@@ -1,18 +1,42 @@
 ---
+layout: default
+title: Getting Started with LEDE
 ---
-Documentation Index
-===================
 
-== The Web Presence
+== Getting Started with LEDE
 
-The documentation  you're reading is generated from text files using the
-http://www.methods.co.nz/asciidoc/[AsciiDoc] suite. Any changes made to the
-project's documentation will be reflected in our +web.git+ repository:
+LEDE is based on link:https://wiki.openwrt.org/doc/start[OpenWrt] &mdash; most of the operational aspects of the two projects are identical. 
+This document frequently refers to pages of the OpenWrt wiki. 
 
-----
-git clone http://git.lede-project.org/web.git
-----
+Although there are many ways to install LEDE on your router and complete its initial configuration, the following steps are reliable:
 
-If you would like to contribute to the documentation then please send patches to our lede-dev mailing list and use the prefix "doc:" in the patch's subject.
+. *Flash the LEDE firmware image into your router.* The exact process is device-specific.
+Follow the OpenWrt links below to find the required information for your router:
+.. *Find your router's architecture and processor types.* 
+The "Device Page" of the link:https://wiki.openwrt.org/toh/start[OpenWrt Table of Hardware] will contain this information.
+.. *Download the proper LEDE firmware image to your computer* from link:https://downloads.lede-project.org/snapshots/targets/[downloads.lede-project.org.] 
+The directory structure for LEDE is identical to OpenWrt's downloads.
+.. *Follow the flashing instructions* on the OpenWrt Device Page.
+.. *Connect via Ethernet using DHCP.* After flashing, make sure your computer is connected to a Local Area Network (LAN) port of the router using DHCP.
+. *SSH to the router.* +
+In your terminal program, enter `ssh root@192.168.1.1`. You can follow along with the steps below in the link:transcript.html[SSH Transcript].  
+. *Set the password.* +
+LEDE ships without a password. Enter `passwd` and type the new password twice. 
+_Note: Use a good password: it secures your home network.
+Write it on the bottom of the router so you don't forget._
+. *Connect the Wide Area Network (WAN) port of the router to "the internet".* +
+The router WAN port defaults to DHCP, so you can usually connect the new WAN port into your existing router's LAN port. The new router should then be "on the air."
+. *Confirm internet connectivity* +
+Type `ping 8.8.8.8` (that is Google's DNS server.) If the previous step worked, you should see ping response messages.
+. *Update the packages, then install the LuCI web configuration package.* +
+We recommend the SSL-based package, but you could use the non-SSL version (named 'luci', not 'luci-ssl').
+.. Enter `opkg update`
+.. Enter `opkg install luci-ssl` to get the SSL-based web GUI. 
+. *At this point, the Web GUI is available.* +
+Go to https://192.168.1.1 to complete configuration.
 
-Alternatively, pull requests can be opened against https://github.com/lede-project/web
+== Next Steps
+
+* Review the link:transcript.html[SSH Transcript] to see all the configuration messages above.
+* Enable Wi-Fi in the router (LEDE ships with Wi-Fi turned off). See *Network -> Wireless* in the Web GUI.
+* Install other packages with `opkg install ...` Useful packages are snmpd, netperf, luci-app-sqm, and any of your favorites.
