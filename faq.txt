@@ -52,7 +52,7 @@ The build system and many LEDE components are licensed under the GNU General Pub
 
 == Who holds the copyright of LEDE code?
 
-The original authors of the code holds the copyright.
+The original authors of the code hold the copyright.
 
 == Is the LEDE project a registered legal entity?
 
