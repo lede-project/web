@@ -16,7 +16,7 @@ using direct means of communication.
 The project offers the following mailing lists
 
 . https://lists.infradead.org/mailman/listinfo/lede-dev[lede-dev@lists.infradead.org] -
-  This list is used for submitting patches and general development related work
+  This list is used for submitting patches and general development related work.
 . https://lists.infradead.org/mailman/listinfo/lede-adm[lede-adm@lists.infradead.org] - 
   This list is used for project organisational purposes. Anyone can
   subscribe and read this list, only committers may write to this list.
@@ -24,24 +24,24 @@ The project offers the following mailing lists
 In addition there are two read only announcement lists:
 
 . http://lists.infradead.org/mailman/listinfo/lede-bugs[lede-bugs@lists.infradead.org] -
-  This list receives bug tracking notifications from Flyspray
+  This list receives bug tracking notifications from Flyspray.
 . http://lists.infradead.org/mailman/listinfo/lede-commits[lede-commits@lists.infradead.org] -
-  This list tracks the commits to our core Git repositories
+  This list tracks the commits to our core Git repositories.
 
 
 === IRC Channels
 
 The project provides 2 IRC channels on freenode
 
-. #lede-dev - a public channel for everyone to join and participate
-. #lede-adm - a moderated channel that anyone can join but only people with +v flag can write on
+. #lede-dev - a public channel for everyone to join and participate.
+. #lede-adm - a moderated channel that anyone can join but only people with +v flag can write on.
 
 
 === Twitter
 
 In case of services going down, being moved or being unreachable for any other
 reason, please go to twitter and see what the status is. The project will do
-its best to post updates link:https://twitter.com/lede_project[here]
+its best to post updates link:https://twitter.com/lede_project[here].
 
 
 === Corporate Contact
@@ -73,4 +73,4 @@ http://piratepad.net/ep/pad/view/ro.UdKV08dIlKx/latest[agenda pad].
 
 == Meeting Logs
 
-All meeting logs can be viewed under http://meetings.lede-project.org/lede-adm/[here]
+All meeting logs can be viewed under http://meetings.lede-project.org/lede-adm/[here].
