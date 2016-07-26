@@ -69,6 +69,15 @@ All patches need to be sent in a format that they are listed in https://patchwor
 If the patch does not get listed in patchwork then it won't get processed.
 
 
+=== Staging Trees
+
+To create yourself a staging tree on git.lede-project.org:
+----
+ssh git@git.lede-project.org "create lede/yournick/staging"
+ssh git@git.lede-project.org "desc lede/yournick/staging Staging tree of Your Name"
+----
+
+
 === Reporting Bugs
 
 . Please report your bugs using our https://bugs.lede-project.org/[issue tracker]
