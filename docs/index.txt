@@ -8,24 +8,25 @@ title: Getting Started with LEDE
 LEDE is based on link:https://wiki.openwrt.org/doc/start[OpenWrt] &mdash; most of the operational aspects of the two projects are identical. 
 This document frequently refers to pages of the OpenWrt wiki. 
 
-Although there are many ways to install LEDE on your router and complete its initial configuration, the following steps are reliable:
+Although there are many ways to install LEDE on your device and complete its initial configuration, the following steps are reliable:
 
-. *Flash the LEDE firmware image into your router.* The exact process is device-specific.
-Follow the OpenWrt links below to find the required information for your router:
-.. *Find your router's architecture and processor types.* 
+. *Flash the LEDE firmware image into your device.* The exact process is device-specific.
+Follow the OpenWrt links below to find the required information for your device:
+.. *Find your device's architecture and processor types.* 
 The "Device Page" of the link:https://wiki.openwrt.org/toh/start[OpenWrt Table of Hardware] will contain this information.
 .. *Download the proper LEDE firmware image to your computer* from link:https://downloads.lede-project.org/snapshots/targets/[downloads.lede-project.org.] 
 The directory structure for LEDE is identical to OpenWrt's downloads.
 .. *Follow the flashing instructions* on the OpenWrt Device Page.
-.. *Connect via Ethernet using DHCP.* After flashing, make sure your computer is connected to a Local Area Network (LAN) port of the router using DHCP.
-. *SSH to the router.* +
-In your terminal program, enter `ssh root@192.168.1.1`. You can follow along with the steps below in the link:transcript.html[SSH Transcript].  
+.. On routers: *Connect via Ethernet using DHCP.* After flashing, make sure your computer is connected to a Local Area Network (LAN) port of the router using DHCP.
+.. On other devices: *Connect the device to your router.* The device will acquire an address using DHCP. Check your router's web-interface to learn which address it got.
+. *SSH to the device.* +
+In your terminal program, enter `ssh root@192.168.1.1` (on other devices, replace 192.168.1.1 with the address assigned to the device by your router). You can follow along with the steps below in the link:transcript.html[SSH Transcript].  
 . *Set the password.* +
 LEDE ships without a password. Enter `passwd` and type the new password twice. 
 _Note: Use a good password: it secures your home network.
-Write it on the bottom of the router so you don't forget._
-. *Connect the Wide Area Network (WAN) port of the router to "the internet".* +
-The router WAN port defaults to DHCP, so you can usually connect the  WAN port of your new router into a LAN port of your existing router. The new router should then be "on the air."
+Write it on the bottom of the device so you don't forget._
+. *Connect the Wide Area Network (WAN) port (if any) of the device to "the internet".* +
+A router's WAN port defaults to DHCP, so you can usually connect the  WAN port of your new router into a LAN port of your existing router. The new router should then be "on the air."
 . *Confirm internet connectivity* +
 Type `ping 8.8.8.8` (that is Google's DNS server.) If the previous step worked, you should see ping response messages.
 . *Update the packages, then install the LuCI web configuration package.* +
