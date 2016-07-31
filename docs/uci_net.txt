@@ -29,28 +29,6 @@ The 'globals' section contains interface-independent options affecting the netwo
 
 The 'switch' section is responsible for partitioning the switch into several _VLANs_ which appear as independent interfaces in the system although they share the same hardware. **Not every OpenWrt supported device (or architecture, like x86) has a programmable switch**, therefore this section might not be present on some platforms. Please also note, that some switches only support 4Bit-VLANs.
 
-There are currently two different configuration formats in use, one for the legacy '/proc/switch/' API and one for the newer swconfig-based switch configuration.
-
-=== /proc/switch ===
-
-This variant is actually only found on Broadcom devices like the WRT54GL.
-
-A typical configuration for it looks like this:
-
-----
-config 'switch' 'eth0'
-	option 'vlan0' '0 1 2 3 5*'
-	option 'vlan1' '4 5'
-----
-
-The 'eth0' identifier specifies the switch the section is belonging to.
-VLANs are defined by 'vlan#' options with '#' being the VLAN number.
-
-=== swconfig ===
-
-The newer swconfig framework is intended to replace the legacy switch configuration.
-
-Configuration for swconfig have a slightly different structure with one extra section per VLAN.
 The example below shows a typical configuration:
 
 ----
