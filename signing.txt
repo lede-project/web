@@ -17,10 +17,10 @@ Our _usign_ signature files carry the extension +.sig+ while the detached
 GPG signatures end with +.gpg+.
 
 Note that not every file is signed individually but that we're signing the
-+md5sums+ and +sha256sums+ or - for repositories - the +Packages+ files to
-establish a chain of trust: The SHA256 checksum will verify the integrity of the
-actual file while the signature will verify the integrity of the file containing
-the checksums.
++sha256sums+ or - for repositories - the +Packages+ files to establish a chain
+of trust: The SHA256 checksum will verify the integrity of the actual file
+while the signature will verify the integrity of the file containing the
+checksums.
 
 === Verify download integrity
 
@@ -30,91 +30,75 @@ following steps:
 . Download the +sha256sum+ and +sha256sum.gpg+ files
 . Check the signature with +gpg --with-fingerprint --verify sha256sum.gpg
   sha256sum+, ensure that the GnuPG command reports a good signature and that
-  the fingerprint matches the ones listed on our fingerprints (TODO:link) page.
-. Download the firmware image and calculate its hash using one of the
-  +sha256sum+ or +openssl sha256+ commands.
-. Verify that the calculated checksum matches the one listed in the +sha256sums+
-  file.
+  the fingerprint matches the ones listed on our
+  *link:signatures.html[fingerprints page]*.
+. Download the firmware image into the same directory as the +sha256sums+ file
+  and verify its checksum using the following command:
+  +sha256sum -c --ignore-missing sha256sums+
 
-You can use the example script below to verify the integrity of image downloads,
-call it as +./script.sh https://downloads.lede-project.org/path/to/image.bin+
+=== Verification script
+
+You can use our supplied link:scripts/download.sh[convenience script] to
+automate the required download and signature verification steps.
+
+Below is an example transcript of using the +download.sh+ script.
 
 ----
-#!/bin/bash
+user@host:~$ wget http://lede-project.org/scripts/download.sh
+--2016-08-02 12:16:32--  http://lede-project.org/scripts/download.sh
+Connecting to lede-project.org... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 4091 (4,0K) [application/x-sh]
+Saving to: ‘download.sh’
 
-[ -n "$1" ] || {
-	echo "Usage: $0 <url>" >&2
-	exit 1
-}
+download.sh         100%[===================>]   4,00K  --.-KB/s    in 0s      
 
-finish() {
-	echo "Cleaning up."
-	rm -r "/tmp/verify.$$"
-	exit $1
-}
+2016-08-02 12:16:32 (622 MB/s) - ‘download.sh’ saved [4091/4091]
 
-trap "finish 7" INT TERM
+user@host:~$ chmod +x download.sh 
+user@host:~$ ./download.sh https://downloads.lede-project.org/snapshots/targets/ar71xx/generic/lede-ar71xx-generic-tl-wr1043nd-v1-squashfs-factory.bin
+1) Downloading image file
+=========================
+############################################################ 100,0%
 
-destdir="$(pwd)"
-image_url="$1"
-image_file="${image_url##*/}"
-sha256_url="${image_url%/*}/sha256sums"
-gpgsig_url="${image_url%/*}/sha256sums.gpg"
+2) Downloading checksum file
+============================
+############################################################ 100,0%
 
-mkdir -p "/tmp/verify.$$"
-cd "/tmp/verify.$$"
+3) Downloading the GPG signature
+================================
+############################################################ 100,0%
 
-echo "1) Downloading image file"
-echo "========================="
-wget -O "$image_file" "$image_url" || {
-	echo "Failed to download image file!" >&2
-	finish 1
-}
+4) Verifying GPG signature
+==========================
+The signature was signed by a public key with the id
+F93525A88B699029 which is not present on this system.
 
-echo "2) Downloading checksum file"
-echo "============================"
-wget -O "sha256sums" "$sha256_url" || {
-	echo "Failed to download checksum file!" >&2
-	finish 2
-}
+Provide a public keyserver url below or press enter to accept the
+default suggestion. Hit Ctrl-C to abort the operation.
 
-echo "3) Downloading the GPG signature"
-echo "================================"
-wget -O "sha256sums.gpg" "$gpgsig_url" || {
-	echo "Failed to download GPG signature!" >&2
-	finish 3
-}
+Keyserver to use? [hkp://pool.sks-keyservers.net] > 
+gpg: requesting key 8B699029 from hkp server pool.sks-keyservers.net
+gpg: key 626471F1: public key "LEDE Build System (LEDE GnuPG key for unattended build jobs) <lede-adm@lists.infradead.org>" imported
+gpg: Total number processed: 1
+gpg:               imported: 1  (RSA: 1)
+gpg: Signature made Di 02 Aug 2016 10:10:40 CEST using RSA key ID 8B699029
+gpg: Good signature from "LEDE Build System (LEDE GnuPG key for unattended build jobs) <lede-adm@lists.infradead.org>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 54CC 7430 7A2C 6DC9 CE61  8269 CD84 BCED 6264 71F1
+     Subkey fingerprint: 6D92 78A3 3A9A B314 6262  DCEC F935 25A8 8B69 9029
 
-echo "4) Verifying GPG signature"
-echo "=========================="
-gpg --with-fingerprint --verify "sha256sums.gpg" "sha256sums" || {
-	echo "Failed to verify checksum file with GPG signature!" >&2
-	finish 4
-}
+5) Verifying SHA256 checksum
+============================
+lede-ar71xx-generic-tl-wr1043nd-v1-squashfs-factory.bin: OK
 
-echo ""
-echo "5) Verifying SHA256 checksum"
-echo "============================"
-remote_csum="$(grep -F "SHA256($image_file)=" "sha256sums")"
-local_csum="$(openssl sha256 "$image_file")"
-[ "$remote_csum" = "$local_csum" ] || {
-	echo "Checksums do not match!" >&2
-	echo "REMOTE: $remote_csum" >&2
-	echo "LOCAL:  $local_csum" >&2
-	finish 5
-}
+Verification done!
+==================
+Firmware image placed in '/home/user/lede-ar71xx-generic-tl-wr1043nd-v1-squashfs-factory.bin'.
 
-cp "$image_file" "$destdir/$image_file" || {
-	echo "Failed to write '$destdir/$image_file'" >&2
-	finish 6
-}
-
-echo ""
-echo "Verficiation done!"
-echo "=================="
-echo "Firmware image placed in '$dest_dir/$image_file'."
-
-finish 0
+Cleaning up.
+user@host:~$ 
 ----
 
 
