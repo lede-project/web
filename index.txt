@@ -56,3 +56,4 @@ kindly decided to endorse this project. Thanks !
 - image:logo/endorsements/wirelesspt.png[WirelessPT logo] https://wirelesspt.net/wiki/LEDE["\"We wish huge success to the LEDE project\""]
 - image:logo/endorsements/weimarnetz.png[Weimarnetz logo] https://weimarnetz.de/["Project Homepage"]
 - image:logo/endorsements/bmx7.png[bmx.net logo] http://bmx6.net/news/24["\"We ... will consider it the new default OS environment for embedded devices running bmx6 and bmx7\""]
+- image:logo/endorsements/libremesh.png[Libre-Mesh logo] http://libre-mesh.org/news.html#2016_08_06_endorsement_to_lede_project["\"We endorse the LEDE project and we plan to start basing Libre-Mesh releases on Linux Embedded Development Environment\""]
