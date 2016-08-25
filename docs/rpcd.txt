@@ -5,9 +5,9 @@ RPC daemon
 
 == RPC daemon
 
-In 'LEDE' we commonly use 'ubus' for all kinds of communication. It can provide info from various software as well as request various actions. Nevertheless, not every part of 'LEDE' has a deamon that can register itself using 'ubus'. For an example 'uci' and 'opkg' are command-line tools without any background process running all the time.
+In 'LEDE' we commonly use 'ubus' for all kinds of communication. It can provide info from various software as well as request various actions. Nevertheless, not every part of 'LEDE' has a daemon that can register itself using 'ubus'. For an example 'uci' and 'opkg' are command-line tools without any background process running all the time.
 
-It would be not efficient to write a deamon for every software like this and run them independently. This is why 'rpcd' was developed. It's a tiny deamon with support for plugins using trivial 'API'. It loads library `.so` files and calls init function of each of them.
+It would be not efficient to write a daemon for every software like this and run them independently. This is why 'rpcd' was developed. It's a tiny daemon with support for plugins using trivial 'API'. It loads library `.so` files and calls init function of each of them.
 
 === Default plugins
 
