@@ -1,0 +1,99 @@
+---
+---
+Multicast DNS Daemon
+====================
+
+== mdns
+
+'This is early stage documentation, but at least attempts to cover
+some basic usage, and bring mdns usage out of the dark.'
+
+mDNS, also known as Bonjour or zero-configuration networking, enables automatic
+discovery of computers, devices, and services on IP networks.  It is
+an internet standard documented in link:https://tools.ietf.org/html/rfc6762[RFC6762]
+
+The 'mdns' package provides a compact implementation of this standard, well
+integrated with the 'LEDE' system environment. In particular, almost all
+interaction with the daemon is via link:ubus.html[ubus]
+
+=== Alternatives
+
+* mdnsd - provided by Apple's mDNSResponder package
+* avahi-* - A fairly full, but quite large implementation
+
+=== Browsing announced services
+
+----
+$ ubus call mdns scan
+# wait a second or two
+$ ubus call mdns browse
+# big json dump example...
+        ....
+	"_printer._tcp": {
+		"HP\\032Color\\032LaserJet\\032CP2025dn\\032(28A6CC)": {
+			"port": 515,
+			"txt": "txtvers=1",
+			"txt": "qtotal=1",
+			"txt": "rp=RAW",
+			"txt": "ty=HP Color LaserJet CP2025dn",
+			"txt": "product=(HP Color LaserJet CP2025dn)",
+			"txt": "priority=50",
+			"txt": "adminurl=http:\/\/NPI28A6CC.local.",
+			"txt": "Transparent=T",
+			"txt": "Binary=T",
+			"txt": "TBCP=T"
+		},
+		"HP\\032LaserJet\\032P3010\\032Series\\032[46A14F]": {
+			"port": 515,
+			"txt": "txtvers=1",
+			"txt": "qtotal=4",
+			"txt": "rp=RAW",
+			"txt": "pdl=application\/postscript,application\/vnd.hp-PCL,application\/vnd.hp-PCLXL",
+			"txt": "ty=HP LaserJet P3010 Series",
+			"txt": "product=(HP LaserJet P3010 Series)",
+			"txt": "usb_MFG=Hewlett-Packard",
+			"txt": "usb_MDL=HP LaserJet P3010 Series",
+			"txt": "priority=52",
+			"txt": "adminurl=http:\/\/NPI46A14F.local."
+		},
+	....
+----
+
+==== Issues/Bugs
+
+* IP addresses are missing
+* TXT records aren't valid json in the dump, so jsonfilter can't be used.
+* How long is data cached? What causes it to update? No idea.
+
+=== Announcing local services
+'mdns' scans all the services listed in 'ubus' (`ubus call service list`) and
+looks for 'mdns' objects in their data object.  You can view this more
+selectively for example with:
+----
+# ubus call service list | jsonfilter -e '@[*].instances[*].data.mdns'
+{ "ssh_22": { "service": "_ssh._tcp.local", "port": 22, "txt": [ "daemon=dropbear" ] } }
+----
+
+Here we can see that ssh is being advertised locally.
+
+If you want to advertise your own service, your service needs to (*AT THE
+TIME OF WRITING*) be a link:procd.html[procd] managed service.  You can use the `procd_add_mdns`
+call to provide a basic definition.
+----
+procd_open_instance
+....
+procd_add_mdns <service> <proto> <port> [<textkey=textvalue> ... ]
+...
+procd_close_instance
+----
+
+As an example, the following call
+----
+procd_add_mdns "hoho" "tcp" "99" "daemon=special" "colour=fuschia"
+----
+will result in advertising `_hoho._tcp.local` with two text records.
+
+If you wish to create a more complicated mdns information block, see
+'procd_add_mdns_service' in '/lib/functions/procd.sh' but be warned that mdns
+probably can't automatically support everything you can represent in json.
+
