@@ -31,6 +31,7 @@ The 'dropbear' section contains these settings:
 | 'dsskeyfile' | file| no | _(none)_ | Path to DSS/DSA file
 | 'SSHKeepAlive' | integer| no | 300 | Keep Alive
 | 'IdleTimeout' | integer| no | 0| Idle Timeout
+| 'mdns' | integer | no | 1 | Whether to annouce the service via link:mdns.html[mDNS]
 |====
 
 This is the default configuration:
