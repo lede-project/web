@@ -17,7 +17,7 @@ This is work in progress.
 
 == Where is the Forum?
 
-Currently we have mailing lists, see /communication.html
+Currently we have mailing lists, see link:communication.html[Communication].
 
 == What happens to the OpenWrt package feed?
 
