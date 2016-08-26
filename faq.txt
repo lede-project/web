@@ -34,9 +34,11 @@ No, LEDE is not affiliated with any specific company or any industry organizatio
 
 == The company I work for uses LEDE and wants to support the project. What should we do?
 
-The best support is that you allow and encourage your employees to contribute the changes you did internally back to the LEDE project.
-If you are a chip vendor for example adding support for your chips to LEDE would be a nice.
-This way others can also benefit from your changes and you reduce your maintenance cost, because you need less patches when using more recent versions of LEDE.
+Companies can best support LEDE by upstreaming the required code to support their products,
+any platform support code, patch submissions or even just detailed specifications are most appreciated.
+
+Upstreaming product support also benefits the company in the long run as ongoing maintenance and
+porting effort decreases over time while the amount of internally required changes can be reduced.
 
 == Are there plans to license LEDE under a different License?
 
