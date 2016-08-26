@@ -9,7 +9,8 @@ LEDE mainly targets embedded devices capable of running Linux. In most cases wir
 
 == How do I upgrade from OpenWrt to LEDE?
 
-Use the same mechanisms as used to upgrade from one OpenWrt version to a more recent versions, sysupgrade for example. With sysupgrade even your configuration should be migrated.
+Migrating from OpenWrt to LEDE should work similar to upgrading from one OpenWrt release to another.
+Using the +sysupgrade+ command is the preferred approach as this will also attempt to preserve the system configuration.
 
 == Where is the LEDE Wiki?
 
