@@ -28,6 +28,11 @@ LEDE plans to use the normal OpenWrt package feed, till it deviates too much fro
 
 OpenWrt Chaos Calmer will be supported with security and bug fixes by the OpenWrt project.
 
+== Were there any technical reasons to split from OpenWrt?
+
+Nothing special, expect that LEDE wants to focus more on stability and not so much on bleeding edge any more.
+The release process should be better automatized and the release should be better tested.
+
 == Is LEDE represented by any Company or Industry organization?
 
 No, LEDE is not affiliated with any specific company or any industry organization.
@@ -43,11 +48,6 @@ porting effort decreases over time while the amount of internally required chang
 == Are there plans to license LEDE under a different License?
 
 There are no plans to change the license of the LEDE code. It should be easy to copy code from and to OpenWrt.
-
-== Were there any technical reasons to split from OpenWrt?
-
-Nothing special, expect that LEDE wants to focus more on stability and not so much on bleeding edge any more.
-The release process should be better automatized and the release should be better tested.
 
 == What license does LEDE use?
 
