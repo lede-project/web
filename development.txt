@@ -57,17 +57,20 @@ git clone https://git.lede-project.org/web.git
 
 === Submitting Patches
 
-The biggest difference is that we now accept pull requests. The tree that shall
-be pulled from needs to be hosted publicly. Small fixes and minor patches can
-also be submitted via the
-https://lists.infradead.org/mailman/listinfo/lede-dev[development mailing list].
-Submissions should follow these rules
+The biggest difference is that we now accept pull requests. Patches can be submitted as either a pull request on Github or small fixes and minor patches can also be submitted via the mailing list. Submissions should follow these rules:
 
+. A `Signed-off-by` line must be added to your commit / patch in accordance with Section 1.1 of the https://www.kernel.org/doc/Documentation/SubmittingPatches[Linux Kernel patches guide].
+.. Git: `git commit --signoff`
+.. Email: Just add line like `Signed-off-by: Random J Developer <random@developer.example.org>` to the top patch.
 . TBD
 
-All patches need to be sent in a format that they are listed in https://patchwork.ozlabs.org/project/lede/list/[patchwork].
-If the patch does not get listed in patchwork then it won't get processed.
+==== Github
 
+There are Github mirrors of the https://github.com/lede-project/source[source] and https://github.com/lede-project/web[web] repos. Simply fork the project to a public repo and submit a pull request.
+
+==== Email
+
+Send an email to the https://lists.infradead.org/mailman/listinfo/lede-dev[development mailing list]. All patches need to be sent in the same format as those that are listed on https://patchwork.ozlabs.org/project/lede/list/[patchwork]. If the patch does not get listed in patchwork then it won't get processed. For example, to print a patch for the most recent commit, `git format-patch -1 --stdout`. Double check that your output conforms before sending.
 
 === Staging Trees
 
