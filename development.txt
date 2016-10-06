@@ -59,7 +59,7 @@ git clone https://git.lede-project.org/web.git
 
 The biggest difference is that we now accept pull requests. Patches can be submitted as either a pull request on Github or small fixes and minor patches can also be submitted via the mailing list. Submissions should follow these rules:
 
-. A `Signed-off-by` line must be added to your commit / patch in accordance with Section 1.1 of the https://www.kernel.org/doc/Documentation/SubmittingPatches[Linux Kernel patches guide].
+. A `Signed-off-by` line must be added to your commit / patch in accordance with Section 1.11 of the https://www.kernel.org/doc/Documentation/SubmittingPatches[Linux Kernel patches guide].
 .. Git: `git commit --signoff`
 .. Email: Just add line like `Signed-off-by: Random J Developer <random@developer.example.org>` to the top patch.
 . TBD
