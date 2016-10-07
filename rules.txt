@@ -39,7 +39,7 @@ Project Rules
 === Changes to these rules ===
 
 ==== Mon, 10 May 2016
-Add the rule "Be nice to eachother"
+Add the rule "Be nice to each other".
 Agreed in the meeting 9 May 2016
 
 ==== Tue, 5 Apr 2016
