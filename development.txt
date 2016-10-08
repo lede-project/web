@@ -66,7 +66,16 @@ The biggest difference is that we now accept pull requests. Patches can be submi
 
 ==== Github
 
-There are Github mirrors of the https://github.com/lede-project/source[source] and https://github.com/lede-project/web[web] repos. Simply fork the project to a public repo and submit a pull request.
+There are Github mirrors of the https://github.com/lede-project/source[source] and https://github.com/lede-project/web[web] repos. Simply fork the project to a public repo using Github web interface, clone the repo to your computer, create a branch for your changes, push these back to Github and submit a pull request.
+
+For example, to submit a pull request for these web-pages, follow these instructions and then submit PR using Github web interface:
+----
+git clone git@github.com:<github username>/web.git
+git checkout -b <branch-name>
+<make changes to files>
+git commit --signoff
+git push --all
+----
 
 ==== Email
 
