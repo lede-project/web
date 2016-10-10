@@ -5,7 +5,7 @@ Dropbear Configuration
 
 == Dropbear Configuration
 
-The firewall configuration located in **'/etc/config/dropbear'**.
+The Dropbear UCI configuration file is located in **'/etc/config/dropbear'**.
 
 == Sections
 
