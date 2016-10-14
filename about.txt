@@ -57,6 +57,7 @@ Here you can find an alphabetically ordered list of the current people involved 
 | Jo-Philipp Wich | jow
 | John Crispin | blogic
 | Jonas Gorski | jogo
+| Mathias Kresin | mkresin
 | Matthias Schiffer | neoraider
 | Rafał Miłecki | rmilecki
 | Steven Barth | cyrus
