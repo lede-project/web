@@ -53,12 +53,14 @@ Here you can find an alphabetically ordered list of the current people involved 
 | Álvaro Fernández Rojas | noltari
 | Daniel Golle | dangole
 | Felix Fietkau | nbd
+| Florian Fainelli | [florian]
 | Hauke Mehrtens | hauke
 | Jo-Philipp Wich | jow
 | John Crispin | blogic
 | Jonas Gorski | jogo
 | Mathias Kresin | mkresin
 | Matthias Schiffer | neoraider
+| Mirko Vogt | mirko
 | Rafał Miłecki | rmilecki
 | Steven Barth | cyrus
 | Stijn Tintel | stintel
