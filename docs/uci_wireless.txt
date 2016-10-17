@@ -333,11 +333,11 @@ Wireless interfaces are brought up and down with the 'wifi' command. To (re)star
 
 == Regenerate Configuration
 
-To rebuild the configuration file, e.g. after installing a new wireless driver, remove the existing wireless configuration (if any) and use the 'wifi detect' command with stdout redirected to the '/etc/config/wireless' file:
+To rebuild the configuration file, remove the existing wireless configuration (if any) and use the 'wifi config' command:
 
 ----
 rm -f /etc/config/wireless
-wifi detect > /etc/config/wireless
+wifi config
 ----
 
 == 40 MHz channel width (up to 300 Mbps) for 802.11n devices ONLY
